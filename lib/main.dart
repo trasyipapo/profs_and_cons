@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           title: const Text('Profs and Cons'),
         ),
         body: Column(
-          children: [welcomeUser],
+          children: [welcomeUser, loginButton],
         ),
       ),
     );
@@ -39,3 +39,20 @@ Widget welcomeUser = Container(
                 style: TextStyle(fontSize: 16))
           ],
         )));
+
+Widget loginButton = Container(
+    margin: EdgeInsets.all(25),
+    child: ElevatedButton(
+      style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+        ImageIcon(AssetImage("assets/googleg.png"), size: 20),
+        SizedBox(width: 15),
+        Text(
+          'Continue with Google',
+          style: TextStyle(fontSize: 20.0),
+        )
+      ]),
+      onPressed: () {},
+    ));
