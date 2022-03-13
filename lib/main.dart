@@ -47,7 +47,7 @@ Widget loginButton = Container(
           padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-        ImageIcon(AssetImage("assets/googleg.png"), size: 20),
+        ImageIcon(AssetImage("assets/google-g.png"), size: 20),
         SizedBox(width: 15),
         Text(
           'Continue with Google',
