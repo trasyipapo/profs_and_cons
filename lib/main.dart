@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
           title: const Text('Profs and Cons'),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [welcomeUser, loginButton],
         ),
       ),
