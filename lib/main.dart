@@ -1,7 +1,32 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MaterialApp(
+      home: MyApp(),
+    ),
+  );
+}
+
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+          },
+          child: const Text('Go back!'),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -29,7 +54,36 @@ class MyApp extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [welcomeUser, loginButton],
+              children: [
+                welcomeUser,
+                Container(
+                    margin: EdgeInsets.all(25),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.all(20)),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red)),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            ImageIcon(AssetImage("assets/google-g.png"),
+                                size: 20),
+                            SizedBox(width: 15),
+                            Text(
+                              'Continue with Google',
+                              style: TextStyle(fontSize: 20.0),
+                            )
+                          ]),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SecondRoute()),
+                        );
+                      },
+                    ))
+              ],
             ),
           ),
         ));
