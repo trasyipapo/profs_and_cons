@@ -10,16 +10,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Profs and Cons'),
-        ),
-        body: Column(
-          children: [welcomeUser, loginButton],
-        ),
-      ),
-    );
+        title: 'Welcome to Flutter',
+        home: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            centerTitle: false,
+            backgroundColor: Colors.transparent,
+            title: const Text(
+              'Profs and Cons',
+              textAlign: TextAlign.left,
+            ),
+          ),
+          body: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/bg-image.png"),
+                    fit: BoxFit.cover)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [welcomeUser, loginButton],
+            ),
+          ),
+        ));
   }
 }
 
@@ -32,11 +45,11 @@ Widget welcomeUser = Container(
           children: const [
             Text('Welcome Atenean!',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
-                )),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 32,
+                    color: Colors.white)),
             Text('Are you ready to start the sem?',
-                style: TextStyle(fontSize: 16))
+                style: TextStyle(fontSize: 16, color: Colors.white))
           ],
         )));
 
@@ -47,7 +60,7 @@ Widget loginButton = Container(
           padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
           backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-        ImageIcon(AssetImage("assets/googleg.png"), size: 20),
+        ImageIcon(AssetImage("assets/google-g.png"), size: 20),
         SizedBox(width: 15),
         Text(
           'Continue with Google',
