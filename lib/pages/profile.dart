@@ -48,3 +48,18 @@ Widget profInfo = Container(
         ])
       ],
     ));
+
+Widget reviewButton = Container(
+    padding: const EdgeInsets.all(32),
+    child: ElevatedButton(
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+          Text(
+            'Add new review',
+            style: TextStyle(fontSize: 20.0),
+          )
+        ]),
+        onPressed: () {}));
