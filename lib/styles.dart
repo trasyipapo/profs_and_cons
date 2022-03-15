@@ -14,3 +14,7 @@ const TextStyle bodyText =
 
 const TextStyle buttonText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 12, color: Colors.white);
+
+const TextStyle smallText =
+    TextStyle(fontWeight: FontWeight.normal, fontSize: 9, color: Colors.grey);
+

@@ -92,3 +92,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+fonts:
+  - family: GoogleSans
+    fonts:
+      - asset: assets/fonts/GoogleSans-Regular-v1.27.tff
+      - asset: assets/fonts/GoogleSans-Italic-v1.27.tff
+        style: italic
+      - asset: assets/fonts/GoogleSans-Medium-v1.27.tff
+        weight: 500
+      - asset: assets/fonts/GoogleSans-MediumItalic-v1.27.tff
+        weight: 500
+        style: italic
+      - asset: assets/fonts/GoogleSans-Bold-v1.27.tff
+        weight: 700
+      - asset: assets/fonts/GoogleSans-BoldItalic-v1.27.tff
+        weight: 700
+        style: italic
