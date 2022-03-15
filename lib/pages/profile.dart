@@ -29,7 +29,7 @@ class Profile extends StatelessWidget {
             constraints: const BoxConstraints.expand(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [profInfo, reviewButton, classesTaught],
+              children: [profInfo, reviewButton, coursesTaught],
             ),
           ),
         ));
@@ -63,3 +63,34 @@ Widget reviewButton = Container(
           )
         ]),
         onPressed: () {}));
+
+Widget coursesTaught = Container(
+    padding: const EdgeInsets.all(32),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text('Courses Taught'),
+      Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Wrap(spacing: 5, children: [
+          DecoratedBox(
+              decoration: BoxDecoration(
+                  color: Colors.red, borderRadius: BorderRadius.circular(5)),
+              child: const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  child: Text('CSCI 115', style: buttonText))),
+          DecoratedBox(
+              decoration: BoxDecoration(
+                  color: Colors.yellow, borderRadius: BorderRadius.circular(5)),
+              child: const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  child: Text('CSCI 42', style: buttonText))),
+          DecoratedBox(
+              decoration: BoxDecoration(
+                  color: Colors.green, borderRadius: BorderRadius.circular(5)),
+              child: const Padding(
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                  child: Text(
+                    'CSCI 21',
+                    style: buttonText,
+                  )))
+        ])
+      ])
+    ]));
