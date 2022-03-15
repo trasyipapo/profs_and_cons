@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/login.dart';
 import 'package:profs_and_cons/pages/home.dart';
-import 'package:profs_and_cons/pages/profiles.dart';
+import 'package:profs_and_cons/pages/profile.dart';
 
 void main() {
-  runApp(MaterialApp(initialRoute: '/profiles', routes: {
+  runApp(MaterialApp(initialRoute: '/profile', routes: {
     '/login': (context) => const Login(),
     '/home': (context) => const Home(),
-    '/profiles': (context) => const Profiles(),
+    '/profile': (context) => const Profile(),
   }));
 }
