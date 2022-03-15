@@ -17,3 +17,4 @@ const TextStyle buttonText =
 
 const TextStyle smallText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 9, color: Colors.grey);
+
