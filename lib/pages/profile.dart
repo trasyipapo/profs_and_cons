@@ -29,7 +29,7 @@ class Profile extends StatelessWidget {
             constraints: const BoxConstraints.expand(),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [profInfo, reviewButton, coursesTaught],
+              children: [profInfo, reviewButton, coursesTaught, averageRatings],
             ),
           ),
         ));
@@ -67,7 +67,7 @@ Widget reviewButton = Container(
 Widget coursesTaught = Container(
     padding: const EdgeInsets.all(32),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text('Courses Taught'),
+      const Text('Courses Taught', style: header2),
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Wrap(spacing: 5, children: [
           DecoratedBox(
@@ -92,5 +92,34 @@ Widget coursesTaught = Container(
                     style: buttonText,
                   )))
         ])
+      ])
+    ]));
+
+Widget averageRatings = Container(
+    padding: const EdgeInsets.all(32),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Text('Average Ratings', style: header2),
+      Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Row(
+          children: const [Text('Teaching Skill')],
+        ),
+        Row(
+          children: const [Text('Personality')],
+        ),
+        Row(
+          children: const [Text('Grading')],
+        ),
+        Row(
+          children: const [Text('Workload')],
+        ),
+        Row(
+          children: const [Text('Leniency')],
+        ),
+        Row(
+          children: const [Text('Attendance')],
+        ),
+        Row(
+          children: const [Text('Feedback')],
+        )
       ])
     ]));
