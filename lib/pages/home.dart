@@ -6,6 +6,16 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Profs and Cons',
+            textAlign: TextAlign.left,
+          ),
+        ),
         body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
@@ -49,7 +59,9 @@ Name!''',
                     fontWeight: FontWeight.bold,
                     fontSize: 32,
                     color: Colors.white)),
-            Text("Let's search for your profs",
+            Text('''
+
+Let's search for your profs''',
                 style: TextStyle(fontSize: 16, color: Colors.white))
           ],
         )));
