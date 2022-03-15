@@ -68,12 +68,15 @@ Widget welcomeUser = Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
-            Text('Welcome Atenean!',
+            Text('''Welcome,
+Atenean!''',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 32,
+                    fontSize: 34,
                     color: Colors.white)),
-            Text('Are you ready to start the sem?',
+            Text('''
+
+Are you ready to start the sem?''',
                 style: TextStyle(fontSize: 16, color: Colors.white))
           ],
         )));
