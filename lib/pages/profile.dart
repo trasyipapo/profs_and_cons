@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
 
@@ -28,8 +29,14 @@ class Profile extends StatelessWidget {
           body: Container(
             constraints: const BoxConstraints.expand(),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [profInfo, reviewButton, coursesTaught, averageRatings],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                profInfo,
+                reviewButton,
+                coursesTaught,
+                averageRatings,
+                seeReviewButton
+              ],
             ),
           ),
         ));
@@ -37,7 +44,7 @@ class Profile extends StatelessWidget {
 }
 
 Widget profInfo = Container(
-    padding: const EdgeInsets.all(32),
+    padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -50,7 +57,7 @@ Widget profInfo = Container(
     ));
 
 Widget reviewButton = Container(
-    padding: const EdgeInsets.all(32),
+    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: ElevatedButton(
         style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
@@ -65,11 +72,12 @@ Widget reviewButton = Container(
         onPressed: () {}));
 
 Widget coursesTaught = Container(
-    padding: const EdgeInsets.all(32),
+    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text('Courses Taught', style: header2),
+      const SizedBox(height: 10),
       Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Wrap(spacing: 5, children: [
+        Wrap(spacing: 10, children: [
           DecoratedBox(
               decoration: BoxDecoration(
                   color: Colors.red, borderRadius: BorderRadius.circular(5)),
@@ -96,30 +104,85 @@ Widget coursesTaught = Container(
     ]));
 
 Widget averageRatings = Container(
-    padding: const EdgeInsets.all(32),
+    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text('Average Ratings', style: header2),
-      Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Row(
-          children: const [Text('Teaching Skill')],
-        ),
-        Row(
-          children: const [Text('Personality')],
-        ),
-        Row(
-          children: const [Text('Grading')],
-        ),
-        Row(
-          children: const [Text('Workload')],
-        ),
-        Row(
-          children: const [Text('Leniency')],
-        ),
-        Row(
-          children: const [Text('Attendance')],
-        ),
-        Row(
-          children: const [Text('Feedback')],
-        )
-      ])
+      Padding(
+          padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Teaching Skill'), ratingBar(4)],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Personality'), ratingBar(3)],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Grading'), ratingBar(4)],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Workload'), ratingBar(3)],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Leniency'), ratingBar(5)],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Attendance'), ratingBar(4)],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [const Text('Feedback'), ratingBar(4)],
+                )
+              ]))
     ]));
+
+RatingBar ratingBar(double rating) {
+  return RatingBar(
+      initialRating: rating,
+      itemSize: 20,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      ratingWidget: RatingWidget(
+          full: const Icon(Icons.star, color: Colors.blue),
+          half: const Icon(
+            Icons.star_half,
+            color: Colors.blue,
+          ),
+          empty: const Icon(
+            Icons.star,
+            color: Colors.black38,
+          )),
+      onRatingUpdate: (value) {}
+      //   setState(() {
+      //     _ratingValue = value;
+      // }
+      );
+}
+
+Widget seeReviewButton = Container(
+    margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
+    child: TextButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+      ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+        Text(
+          'See reviews',
+          style: TextStyle(fontSize: 15.0),
+        ),
+        SizedBox(width: 5),
+        Icon(
+          Icons.keyboard_arrow_right_sharp,
+          size: 20,
+        ),
+      ]),
+      onPressed: () {},
+    ));
