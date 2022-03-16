@@ -29,11 +29,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_rating_bar: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -91,3 +93,20 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+fonts:
+  - family: GoogleSans
+    fonts:
+      - asset: assets/fonts/GoogleSans-Regular-v1.27.tff
+      - asset: assets/fonts/GoogleSans-Italic-v1.27.tff
+        style: italic
+      - asset: assets/fonts/GoogleSans-Medium-v1.27.tff
+        weight: 500
+      - asset: assets/fonts/GoogleSans-MediumItalic-v1.27.tff
+        weight: 500
+        style: italic
+      - asset: assets/fonts/GoogleSans-Bold-v1.27.tff
+        weight: 700
+      - asset: assets/fonts/GoogleSans-BoldItalic-v1.27.tff
+        weight: 700
+        style: italic
