@@ -42,7 +42,10 @@ class _SearchResultsState extends State<SearchResults> {
                   icon: const Icon(Icons.search),
                   color: Colors.black87,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/profile');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Home()),
+                    );
                   }),
               centerTitle: false,
               backgroundColor: Colors.white,
