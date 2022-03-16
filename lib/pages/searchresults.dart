@@ -5,19 +5,30 @@ import 'package:profs_and_cons/styles.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class SearchResults extends StatelessWidget {
+List<Professor> professors = [];
+List titles = [];
+List ratings = [];
+
+class SearchResults extends StatefulWidget {
   const SearchResults({Key? key}) : super(key: key);
 
-  final titles = const ["Juan Bernardo", "Juan Dela Cruz", "Juan Garcia"];
-  // final subtitles = const [
-  //   "Here is list 1 subtitle",
-  //   "Here is list 2 subtitle",
-  //   "Here is list 3 subtitle"
-  // ];
-  final ratings = const ["4.2", "2.1", "3.9"];
+  @override
+  State<SearchResults> createState() => _SearchResultsState();
+}
+
+class _SearchResultsState extends State<SearchResults> {
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  // final titles = const ["Juan Bernardo", "Juan Dela Cruz", "Juan Garcia"];
   @override
   Widget build(BuildContext context) {
-    getData();
+    // getData();
+    print("hellaehlhelhe");
+    print(titles);
     // print("HELLO" + data[0]["middle_name"]);
     return MaterialApp(
         title: 'Professor Profile Screen',
@@ -60,16 +71,45 @@ class SearchResults extends StatelessWidget {
                     ]))));
   }
 
-  Future<dynamic> getData() async {
+  Future getData() async {
+    // titles = [];
+    // ratings = [];
+
     var url = 'https://profsandcons.000webhostapp.com/allprofs.php';
     http.Response response = await http.get(Uri.parse(url));
     var data = json.decode(response.body);
-    print(data[1]["first_name"] + " " + data[1]["last_name"]);
+    professors =
+        await data.map<Professor>((json) => Professor.fromJson(json)).toList();
+    print(data[1]["first_name"] + " " + data[1]["overall_ave"]);
+    // print(professors[0].firstName);
+    for (var i = 0; i < professors.length; i++) {
+      print(professors[i].firstName);
+      titles.add(professors[i].firstName + " " + professors[i].lastName);
+      ratings.add(professors[i].overallRating);
+    }
+    print(titles);
     print("HELLO WORLD");
   }
+}
 
-  // @override
-  // void initState() {
-  //   getData();
-  // }
+class Professor {
+  int id;
+  String firstName;
+  String lastName;
+  String overallRating;
+
+  Professor(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.overallRating});
+
+  factory Professor.fromJson(Map<String, dynamic> json) {
+    return Professor(
+      id: int.parse(json['professor_id']),
+      firstName: json['first_name'] as String,
+      lastName: json['last_name'] as String,
+      overallRating: json['overall_ave'] as String,
+    );
+  }
 }
