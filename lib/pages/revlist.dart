@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
@@ -17,17 +17,26 @@ class _RevListState extends State<RevList> {
 
   List<ReviewCard> reviews = [
     ReviewCard(
-        reviewHead: 'Great!',
+        reviewHead: 'Great organizational...',
         reviewer: 'Simon Garcia',
         counter: 24,
         stars: 5,
-        courseCode: 'CSCI 42'),
+        courseCode: ['CSCI 42']),
     ReviewCard(
         reviewHead: 'Run!!!',
         reviewer: 'Anonymous',
         counter: 17,
         stars: 1,
-        courseCode: 'CSCI 115'),
+        courseCode: ['CSCI 42', 'CSCI 115']),
+  ];
+
+  List rainbow = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.purple
   ];
 
   Widget reviewTemplate(review) {
@@ -47,8 +56,30 @@ class _RevListState extends State<RevList> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(review.counter.toString()),
-                        Text(review.stars.toString())
+                        Row(children: [
+                          IconButton(
+                              onPressed: () {},
+                              color: Colors.grey,
+                              iconSize: 10,
+                              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_upward)),
+                          Text(
+                            review.counter.toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                color: Colors.grey),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              color: Colors.grey,
+                              iconSize: 10,
+                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_downward)),
+                        ]),
+                        ratingBar(review.stars),
                       ],
                     ),
                     Padding(
@@ -70,15 +101,25 @@ class _RevListState extends State<RevList> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
-                            color: Colors.red,
-                            padding: const EdgeInsets.all(5),
-                            child: Text(
-                              review.courseCode,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 10),
-                            ))
-                      ], // TO BE FIXED (ONLY ONE PALANG PWEDE)
+                        Row(
+                          children: [
+                            for (var i = 0; i < review.courseCode.length; i++)
+                              // for (var i in review.courseCode)
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                  child: Container(
+                                      color: rainbow[i % 6],
+                                      padding: const EdgeInsets.all(5),
+                                      child: Text(
+                                        review.courseCode[i],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.white),
+                                      )))
+                          ],
+                        )
+                      ], // TO BE FIXED (ONLY ONE COLOR PALANG PWEDE)
                     ),
                   ],
                 ))));
@@ -124,9 +165,6 @@ class _RevListState extends State<RevList> {
         ));
   }
 }
-// Column(
-//                 children:
-//                     reviews.map((review) => reviewTemplate(review)).toList())
 
 DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
       value: item,
@@ -164,50 +202,26 @@ Widget reviewButton = Container(
         ]),
         onPressed: () {}));
 
-// Widget reviewCard = Container(
-//     color: Colors.blue,
-//     width: 325, // HARDCODED TO BE FIXED
-//     // padding: const EdgeInsets.all(50),
-//     margin: const EdgeInsets.all(5),
-//     child: Column(
-//       children: [
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [counter, stars],
-//         ),
-//         reviewHead,
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           children: [courseCode, courseCode],
-//         ),
-//       ],
-//     ));
-
-// Widget courseCode = Container(
-//   color: const Color.fromARGB(255, 255, 30, 0),
-//   child: const Text('courseCode'),
-//   width: 50,
-//   margin: const EdgeInsets.all(10),
-// );
-
-// Widget counter = Container(
-//   color: const Color.fromARGB(225, 97, 247, 60),
-//   child: const Text('counter'),
-//   width: 50,
-//   margin: const EdgeInsets.all(10),
-// );
-
-// Widget stars = Container(
-//   alignment: Alignment.topLeft,
-//   color: Colors.yellow,
-//   width: 35,
-//   margin: const EdgeInsets.all(5),
-//   child: const Text('stars'),
-// );
-
-// Widget reviewHead = Container(
-//   alignment: Alignment.topLeft,
-//   color: const Color.fromARGB(255, 216, 59, 255),
-//   margin: const EdgeInsets.all(5),
-//   child: const Text('reviewHead'),
-// );
+RatingBar ratingBar(double rating) {
+  return RatingBar(
+      initialRating: rating,
+      itemSize: 20,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      ratingWidget: RatingWidget(
+          full: const Icon(Icons.star, color: Colors.blue),
+          half: const Icon(
+            Icons.star_half,
+            color: Colors.blue,
+          ),
+          empty: const Icon(
+            Icons.star,
+            color: Colors.black38,
+          )),
+      onRatingUpdate: (value) {}
+      //   setState(() {
+      //     _ratingValue = value;
+      // }
+      );
+}
