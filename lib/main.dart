@@ -9,7 +9,7 @@ import 'package:profs_and_cons/pages/searchresults.dart';
 void main() {
   runApp(MaterialApp(
       theme: ThemeData(fontFamily: 'GoogleSans'),
-      initialRoute: '/fullreview',
+      initialRoute: '/home',
       routes: {
         '/login': (context) => const Login(),
         '/home': (context) => const Home(),
