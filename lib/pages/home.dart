@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:profs_and_cons/pages/searchresults.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final myController = TextEditingController();
+  @override
+  void _printLatestValue() {
+    print('Second text field: ${myController.text}');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Start listening to changes.
+    myController.addListener(_printLatestValue);
+  }
+
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +52,20 @@ class Home extends StatelessWidget {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               helloUser,
-              const Padding(
-                padding: EdgeInsets.all(16.0),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: TextField(
-                  // onChanged: (value) {
-                  //  filterSearchResults(value);
-                  // },
-                  // controller: editingController,
-                  decoration: InputDecoration(
+                  onSubmitted: (String str) {
+                    _printLatestValue();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SearchResults()),
+                    );
+                    //print whats there
+                  },
+                  controller: myController,
+                  decoration: const InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
                       hintText: "Search",
