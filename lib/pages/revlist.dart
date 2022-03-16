@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
+import 'package:profs_and_cons/objects/reviewcard.dart';
 
 class RevList extends StatefulWidget {
   const RevList({Key? key}) : super(key: key);
@@ -13,6 +14,16 @@ class RevList extends StatefulWidget {
 class _RevListState extends State<RevList> {
   final filters = ['FILTER', 'FILTER 2', 'FILTER 3'];
   String? value = 'FILTER'; // TO BE FIXED
+
+  List<ReviewCard> reviews = [
+    ReviewCard(
+        reviewHead: 'Great!',
+        reviewer: 'Anonymous',
+        counter: 24,
+        stars: 5,
+        courseCode: 'CSCI42')
+  ];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -111,7 +122,7 @@ Widget courseCode = Container(
 );
 
 Widget counter = Container(
-  color: Color.fromARGB(225, 97, 247, 60),
+  color: const Color.fromARGB(225, 97, 247, 60),
   child: const Text('counter'),
   width: 50,
   margin: const EdgeInsets.all(10),
@@ -127,7 +138,7 @@ Widget stars = Container(
 
 Widget reviewHead = Container(
   alignment: Alignment.topLeft,
-  color: Color.fromARGB(255, 216, 59, 255),
+  color: const Color.fromARGB(255, 216, 59, 255),
   margin: const EdgeInsets.all(5),
   child: const Text('reviewHead'),
 );
