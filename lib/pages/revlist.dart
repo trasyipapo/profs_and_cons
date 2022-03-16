@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter/rendering.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
 
@@ -11,8 +11,8 @@ class RevList extends StatefulWidget {
 }
 
 class _RevListState extends State<RevList> {
-  final filters = ['Filter 1', 'Filter 2'];
-
+  final filters = ['FILTER', 'FILTER 2', 'FILTER 3'];
+  String? value = 'FILTER'; // TO BE FIXED
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,6 +40,7 @@ class _RevListState extends State<RevList> {
               children: [
                 profInfo,
                 reviewButton,
+                reviewCard,
               ],
             ),
           ),
@@ -60,16 +61,19 @@ Widget profInfo = Container(
       children: [
         const Text('Juan Dela Cruz', style: header),
         DropdownButton<String>(
+            value: instance.value,
             items: instance.filters.map(buildMenuItem).toList(),
-            onChanged: onChanged)
+            onChanged: (value) => value = value) // TO BE FIXED
       ],
     ));
 
 Widget reviewButton = Container(
+    margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: ElevatedButton(
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+            padding:
+                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
@@ -80,4 +84,50 @@ Widget reviewButton = Container(
         ]),
         onPressed: () {}));
 
-void onChanged(String? value) {}
+Widget reviewCard = Container(
+    color: Colors.blue,
+    width: 325, // HARDCODED TO BE FIXED
+    // padding: const EdgeInsets.all(50),
+    margin: const EdgeInsets.all(5),
+    child: Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [counter, stars],
+        ),
+        reviewHead,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [courseCode, courseCode],
+        ),
+      ],
+    ));
+
+Widget courseCode = Container(
+  color: const Color.fromARGB(255, 255, 30, 0),
+  child: const Text('courseCode'),
+  width: 50,
+  margin: const EdgeInsets.all(10),
+);
+
+Widget counter = Container(
+  color: Color.fromARGB(225, 97, 247, 60),
+  child: const Text('counter'),
+  width: 50,
+  margin: const EdgeInsets.all(10),
+);
+
+Widget stars = Container(
+  alignment: Alignment.topLeft,
+  color: Colors.yellow,
+  width: 35,
+  margin: const EdgeInsets.all(5),
+  child: const Text('stars'),
+);
+
+Widget reviewHead = Container(
+  alignment: Alignment.topLeft,
+  color: Color.fromARGB(255, 216, 59, 255),
+  margin: const EdgeInsets.all(5),
+  child: const Text('reviewHead'),
+);
