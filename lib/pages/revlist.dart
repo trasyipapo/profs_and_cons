@@ -30,6 +30,15 @@ class _RevListState extends State<RevList> {
         courseCode: ['CSCI 42', 'CSCI 115']),
   ];
 
+  List rainbow = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.purple
+  ];
+
   Widget reviewTemplate(review) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
@@ -94,14 +103,20 @@ class _RevListState extends State<RevList> {
                       children: [
                         Row(
                           children: [
-                            for (var i in review.courseCode)
+                            for (var i = 0; i < review.courseCode.length; i++)
+                              // for (var i in review.courseCode)
                               Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                   child: Container(
-                                      color: Colors.red,
+                                      color: rainbow[i % 6],
                                       padding: const EdgeInsets.all(5),
-                                      child: Text(i)))
+                                      child: Text(
+                                        review.courseCode[i],
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.white),
+                                      )))
                           ],
                         )
                       ], // TO BE FIXED (ONLY ONE COLOR PALANG PWEDE)
