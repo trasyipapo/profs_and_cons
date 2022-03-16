@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/pages/fullreview.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
@@ -134,13 +134,28 @@ class _RevListState extends State<RevList> {
     return MaterialApp(
         title: 'Professor Reviews Screen',
         home: Scaffold(
+          // appBar: AppBar(
+          //   leading: IconButton(
+          //       icon: const Icon(Icons.search),
+          //       color: Colors.black87,
+          //       onPressed: () {
+          //         Navigator.push(context,
+          //             MaterialPageRoute(builder: (context) => const Home()));
+          //       }),
+          //   centerTitle: false,
+          //   backgroundColor: Colors.white,
+          //   title: const Text(
+          //     'Profs and Cons',
+          //     textAlign: TextAlign.left,
+          //   ),
+          // ),
           appBar: AppBar(
             leading: IconButton(
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.arrow_back),
                 color: Colors.black87,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Home()));
+                      MaterialPageRoute(builder: (context) => const Profile()));
                 }),
             centerTitle: false,
             backgroundColor: Colors.white,
