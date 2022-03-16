@@ -6,8 +6,14 @@ const TextStyle header =
 const TextStyle header2 =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black);
 
+const TextStyle resultName =
+    TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black);
+
 const TextStyle overallRating =
     TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: Colors.blue);
+
+const TextStyle resultsRating =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.blue);
 
 const TextStyle bodyText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 12, color: Colors.black);
@@ -17,4 +23,3 @@ const TextStyle buttonText =
 
 const TextStyle smallText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 9, color: Colors.grey);
-
