@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
+import 'package:profs_and_cons/main.dart';
+import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/models/professor.dart';
 import 'dart:convert';
@@ -40,8 +42,7 @@ class _SearchResultsState extends State<SearchResults> {
                   icon: const Icon(Icons.search),
                   color: Colors.black87,
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Home()));
+                    Navigator.pushNamed(context, '/profile');
                   }),
               centerTitle: false,
               backgroundColor: Colors.white,
@@ -62,20 +63,27 @@ class _SearchResultsState extends State<SearchResults> {
                           shrinkWrap: true,
                           itemCount: professors.length,
                           itemBuilder: (context, index) {
-                            return Card(
-                                child: ListTile(
-                                    title: Text(
-                                        professors[index].firstName +
-                                            " " +
-                                            professors[index].lastName,
-                                        style: resultName),
-                                    subtitle:
-                                        Text(professors[index].department),
-                                    trailing: Text(
-                                        professors[index]
-                                            .overallRating
-                                            .toStringAsFixed(2),
-                                        style: resultsRating)));
+                            return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const Profile()));
+                                },
+                                child: Card(
+                                    child: ListTile(
+                                        title: Text(
+                                            professors[index].firstName +
+                                                " " +
+                                                professors[index].lastName,
+                                            style: resultName),
+                                        // subtitle: Text(subtitles[index]),
+                                        trailing: Text(
+                                            professors[index]
+                                                .overallRating
+                                                .toStringAsFixed(2),
+                                            style: resultsRating))));
                           })
                     ]))));
   }
