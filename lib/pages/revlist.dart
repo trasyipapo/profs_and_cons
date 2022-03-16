@@ -21,8 +21,35 @@ class _RevListState extends State<RevList> {
         reviewer: 'Anonymous',
         counter: 24,
         stars: 5,
-        courseCode: 'CSCI42')
+        courseCode: '2323'),
+    ReviewCard(
+        reviewHead: 'Run!!!',
+        reviewer: 'Anonymous din',
+        counter: 2424,
+        stars: 1,
+        courseCode: '232323'),
   ];
+
+  Widget reviewTemplate(review) {
+    return Card(
+        margin: const EdgeInsets.all(5),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(review.counter.toString()),
+                Text(review.stars.toString())
+              ],
+            ),
+            Text(review.reviewHead),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [Text(review.courseCode), Text(review.courseCode)],
+            ),
+          ],
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +78,20 @@ class _RevListState extends State<RevList> {
               children: [
                 profInfo,
                 reviewButton,
-                reviewCard,
+                Column(
+                    children: reviews
+                        .map((review) => reviewTemplate(review))
+                        .toList())
+                // reviewCard,
               ],
             ),
           ),
         ));
   }
 }
+// Column(
+//                 children:
+//                     reviews.map((review) => reviewTemplate(review)).toList())
 
 DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
       value: item,
@@ -95,50 +129,50 @@ Widget reviewButton = Container(
         ]),
         onPressed: () {}));
 
-Widget reviewCard = Container(
-    color: Colors.blue,
-    width: 325, // HARDCODED TO BE FIXED
-    // padding: const EdgeInsets.all(50),
-    margin: const EdgeInsets.all(5),
-    child: Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [counter, stars],
-        ),
-        reviewHead,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [courseCode, courseCode],
-        ),
-      ],
-    ));
+// Widget reviewCard = Container(
+//     color: Colors.blue,
+//     width: 325, // HARDCODED TO BE FIXED
+//     // padding: const EdgeInsets.all(50),
+//     margin: const EdgeInsets.all(5),
+//     child: Column(
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [counter, stars],
+//         ),
+//         reviewHead,
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [courseCode, courseCode],
+//         ),
+//       ],
+//     ));
 
-Widget courseCode = Container(
-  color: const Color.fromARGB(255, 255, 30, 0),
-  child: const Text('courseCode'),
-  width: 50,
-  margin: const EdgeInsets.all(10),
-);
+// Widget courseCode = Container(
+//   color: const Color.fromARGB(255, 255, 30, 0),
+//   child: const Text('courseCode'),
+//   width: 50,
+//   margin: const EdgeInsets.all(10),
+// );
 
-Widget counter = Container(
-  color: const Color.fromARGB(225, 97, 247, 60),
-  child: const Text('counter'),
-  width: 50,
-  margin: const EdgeInsets.all(10),
-);
+// Widget counter = Container(
+//   color: const Color.fromARGB(225, 97, 247, 60),
+//   child: const Text('counter'),
+//   width: 50,
+//   margin: const EdgeInsets.all(10),
+// );
 
-Widget stars = Container(
-  alignment: Alignment.topLeft,
-  color: Colors.yellow,
-  width: 35,
-  margin: const EdgeInsets.all(5),
-  child: const Text('stars'),
-);
+// Widget stars = Container(
+//   alignment: Alignment.topLeft,
+//   color: Colors.yellow,
+//   width: 35,
+//   margin: const EdgeInsets.all(5),
+//   child: const Text('stars'),
+// );
 
-Widget reviewHead = Container(
-  alignment: Alignment.topLeft,
-  color: const Color.fromARGB(255, 216, 59, 255),
-  margin: const EdgeInsets.all(5),
-  child: const Text('reviewHead'),
-);
+// Widget reviewHead = Container(
+//   alignment: Alignment.topLeft,
+//   color: const Color.fromARGB(255, 216, 59, 255),
+//   margin: const EdgeInsets.all(5),
+//   child: const Text('reviewHead'),
+// );
