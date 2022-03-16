@@ -18,37 +18,70 @@ class _RevListState extends State<RevList> {
   List<ReviewCard> reviews = [
     ReviewCard(
         reviewHead: 'Great!',
-        reviewer: 'Anonymous',
+        reviewer: 'Simon Garcia',
         counter: 24,
         stars: 5,
-        courseCode: '2323'),
+        courseCode: 'CSCI 42'),
     ReviewCard(
         reviewHead: 'Run!!!',
-        reviewer: 'Anonymous din',
-        counter: 2424,
+        reviewer: 'Anonymous',
+        counter: 17,
         stars: 1,
-        courseCode: '232323'),
+        courseCode: 'CSCI 115'),
   ];
 
   Widget reviewTemplate(review) {
-    return Card(
-        margin: const EdgeInsets.all(5),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(review.counter.toString()),
-                Text(review.stars.toString())
-              ],
-            ),
-            Text(review.reviewHead),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [Text(review.courseCode), Text(review.courseCode)],
-            ),
-          ],
-        ));
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+        child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+                primary: const Color.fromARGB(245, 255, 255, 255),
+                onPrimary: Colors.black,
+                elevation: 5,
+                padding: const EdgeInsets.all(0)),
+            child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(review.counter.toString()),
+                        Text(review.stars.toString())
+                      ],
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 5),
+                        child: Row(children: [
+                          Text(review.reviewHead,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                        ])),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                        child: Row(children: [
+                          Text(review.reviewer,
+                              style: const TextStyle(
+                                fontSize: 8,
+                                color: Colors.grey,
+                              )),
+                        ])),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                            color: Colors.red,
+                            padding: const EdgeInsets.all(5),
+                            child: Text(
+                              review.courseCode,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 10),
+                            ))
+                      ], // TO BE FIXED (ONLY ONE PALANG PWEDE)
+                    ),
+                  ],
+                ))));
   }
 
   @override
@@ -71,20 +104,22 @@ class _RevListState extends State<RevList> {
               textAlign: TextAlign.left,
             ),
           ),
-          body: Container(
-            constraints: const BoxConstraints.expand(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                profInfo,
-                reviewButton,
-                Column(
-                    children: reviews
-                        .map((review) => reviewTemplate(review))
-                        .toList())
-                // reviewCard,
-              ],
-            ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              profInfo,
+              Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(children: [
+                    reviewButton,
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: reviews
+                            .map((review) => reviewTemplate(review))
+                            .toList())
+                  ]))
+            ],
           ),
         ));
   }
@@ -114,11 +149,11 @@ Widget profInfo = Container(
 
 Widget reviewButton = Container(
     margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
     child: ElevatedButton(
         style: ButtonStyle(
             padding:
-                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
+                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(10)),
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
