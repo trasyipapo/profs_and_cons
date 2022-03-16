@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
@@ -47,8 +47,30 @@ class _RevListState extends State<RevList> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(review.counter.toString()),
-                        Text(review.stars.toString())
+                        Row(children: [
+                          IconButton(
+                              onPressed: () {},
+                              color: Colors.grey,
+                              iconSize: 10,
+                              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_upward)),
+                          Text(
+                            review.counter.toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal,
+                                fontSize: 10,
+                                color: Colors.grey),
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              color: Colors.grey,
+                              iconSize: 10,
+                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                              constraints: const BoxConstraints(),
+                              icon: const Icon(Icons.arrow_downward)),
+                        ]),
+                        ratingBar(review.stars),
                       ],
                     ),
                     Padding(
@@ -211,3 +233,27 @@ Widget reviewButton = Container(
 //   margin: const EdgeInsets.all(5),
 //   child: const Text('reviewHead'),
 // );
+
+RatingBar ratingBar(double rating) {
+  return RatingBar(
+      initialRating: rating,
+      itemSize: 20,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      ratingWidget: RatingWidget(
+          full: const Icon(Icons.star, color: Colors.blue),
+          half: const Icon(
+            Icons.star_half,
+            color: Colors.blue,
+          ),
+          empty: const Icon(
+            Icons.star,
+            color: Colors.black38,
+          )),
+      onRatingUpdate: (value) {}
+      //   setState(() {
+      //     _ratingValue = value;
+      // }
+      );
+}
