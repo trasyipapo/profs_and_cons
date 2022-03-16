@@ -5,7 +5,7 @@ import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 
 void main() {
-  runApp(MaterialApp(initialRoute: '/revlist', routes: {
+  runApp(MaterialApp(initialRoute: '/profile', routes: {
     '/login': (context) => const Login(),
     '/home': (context) => const Home(),
     '/profile': (context) => const Profile(),
