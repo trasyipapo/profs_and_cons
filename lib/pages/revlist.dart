@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/pages/fullreview.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
 
@@ -43,7 +44,10 @@ class _RevListState extends State<RevList> {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const FullReview()));
+            },
             style: ElevatedButton.styleFrom(
                 primary: const Color.fromARGB(245, 255, 255, 255),
                 onPrimary: Colors.black,

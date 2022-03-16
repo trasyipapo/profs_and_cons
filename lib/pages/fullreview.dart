@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:profs_and_cons/pages/home.dart';
-import 'package:profs_and_cons/pages/profile.dart';
+import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 
 class FullReview extends StatelessWidget {
@@ -18,7 +17,7 @@ class FullReview extends StatelessWidget {
                 color: Colors.black87,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Home()));
+                      MaterialPageRoute(builder: (context) => const RevList()));
                 }),
             centerTitle: false,
             backgroundColor: Colors.white,
