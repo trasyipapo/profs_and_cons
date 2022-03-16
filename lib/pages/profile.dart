@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:profs_and_cons/objects/reviewcard.dart';
 import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,7 +42,34 @@ class Profile extends StatelessWidget {
                 reviewButton,
                 coursesTaught,
                 averageRatings,
-                seeReviewButton
+                Container(
+                    margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.all(20)),
+                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              'See reviews',
+                              style: TextStyle(fontSize: 15.0),
+                            ),
+                            SizedBox(width: 5),
+                            Icon(
+                              Icons.keyboard_arrow_right_sharp,
+                              size: 20,
+                            ),
+                          ]),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RevList()),
+                        );
+                      },
+                    ))
               ],
             ),
           ),
@@ -167,22 +201,27 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-Widget seeReviewButton = Container(
-    margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
-    child: TextButton(
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
-      ),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-        Text(
-          'See reviews',
-          style: TextStyle(fontSize: 15.0),
-        ),
-        SizedBox(width: 5),
-        Icon(
-          Icons.keyboard_arrow_right_sharp,
-          size: 20,
-        ),
-      ]),
-      onPressed: () {},
-    ));
+// Widget seeReviewButton = Container(
+//     margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
+//     child: TextButton(
+//       style: ButtonStyle(
+//         padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+//       ),
+//       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+//         Text(
+//           'See reviews',
+//           style: TextStyle(fontSize: 15.0),
+//         ),
+//         SizedBox(width: 5),
+//         Icon(
+//           Icons.keyboard_arrow_right_sharp,
+//           size: 20,
+//         ),
+//       ]),
+//       onPressed: () {
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(builder: (context) => const RevList()),
+//         );
+//       },
+//     ));
