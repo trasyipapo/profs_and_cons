@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/styles.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 class SearchResults extends StatelessWidget {
   const SearchResults({Key? key}) : super(key: key);
 
@@ -14,6 +17,8 @@ class SearchResults extends StatelessWidget {
   final ratings = const ["4.2", "2.1", "3.9"];
   @override
   Widget build(BuildContext context) {
+    getData();
+    // print("HELLO" + data[0]["middle_name"]);
     return MaterialApp(
         title: 'Professor Profile Screen',
         home: Scaffold(
@@ -54,4 +59,17 @@ class SearchResults extends StatelessWidget {
                           })
                     ]))));
   }
+
+  Future<dynamic> getData() async {
+    var url = 'https://profsandcons.000webhostapp.com/allprofs.php';
+    http.Response response = await http.get(Uri.parse(url));
+    var data = json.decode(response.body);
+    print(data[1]["first_name"] + " " + data[1]["last_name"]);
+    print("HELLO WORLD");
+  }
+
+  // @override
+  // void initState() {
+  //   getData();
+  // }
 }
