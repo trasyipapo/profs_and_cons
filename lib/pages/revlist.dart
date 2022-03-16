@@ -165,9 +165,6 @@ class _RevListState extends State<RevList> {
         ));
   }
 }
-// Column(
-//                 children:
-//                     reviews.map((review) => reviewTemplate(review)).toList())
 
 DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
       value: item,
@@ -204,54 +201,6 @@ Widget reviewButton = Container(
           )
         ]),
         onPressed: () {}));
-
-// Widget reviewCard = Container(
-//     color: Colors.blue,
-//     width: 325, // HARDCODED TO BE FIXED
-//     // padding: const EdgeInsets.all(50),
-//     margin: const EdgeInsets.all(5),
-//     child: Column(
-//       children: [
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           children: [counter, stars],
-//         ),
-//         reviewHead,
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           children: [courseCode, courseCode],
-//         ),
-//       ],
-//     ));
-
-// Widget courseCode = Container(
-//   color: const Color.fromARGB(255, 255, 30, 0),
-//   child: const Text('courseCode'),
-//   width: 50,
-//   margin: const EdgeInsets.all(10),
-// );
-
-// Widget counter = Container(
-//   color: const Color.fromARGB(225, 97, 247, 60),
-//   child: const Text('counter'),
-//   width: 50,
-//   margin: const EdgeInsets.all(10),
-// );
-
-// Widget stars = Container(
-//   alignment: Alignment.topLeft,
-//   color: Colors.yellow,
-//   width: 35,
-//   margin: const EdgeInsets.all(5),
-//   child: const Text('stars'),
-// );
-
-// Widget reviewHead = Container(
-//   alignment: Alignment.topLeft,
-//   color: const Color.fromARGB(255, 216, 59, 255),
-//   margin: const EdgeInsets.all(5),
-//   child: const Text('reviewHead'),
-// );
 
 RatingBar ratingBar(double rating) {
   return RatingBar(
