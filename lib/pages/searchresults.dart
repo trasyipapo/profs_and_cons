@@ -78,7 +78,8 @@ class _SearchResultsState extends State<SearchResults> {
                                                 " " +
                                                 professors[index].lastName,
                                             style: resultName),
-                                        // subtitle: Text(subtitles[index]),
+                                        subtitle:
+                                            Text(professors[index].department),
                                         trailing: Text(
                                             professors[index]
                                                 .overallRating
