@@ -17,17 +17,17 @@ class _RevListState extends State<RevList> {
 
   List<ReviewCard> reviews = [
     ReviewCard(
-        reviewHead: 'Great!',
+        reviewHead: 'Great organizational...',
         reviewer: 'Simon Garcia',
         counter: 24,
         stars: 5,
-        courseCode: 'CSCI 42'),
+        courseCode: ['CSCI 42']),
     ReviewCard(
         reviewHead: 'Run!!!',
         reviewer: 'Anonymous',
         counter: 17,
         stars: 1,
-        courseCode: 'CSCI 115'),
+        courseCode: ['CSCI 42', 'CSCI 115']),
   ];
 
   Widget reviewTemplate(review) {
@@ -92,15 +92,19 @@ class _RevListState extends State<RevList> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
-                            color: Colors.red,
-                            padding: const EdgeInsets.all(5),
-                            child: Text(
-                              review.courseCode,
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 10),
-                            ))
-                      ], // TO BE FIXED (ONLY ONE PALANG PWEDE)
+                        Row(
+                          children: [
+                            for (var i in review.courseCode)
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                  child: Container(
+                                      color: Colors.red,
+                                      padding: const EdgeInsets.all(5),
+                                      child: Text(i)))
+                          ],
+                        )
+                      ], // TO BE FIXED (ONLY ONE COLOR PALANG PWEDE)
                     ),
                   ],
                 ))));

@@ -3,7 +3,7 @@ class ReviewCard {
   double stars;
   String reviewHead;
   String reviewer;
-  String courseCode;
+  List<String> courseCode;
 
   ReviewCard(
       {required this.counter,
