@@ -64,7 +64,10 @@ class _SearchResultsState extends State<SearchResults> {
                           itemBuilder: (context, index) {
                             return Card(
                                 child: ListTile(
-                                    title: Text(professors[index].firstName,
+                                    title: Text(
+                                        professors[index].firstName +
+                                            " " +
+                                            professors[index].lastName,
                                         style: resultName),
                                     // subtitle: Text(subtitles[index]),
                                     trailing: Text(
