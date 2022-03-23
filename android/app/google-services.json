@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249914427023",
+    "project_id": "profs-and-cons-42b0b",
+    "storage_bucket": "profs-and-cons-42b0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249914427023:android:2b62f0be5ece8a4d71d2fa",
+        "android_client_info": {
+          "package_name": "com.lunchbuddies.profs_and_cons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249914427023-5obtgeb09r6f1c8pr9d6l36f0nlno4h1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmd96ij-GJBSnAeL03WgehsGIf5BYsUj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249914427023-5obtgeb09r6f1c8pr9d6l36f0nlno4h1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -5,8 +5,12 @@ import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/pages/fullreview.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/pages/searchresults.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MaterialApp(
       theme: ThemeData(fontFamily: 'GoogleSans'),
       initialRoute: '/home',
