@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/providers/googlesignin.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -48,10 +50,14 @@ class Login extends StatelessWidget {
                             )
                           ]),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Home()),
-                        );
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.googleLogin();
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => const Home()),
+                        // );
                       },
                     ))
               ],
@@ -75,25 +81,7 @@ Atenean!''',
                     fontSize: 34,
                     color: Colors.white)),
             Text('''
-
 Are you ready to start the sem?''',
                 style: TextStyle(fontSize: 16, color: Colors.white))
           ],
         )));
-
-Widget loginButton = Container(
-    margin: EdgeInsets.all(25),
-    child: ElevatedButton(
-      style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-        ImageIcon(AssetImage("assets/google-g.png"), size: 20),
-        SizedBox(width: 15),
-        Text(
-          'Continue with Google',
-          style: TextStyle(fontSize: 20.0),
-        )
-      ]),
-      onPressed: () {},
-    ));
