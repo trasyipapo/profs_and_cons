@@ -56,6 +56,7 @@ class _HomeState extends State<Home> {
                     fit: BoxFit.cover)),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Spacer(),
               Container(
                   padding: const EdgeInsets.all(32),
                   child: Align(
@@ -98,33 +99,27 @@ Let's search for your profs''',
                               BorderRadius.all(Radius.circular(25.0)))),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  final provider =
-                      Provider.of<GoogleSignInProvider>(context, listen: false);
-                  provider.logout();
-                },
-                child: Text('Logout'),
-              )
+              Spacer(),
+              Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        minimumSize: const Size.fromHeight(50)),
+                    onPressed: () {
+                      final provider = Provider.of<GoogleSignInProvider>(
+                          context,
+                          listen: false);
+                      provider.logout();
+                    },
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20),
+                    ),
+                  ))
             ])));
   }
 }
-
-// Widget helloUser = Container(
-//     padding: const EdgeInsets.all(32),
-//     child: Align(
-//         alignment: Alignment.centerLeft,
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text('Hello, Name!',
-//                 style: TextStyle(
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 32,
-//                     color: Colors.white)),
-//             Text('''
-
-// Let's search for your profs''',
-//                 style: TextStyle(fontSize: 16, color: Colors.white))
-//           ],
-//         )));
