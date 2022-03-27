@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:profs_and_cons/pages/search.dart';
+import 'package:profs_and_cons/pages/home.dart';
 
+/*Not Used! */
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 

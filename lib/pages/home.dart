@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/searchresults.dart';
 import 'package:profs_and_cons/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -34,6 +35,8 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -53,7 +56,25 @@ class _HomeState extends State<Home> {
                     fit: BoxFit.cover)),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              helloUser,
+              Container(
+                  padding: const EdgeInsets.all(32),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Hello,\n' + user!.displayName! + '!',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 32,
+                                  color: Colors.white)),
+                          Text('''
+
+Let's search for your profs''',
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white))
+                        ],
+                      ))),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
@@ -89,22 +110,21 @@ class _HomeState extends State<Home> {
   }
 }
 
-Widget helloUser = Container(
-    padding: const EdgeInsets.all(32),
-    child: Align(
-        alignment: Alignment.centerLeft,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text('''Hello, 
-Name!''',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32,
-                    color: Colors.white)),
-            Text('''
+// Widget helloUser = Container(
+//     padding: const EdgeInsets.all(32),
+//     child: Align(
+//         alignment: Alignment.centerLeft,
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text('Hello, Name!',
+//                 style: TextStyle(
+//                     fontWeight: FontWeight.bold,
+//                     fontSize: 32,
+//                     color: Colors.white)),
+//             Text('''
 
-Let's search for your profs''',
-                style: TextStyle(fontSize: 16, color: Colors.white))
-          ],
-        )));
+// Let's search for your profs''',
+//                 style: TextStyle(fontSize: 16, color: Colors.white))
+//           ],
+//         )));

@@ -8,13 +8,14 @@ class GoogleSigninButton extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.all(4),
         child: ElevatedButton.icon(
-          style: ButtonStyle(
-              padding:
-                  MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
+          style: ElevatedButton.styleFrom(
+              primary: Colors.red, minimumSize: const Size.fromHeight(50)),
           label: Text(
             'Sign In With Google',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: TextStyle(
+                fontFamily: 'GoogleSans',
+                fontWeight: FontWeight.normal,
+                fontSize: 20),
           ),
           icon: FaIcon(FontAwesomeIcons.google, color: Colors.white),
           onPressed: () {

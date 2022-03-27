@@ -13,21 +13,62 @@ class LoginWidget extends StatelessWidget {
 
   Widget buildLogin() => Column(
         children: [
-          Text(
-            'Profs and Cons',
-            textAlign: TextAlign.left,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+              width: 175,
+              child: Text(
+                'Profs and Cons',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'GoogleSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
           ),
           Spacer(),
-          Text('Welcome,\nAtenean!',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              width: 175,
+              child: Text(
+                'Welcome,\nAtenean!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'GoogleSans',
                   fontSize: 34,
-                  color: Colors.white)),
-          Text('Are you ready to start the sem?',
-              style: TextStyle(fontSize: 16, color: Colors.white)),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              width: 500,
+              child: Text(
+                'Are you ready to start the sem?',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'GoogleSans',
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
           Spacer(),
-          GoogleSigninButton(),
-          Spacer(),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: GoogleSigninButton(),
+          ),
+          Spacer(
+            flex: 3,
+          ),
         ],
       );
 }
