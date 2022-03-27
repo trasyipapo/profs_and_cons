@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/searchresults.dart';
+import 'package:profs_and_cons/provider/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -75,6 +77,14 @@ class _HomeState extends State<Home> {
                               BorderRadius.all(Radius.circular(25.0)))),
                 ),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.logout();
+                },
+                child: Text('Logout'),
+              )
             ])));
   }
 }

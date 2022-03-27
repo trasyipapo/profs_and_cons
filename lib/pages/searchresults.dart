@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/main.dart';
 import 'package:profs_and_cons/pages/profile.dart';

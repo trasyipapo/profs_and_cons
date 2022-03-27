@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
-import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 
