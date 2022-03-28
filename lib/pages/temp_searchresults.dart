@@ -73,13 +73,27 @@ class MySearchDelegate extends SearchDelegate {
           if (snapshot.hasError) {
             return Text('Something went wrong...');
           } else if (snapshot.hasData) {
-            final professors = snapshot.data!;
+            List<Professor> professors = snapshot.data!;
+            List<Professor> filteredProfs = [];
+            filteredProfs.addAll(professors);
+            filteredProfs.retainWhere((prof) =>
+                prof.name.toLowerCase().contains(query.toLowerCase()));
 
-            return ListView(
-                children: professors
-                    .where((prof) => prof.name.contains(query))
-                    .map(buildProf)
-                    .toList());
+            return ListView.builder(
+              itemCount: filteredProfs.length,
+              itemBuilder: (context, index) {
+                final prof = filteredProfs[index];
+                return ListTile(
+                  title: Text(prof.name),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()));
+                  },
+                );
+              },
+            );
           } else {
             return Center(
               child: CircularProgressIndicator(),
@@ -117,11 +131,6 @@ class MySearchDelegate extends SearchDelegate {
                 );
               },
             );
-            // return ListView(
-            //     children: professors
-            //         .where((prof) => prof.name.contains(query))
-            //         .map(buildProf)
-            //         .toList());
           } else {
             return Center(
               child: CircularProgressIndicator(),
