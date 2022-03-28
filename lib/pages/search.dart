@@ -113,7 +113,7 @@ class _SearchPageState extends State<SearchPage> {
                       );
                     },
                     child: Text(
-                      'View All Professors',
+                      'Search Professors',
                       style: TextStyle(
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.normal,
