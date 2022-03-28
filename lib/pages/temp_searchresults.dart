@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/widget/professor.dart';
+import 'package:profs_and_cons/pages/profile.dart';
 
 class TempSearchResults extends StatefulWidget {
   @override
@@ -95,13 +96,32 @@ class MySearchDelegate extends SearchDelegate {
           if (snapshot.hasError) {
             return Text('Something went wrong...');
           } else if (snapshot.hasData) {
-            final professors = snapshot.data!;
+            List<Professor> professors = snapshot.data!;
+            List<Professor> filteredProfs = [];
+            filteredProfs.addAll(professors);
+            filteredProfs.retainWhere((prof) =>
+                prof.name.toLowerCase().contains(query.toLowerCase()));
 
-            return ListView(
-                children: professors
-                    .where((prof) => prof.name.contains(query))
-                    .map(buildProf)
-                    .toList());
+            return ListView.builder(
+              itemCount: filteredProfs.length,
+              itemBuilder: (context, index) {
+                final prof = filteredProfs[index];
+                return ListTile(
+                  title: Text(prof.name),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Profile()));
+                  },
+                );
+              },
+            );
+            // return ListView(
+            //     children: professors
+            //         .where((prof) => prof.name.contains(query))
+            //         .map(buildProf)
+            //         .toList());
           } else {
             return Center(
               child: CircularProgressIndicator(),
@@ -118,5 +138,9 @@ class MySearchDelegate extends SearchDelegate {
 
   Widget buildProf(Professor prof) => ListTile(
         title: Text(prof.name),
+        // onTap: () {
+        //   Navigator.push(context,
+        //       MaterialPageRoute(builder: (context) => const Profile()));
+        // },
       );
 }
