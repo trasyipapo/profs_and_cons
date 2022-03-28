@@ -3,6 +3,7 @@ import 'package:profs_and_cons/pages/searchresults.dart';
 import 'package:profs_and_cons/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:profs_and_cons/pages/temp_addprof.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -100,6 +101,26 @@ Let's search for your profs''',
                 ),
               ),
               Spacer(),
+              Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        minimumSize: const Size.fromHeight(50)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddProf()),
+                      );
+                    },
+                    child: Text(
+                      'Add Professor',
+                      style: TextStyle(
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20),
+                    ),
+                  )),
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(
