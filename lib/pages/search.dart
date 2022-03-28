@@ -3,17 +3,16 @@ import 'package:profs_and_cons/pages/searchresults.dart';
 import 'package:profs_and_cons/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/pages/temp_addprof.dart';
 import 'package:profs_and_cons/pages/temp_searchresults.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
+class SearchPage extends StatefulWidget {
   @override
-  State<Home> createState() => _HomeState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _HomeState extends State<Home> {
+class _SearchPageState extends State<SearchPage> {
   final myController = TextEditingController();
   @override
   void _printLatestValue() {
@@ -163,4 +162,42 @@ class _HomeState extends State<Home> {
                   ))
             ])));
   }
+}
+
+// class Home extends StatefulWidget {
+//   const Home({Key? key}) : super(key: key);
+
+//   @override
+//   State<Home> createState() => _HomeState();
+// }
+
+// class _HomeState extends State<Home> {
+//   final myController = TextEditingController();
+//   @override
+//   void _printLatestValue() {
+//     print('Second text field: ${myController.text}');
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     // Start listening to changes.
+//     myController.addListener(_printLatestValue);
+//   }
+
+//   void dispose() {
+//     // Clean up the controller when the widget is removed from the
+//     // widget tree.
+//     myController.dispose();
+//     super.dispose();
+//   }
+
+// }
+
+Future queryData(String queryString) async {
+  return FirebaseFirestore.instance
+      .collection('professors')
+      .where('name', isGreaterThanOrEqualTo: queryString)
+      .get();
 }

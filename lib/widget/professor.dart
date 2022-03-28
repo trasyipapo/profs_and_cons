@@ -1,5 +1,5 @@
 class Professor {
-  int id;
+  final String id;
   final String name;
 
   Professor({
@@ -11,4 +11,7 @@ class Professor {
         'id': id,
         'name': name,
       };
+
+  static Professor fromJson(Map<String, dynamic> json) =>
+      Professor(id: json['id'], name: json['name']);
 }

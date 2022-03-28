@@ -1,21 +1,17 @@
 import 'dart:async';
-import 'package:profs_and_cons/pages/home.dart';
+import 'package:profs_and_cons/pages/search.dart';
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/widget/professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddProf extends StatefulWidget {
-  final controllerId = TextEditingController();
-  final controllerName = TextEditingController();
-
   @override
   State<AddProf> createState() => _AddProfState();
 }
 
 class _AddProfState extends State<AddProf> {
-  get controllerName => null;
-
-  get controllerId => null;
+  final controllerId = TextEditingController();
+  final controllerName = TextEditingController();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -25,7 +21,7 @@ class _AddProfState extends State<AddProf> {
                 color: Colors.black87,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Home()));
+                      MaterialPageRoute(builder: (context) => SearchPage()));
                 })),
         body: ListView(
           padding: EdgeInsets.all(16),
@@ -36,7 +32,6 @@ class _AddProfState extends State<AddProf> {
                 border: OutlineInputBorder(),
                 hintText: 'Professor ID',
               ),
-              keyboardType: TextInputType.number,
             ),
             const SizedBox(
               height: 24,
@@ -54,9 +49,8 @@ class _AddProfState extends State<AddProf> {
             ElevatedButton(
               child: Text('Add New Professor'),
               onPressed: () {
-                final professor = Professor(
-                    id: int.parse(controllerId.text),
-                    name: controllerName.text);
+                final professor =
+                    Professor(id: controllerId.text, name: controllerName.text);
 
                 createProf(professor);
 
@@ -67,11 +61,15 @@ class _AddProfState extends State<AddProf> {
         ),
       );
 
-  // Stream<List<Professor>> readProfs() =>
-  //     FirebaseFirestore.instance.collection('professors').doc();
+  Stream<List<Professor>> readProfs() => FirebaseFirestore.instance
+      .collection('professors')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Professor.fromJson(doc.data())).toList());
 
   Future createProf(Professor prof) async {
-    final docProf = FirebaseFirestore.instance.collection('professors').doc();
+    final docProf =
+        FirebaseFirestore.instance.collection('professors').doc(prof.id);
     final json = prof.toJson();
     await docProf.set(json);
   }
