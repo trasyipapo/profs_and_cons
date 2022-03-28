@@ -5,7 +5,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 //import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
-import 'package:profs_and_cons/widget/professor.dart';
+import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search.dart';
 
 class Profile extends StatefulWidget {

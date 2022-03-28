@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:flutter/material.dart';
-import 'package:profs_and_cons/widget/professor.dart';
+import 'package:profs_and_cons/objects/professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddProf extends StatefulWidget {
