@@ -86,10 +86,8 @@ class MySearchDelegate extends SearchDelegate {
                 return ListTile(
                   title: Text(prof.name),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Profile()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Profile(professor: prof)));
                   },
                 );
               },
@@ -123,10 +121,8 @@ class MySearchDelegate extends SearchDelegate {
                 return ListTile(
                   title: Text(prof.name),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Profile()));
+                    query = prof.name;
+                    showResults(context);
                   },
                 );
               },
@@ -145,11 +141,11 @@ class MySearchDelegate extends SearchDelegate {
       .map((snapshot) =>
           snapshot.docs.map((doc) => Professor.fromJson(doc.data())).toList());
 
-  Widget buildProf(Professor prof) => ListTile(
-        title: Text(prof.name),
-        // onTap: () {
-        //   Navigator.push(context,
-        //       MaterialPageRoute(builder: (context) => const Profile()));
-        // },
-      );
+  // Widget buildProf(Professor prof) => ListTile(
+  //       title: Text(prof.name),
+  //       // onTap: () {
+  //       //   Navigator.push(context,
+  //       //       MaterialPageRoute(builder: (context) => const Profile()));
+  //       // },
+  //     );
 }
