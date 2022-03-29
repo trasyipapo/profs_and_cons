@@ -22,6 +22,7 @@ class _TempSearchResultsState extends State<TempSearchResults> {
           actions: [
             IconButton(
                 onPressed: () {
+                  print("You clicked search");
                   showSearch(context: context, delegate: MySearchDelegate());
                 },
                 icon: const Icon(Icons.search))
@@ -93,7 +94,7 @@ class MySearchDelegate extends SearchDelegate {
               },
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -106,7 +107,7 @@ class MySearchDelegate extends SearchDelegate {
         stream: readProfs(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong...');
+            return const Text('Something went wrong...');
           } else if (snapshot.hasData) {
             List<Professor> professors = snapshot.data!;
             List<Professor> filteredProfs = [];
@@ -128,7 +129,7 @@ class MySearchDelegate extends SearchDelegate {
               },
             );
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

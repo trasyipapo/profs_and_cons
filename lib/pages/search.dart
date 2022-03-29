@@ -13,9 +13,13 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final myController = TextEditingController();
-  @override
+
   void _printLatestValue() {
-    print('Second text field: ${myController.text}');
+    print('You typed: ${myController.text}');
+  }
+
+  String _searchLatestValue() {
+    return (myController.text);
   }
 
   @override
@@ -26,6 +30,7 @@ class _SearchPageState extends State<SearchPage> {
     myController.addListener(_printLatestValue);
   }
 
+  @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
     // widget tree.
@@ -56,7 +61,7 @@ class _SearchPageState extends State<SearchPage> {
                     fit: BoxFit.cover)),
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Spacer(),
+              const Spacer(),
               Container(
                   padding: const EdgeInsets.all(32),
                   child: Align(
@@ -65,11 +70,11 @@ class _SearchPageState extends State<SearchPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Hello,\n' + user!.displayName! + '!',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 32,
                                   color: Colors.white)),
-                          Text('Let\'s search for your profs',
+                          const Text('Let\'s search for your profs',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white))
                         ],
@@ -77,6 +82,13 @@ class _SearchPageState extends State<SearchPage> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
+                  onSubmitted: (String str) {
+                    var profQuery = _searchLatestValue(); //prints
+                    showSearch(
+                        context: context,
+                        delegate: MySearchDelegate(),
+                        query: profQuery);
+                  },
                   // onSubmitted: (String str) {
                   //   _printLatestValue();
                   //   Navigator.push(
@@ -97,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
                               BorderRadius.all(Radius.circular(25.0)))),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(
@@ -111,7 +123,7 @@ class _SearchPageState extends State<SearchPage> {
                             builder: (context) => TempSearchResults()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Search Professors',
                       style: TextStyle(
                           fontFamily: 'GoogleSans',
@@ -131,7 +143,7 @@ class _SearchPageState extends State<SearchPage> {
                         MaterialPageRoute(builder: (context) => AddProf()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Add Professor',
                       style: TextStyle(
                           fontFamily: 'GoogleSans',
@@ -151,7 +163,7 @@ class _SearchPageState extends State<SearchPage> {
                           listen: false);
                       provider.logout();
                     },
-                    child: Text(
+                    child: const Text(
                       'Logout',
                       style: TextStyle(
                           fontFamily: 'GoogleSans',
