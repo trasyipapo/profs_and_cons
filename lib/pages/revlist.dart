@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/pages/fullreview.dart';
+import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
 
@@ -155,11 +156,19 @@ class _RevListState extends State<RevList> {
                 color: Colors.black87,
                 onPressed: () {
                   Navigator.pop(context);
+                  // Navigator.of(context).push(
+                  // MaterialPageRoute(builder: (context) => Profile(professor: prof)));
                 }),
             actions: [
-              Padding(
+              IconButton(
+                icon: Image.asset('assets/appbar-logo.png'),
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-                child: Image.asset('assets/appbar-logo.png'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchPage()),
+                  );
+                },
               ),
             ],
             centerTitle: false,

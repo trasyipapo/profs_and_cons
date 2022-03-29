@@ -34,9 +34,15 @@ class _ProfileState extends State<Profile> {
                   MaterialPageRoute(builder: (context) => SearchPage()));
             }),
         actions: [
-          Padding(
+          IconButton(
+            icon: Image.asset('assets/appbar-logo.png'),
             padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-            child: Image.asset('assets/appbar-logo.png'),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+              );
+            },
           ),
         ],
         centerTitle: false,

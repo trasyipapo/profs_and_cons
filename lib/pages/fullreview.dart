@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
+import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 
 class FullReview extends StatelessWidget {
@@ -20,9 +21,15 @@ class FullReview extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const RevList()));
                 }),
             actions: [
-              Padding(
+              IconButton(
+                icon: Image.asset('assets/appbar-logo.png'),
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-                child: Image.asset('assets/appbar-logo.png'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SearchPage()),
+                  );
+                },
               ),
             ],
             centerTitle: false,
