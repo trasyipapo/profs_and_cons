@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/pages/temp_addprof.dart';
-import 'package:profs_and_cons/pages/temp_searchresults.dart';
+import 'package:profs_and_cons/objects/professor.dart';
+import 'package:profs_and_cons/pages/search_results.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class _SearchPageState extends State<SearchPage> {
   String _searchLatestValue() {
     return (myController.text);
   }
+
+  List<Professor> profs = [];
 
   @override
   void initState() {
@@ -80,56 +83,60 @@ class _SearchPageState extends State<SearchPage> {
                         ],
                       ))),
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextField(
-                  onSubmitted: (String str) {
-                    showSearch(
-                        context: context,
-                        delegate: MySearchDelegate(),
-                        query: _searchLatestValue());
-                  },
-                  // onSubmitted: (String str) {
-                  //   _printLatestValue();
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => const SearchResults()),
-                  //   );
-                  //   //print whats there
-                  // },
-                  controller: myController,
-                  decoration: const InputDecoration(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    // suggestions: profs
+                    //     .map(
+                    //       (e) => SearchFieldListItem<Professor>(
+                    //         e.name,
+                    //         item: e,
+                    //       ),
+                    //     )
+                    //     .toList(),
+                    // suggestionState: Suggestion.expand,
+                    textInputAction: TextInputAction.next,
+                    controller: myController,
+                    onSubmitted: (String query) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SearchResults(query: query)));
+                    },
+
+                    decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
-                      hintText: "Search",
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white.withOpacity(0.8),
+                        ),
+                      ),
+                      border: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
                           borderRadius:
-                              BorderRadius.all(Radius.circular(25.0)))),
-                ),
-              ),
-              const Spacer(),
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                        minimumSize: const Size.fromHeight(50)),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TempSearchResults()),
-                      );
-                    },
-                    child: const Text(
-                      'Search Professors',
-                      style: TextStyle(
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20),
+                              BorderRadius.all(Radius.circular(25.0))),
                     ),
                   )),
+              const Spacer(),
+              // Padding(
+              //     padding: const EdgeInsets.all(16.0),
+              //     child: ElevatedButton(
+              //       style: ElevatedButton.styleFrom(
+              //           primary: Colors.red,
+              //           minimumSize: const Size.fromHeight(50)),
+              //       onPressed: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => TempSearchResults()),
+              //         );
+              //       },
+              //       child: const Text(
+              //         'Search Professors',
+              //         style: TextStyle(
+              //             fontFamily: 'GoogleSans',
+              //             fontWeight: FontWeight.normal,
+              //             fontSize: 20),
+              //       ),
+              //     )),
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(

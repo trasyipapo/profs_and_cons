@@ -90,13 +90,14 @@ class MySearchDelegate extends SearchDelegate {
               itemCount: filteredProfs.length,
               itemBuilder: (context, index) {
                 final prof = filteredProfs[index];
-                return ListTile(
+                return Card(
+                    child: ListTile(
                   title: Text(prof.name),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => Profile(professor: prof)));
                   },
-                );
+                ));
               },
             );
           } else {
@@ -125,13 +126,14 @@ class MySearchDelegate extends SearchDelegate {
               itemCount: filteredProfs.length,
               itemBuilder: (context, index) {
                 final prof = filteredProfs[index];
-                return ListTile(
+                return Card(
+                    child: ListTile(
                   title: Text(prof.name),
                   onTap: () {
-                    query = prof.name;
-                    showResults(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Profile(professor: prof)));
                   },
-                );
+                ));
               },
             );
           } else {
