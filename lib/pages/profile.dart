@@ -51,21 +51,22 @@ class _ProfileState extends State<Profile> {
                     Text(professor.name, style: header),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
-                          Text('4.5', style: overallRating),
-                          Text('Overall Rating', style: bodyText)
+                        children: [
+                          Text(professor.overallRating.toString(),
+                              style: overallRating),
+                          const Text('Overall Rating', style: bodyText)
                         ])
                   ],
                 )),
             reviewButton,
-            coursesTaught,
+            coursesTaught, // replacing now
             averageRatings,
             Container(
                 margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
                 child: TextButton(
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(20)),
+                        const EdgeInsets.all(20)),
                   ),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +112,8 @@ Widget reviewButton = Container(
     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: ElevatedButton(
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+            padding:
+                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
