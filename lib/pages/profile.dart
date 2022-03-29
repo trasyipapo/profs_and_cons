@@ -21,10 +21,11 @@ class _ProfileState extends State<Profile> {
   Professor professor;
   _ProfileState({required this.professor});
 
-  List courses = <String>["Test", "Test1"];
+  // List courses = professor.courses.split(",");
 
   @override
   Widget build(BuildContext context) {
+    List<String> courses = professor.courses.split(", ");
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -62,8 +63,34 @@ class _ProfileState extends State<Profile> {
                   ],
                 )),
             reviewButton,
-            coursesTaught, // replacing now
-            // ListView(children: [],),
+
+            const Text(
+              'Courses Taught',
+              style: header2,
+              textAlign: TextAlign.left,
+            ),
+            SizedBox(
+              width: 333, //HARDCODED TO FIX
+              height: 25,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: courses.length,
+                itemBuilder: (BuildContext context, int position) {
+                  return Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: Text(
+                                courses[position],
+                                style: buttonText,
+                              ))));
+                },
+              ),
+            ),
             // averageRatings => replaced with this thing below
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
@@ -210,21 +237,6 @@ Widget coursesTaught = Container(
               child: const Padding(
                   padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Text('CSCI 115', style: buttonText))),
-          DecoratedBox(
-              decoration: BoxDecoration(
-                  color: Colors.yellow, borderRadius: BorderRadius.circular(5)),
-              child: const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  child: Text('CSCI 42', style: buttonText))),
-          DecoratedBox(
-              decoration: BoxDecoration(
-                  color: Colors.green, borderRadius: BorderRadius.circular(5)),
-              child: const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  child: Text(
-                    'CSCI 21',
-                    style: buttonText,
-                  )))
         ])
       ])
     ]));
