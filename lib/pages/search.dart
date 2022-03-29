@@ -83,38 +83,36 @@ class _SearchPageState extends State<SearchPage> {
                         ],
                       ))),
               Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    // suggestions: profs
-                    //     .map(
-                    //       (e) => SearchFieldListItem<Professor>(
-                    //         e.name,
-                    //         item: e,
-                    //       ),
-                    //     )
-                    //     .toList(),
-                    // suggestionState: Suggestion.expand,
-                    textInputAction: TextInputAction.next,
+                padding: const EdgeInsets.all(16.0),
+                child: TextField(
+                    textInputAction: TextInputAction.search,
                     controller: myController,
                     onSubmitted: (String query) {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SearchResults(query: query)));
                     },
-
+                    cursorColor: Colors.blue,
+                    cursorHeight: 20,
+                    cursorWidth: 2,
                     decoration: InputDecoration(
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: Colors.black54,
+                      ),
                       filled: true,
                       fillColor: Colors.white,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.white.withOpacity(0.8),
-                        ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
                       ),
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red),
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(25.0))),
-                    ),
-                  )),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            const BorderSide(color: Colors.blue, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      hintStyle: TextStyle(color: Colors.grey[800]),
+                      hintText: "Search",
+                    )),
+              ),
               const Spacer(),
               // Padding(
               //     padding: const EdgeInsets.all(16.0),

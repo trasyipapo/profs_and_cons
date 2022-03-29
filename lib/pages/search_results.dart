@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
@@ -69,25 +71,28 @@ class _SearchResultsState extends State<SearchResults> {
                             filteredProfs.retainWhere((prof) => prof.name
                                 .toLowerCase()
                                 .contains(query.toLowerCase()));
-
-                            return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: filteredProfs.length,
-                              itemBuilder: (context, index) {
-                                final prof = filteredProfs[index];
-                                return Card(
-                                    child: ListTile(
-                                  title: Text(prof.name),
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                Profile(professor: prof)));
-                                  },
-                                ));
-                              },
-                            );
+                            if (filteredProfs.length == 0) {
+                              return const Text('No results found');
+                            } else {
+                              return ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: filteredProfs.length,
+                                itemBuilder: (context, index) {
+                                  final prof = filteredProfs[index];
+                                  return Card(
+                                      child: ListTile(
+                                    title: Text(prof.name),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Profile(professor: prof)));
+                                    },
+                                  ));
+                                },
+                              );
+                            }
                           } else {
                             return const Center(
                               child: CircularProgressIndicator(),
