@@ -51,15 +51,11 @@ class _SearchPageState extends State<SearchPage> {
           automaticallyImplyLeading: false,
           centerTitle: false,
           backgroundColor: Colors.transparent,
-          // leading: Padding(
-          //   padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-          //   child: Image.asset('assets/home-logo.png'),
-          // ),
-          // leadingWidth: 500,
-          title: const Text(
-            'Profs and Cons',
-            textAlign: TextAlign.left,
+          title: Padding(
+            padding: const EdgeInsets.fromLTRB(5.0, 0, 150.0, 0),
+            child: Image.asset('assets/home-logo.png'),
           ),
+          leadingWidth: 500,
         ),
         body: Container(
             constraints: const BoxConstraints.expand(),
