@@ -21,8 +21,6 @@ class _ProfileState extends State<Profile> {
   Professor professor;
   _ProfileState({required this.professor});
 
-  // List courses = professor.courses.split(",");
-
   @override
   Widget build(BuildContext context) {
     List<String> courses = professor.courses.split(", ");
