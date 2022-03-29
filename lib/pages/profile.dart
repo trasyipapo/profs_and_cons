@@ -1,94 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:profs_and_cons/objects/reviewcard.dart';
-import 'package:profs_and_cons/pages/home.dart';
+//import 'package:profs_and_cons/models/professor.dart';
+//import 'package:profs_and_cons/objects/reviewcard.dart';
+//import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
+import 'package:profs_and_cons/objects/professor.dart';
+import 'package:profs_and_cons/pages/search.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  Professor professor;
+
+  Profile({Key? key, required this.professor}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<Profile> createState() => _ProfileState(professor: professor);
 }
 
 class _ProfileState extends State<Profile> {
+  Professor professor;
+  _ProfileState({required this.professor});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Professor Profile Screen',
-        home: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.search),
-                color: Colors.black87,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Home()));
-                }),
-            centerTitle: false,
-            backgroundColor: Colors.white,
-            title: const Text(
-              'Profs and Cons',
-              textAlign: TextAlign.left,
-            ),
-          ),
-          body: Container(
-            constraints: const BoxConstraints.expand(),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                profInfo,
-                reviewButton,
-                coursesTaught,
-                averageRatings,
-                Container(
-                    margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
-                    child: TextButton(
-                      style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            EdgeInsets.all(20)),
-                      ),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              'See reviews',
-                              style: TextStyle(fontSize: 15.0),
-                            ),
-                            SizedBox(width: 5),
-                            Icon(
-                              Icons.keyboard_arrow_right_sharp,
-                              size: 20,
-                            ),
-                          ]),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RevList()),
-                        );
-                      },
-                    ))
-              ],
-            ),
-          ),
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+            icon: const Icon(Icons.search),
+            color: Colors.black87,
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchPage()));
+            }),
+        centerTitle: false,
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Profs and Cons',
+          textAlign: TextAlign.left,
+        ),
+      ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(professor.name, style: header),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: const [
+                          Text('4.5', style: overallRating),
+                          Text('Overall Rating', style: bodyText)
+                        ])
+                  ],
+                )),
+            reviewButton,
+            coursesTaught,
+            averageRatings,
+            Container(
+                margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
+                child: TextButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        EdgeInsets.all(20)),
+                  ),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'See reviews',
+                          style: TextStyle(fontSize: 15.0),
+                        ),
+                        SizedBox(width: 5),
+                        Icon(
+                          Icons.keyboard_arrow_right_sharp,
+                          size: 20,
+                        ),
+                      ]),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RevList()),
+                    );
+                  },
+                ))
+          ],
+        ),
+      ),
+    );
   }
 }
 
-Widget profInfo = Container(
-    padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text('Juan Dela Cruz', style: header),
-        Column(crossAxisAlignment: CrossAxisAlignment.end, children: const [
-          Text('4.5', style: overallRating),
-          Text('Overall Rating', style: bodyText)
-        ])
-      ],
-    ));
+// Widget profInfo = Container(
+//     padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         const Text('Juan Dela Cruz', style: header),
+//         Column(crossAxisAlignment: CrossAxisAlignment.end, children: const [
+//           Text('4.5', style: overallRating),
+//           Text('Overall Rating', style: bodyText)
+//         ])
+//       ],
+//     ));
 
 Widget reviewButton = Container(
     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),

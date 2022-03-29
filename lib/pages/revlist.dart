@@ -154,8 +154,7 @@ class _RevListState extends State<RevList> {
                 icon: const Icon(Icons.arrow_back),
                 color: Colors.black87,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Profile()));
+                  Navigator.pop(context);
                 }),
             centerTitle: false,
             backgroundColor: Colors.white,
