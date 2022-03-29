@@ -19,6 +19,12 @@ class FullReview extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const RevList()));
                 }),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
+                child: Image.asset('assets/appbar-logo.png'),
+              ),
+            ],
             centerTitle: false,
             backgroundColor: Colors.white,
             title: const Text(

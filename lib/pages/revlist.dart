@@ -156,6 +156,12 @@ class _RevListState extends State<RevList> {
                 onPressed: () {
                   Navigator.pop(context);
                 }),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
+                child: Image.asset('assets/appbar-logo.png'),
+              ),
+            ],
             centerTitle: false,
             backgroundColor: Colors.white,
             title: const Text(
