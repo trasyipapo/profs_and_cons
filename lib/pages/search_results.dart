@@ -8,8 +8,6 @@ import 'package:profs_and_cons/objects/professor.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-List<Professor> professors = [];
-
 Stream<List<Professor>> readProfs() => FirebaseFirestore.instance
     .collection('professors')
     .snapshots()
@@ -90,9 +88,7 @@ class _SearchResultsState extends State<SearchResults> {
                                     title: Text(prof.name, style: resultName),
                                     subtitle: Text(prof.department),
                                     trailing: Text(
-                                        professors[index]
-                                            .overallRating
-                                            .toStringAsFixed(2),
+                                        prof.overallRating.toStringAsFixed(2),
                                         style: resultsRating),
                                     onTap: () {
                                       Navigator.of(context).push(
