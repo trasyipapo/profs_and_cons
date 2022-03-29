@@ -83,11 +83,10 @@ class _SearchPageState extends State<SearchPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: TextField(
                   onSubmitted: (String str) {
-                    var profQuery = _searchLatestValue(); //prints
                     showSearch(
                         context: context,
                         delegate: MySearchDelegate(),
-                        query: profQuery);
+                        query: _searchLatestValue());
                   },
                   // onSubmitted: (String str) {
                   //   _printLatestValue();

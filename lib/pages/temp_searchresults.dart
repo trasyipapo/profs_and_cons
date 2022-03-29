@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/profile.dart';
+import 'package:profs_and_cons/pages/search.dart';
 
 class TempSearchResults extends StatefulWidget {
   @override
@@ -51,7 +52,12 @@ class MySearchDelegate extends SearchDelegate {
   @override
   Widget? buildLeading(BuildContext context) => IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () => close(context, null),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchPage()),
+          );
+        },
       );
 
   @override
