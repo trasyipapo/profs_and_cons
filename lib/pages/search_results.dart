@@ -81,7 +81,28 @@ class _SearchResultsState extends State<SearchResults> {
                                 .toLowerCase()
                                 .contains(query.toLowerCase()));
                             if (filteredProfs.length == 0) {
-                              return const Text('No results found');
+                              return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(120, 56, 120, 24),
+                                          child: Image.asset('assets/appbar-logo.png'),
+                                        ),
+                                        const Text("Sorry, we couldn't find any matches",
+                                            textAlign: TextAlign.center,
+                                            style:
+                                              TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 32,
+                                                color: Colors.black)),
+                                        const Text('\n',
+                                            style:
+                                                TextStyle(fontSize: 5, color: Colors.white)),
+                                        const Text('Please try another keyword',
+                                            style:
+                                                TextStyle(fontSize: 16, color: Colors.black)),
+                                      ],
+                                    );
                             } else {
                               return ListView.builder(
                                 scrollDirection: Axis.vertical,
