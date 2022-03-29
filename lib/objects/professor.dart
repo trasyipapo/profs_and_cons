@@ -2,7 +2,7 @@ class Professor {
   final String id;
   final String name;
   final String department;
-  final List<String> courses;
+  final String courses;
   final double overallRating;
   final double teachingRating;
   final double personalityRating;

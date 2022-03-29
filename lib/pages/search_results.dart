@@ -61,7 +61,8 @@ class _SearchResultsState extends State<SearchResults> {
                         stream: readProfs(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
-                            return Text('Something went wrong...');
+                            return Text(
+                                'Something went wrong...${snapshot.error}');
                           } else if (snapshot.hasData) {
                             List<Professor> professors = snapshot.data!;
                             List<Professor> filteredProfs = [];
@@ -80,7 +81,13 @@ class _SearchResultsState extends State<SearchResults> {
                                   final prof = filteredProfs[index];
                                   return Card(
                                       child: ListTile(
-                                    title: Text(prof.name),
+                                    title: Text(prof.name, style: resultName),
+                                    subtitle: Text(prof.department),
+                                    trailing: Text(
+                                        professors[index]
+                                            .overallRating
+                                            .toStringAsFixed(2),
+                                        style: resultsRating),
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(

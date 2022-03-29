@@ -139,7 +139,7 @@ class _AddProfState extends State<AddProf> {
                   id: controllerId.text,
                   name: controllerName.text,
                   department: controllerDep.text,
-                  courses: controllerCourses.text.split(','),
+                  courses: controllerCourses.text,
                   overallRating: double.parse(controlleroverallRating.text),
                   teachingRating: double.parse(controllerteachingRating.text),
                   personalityRating:
