@@ -39,8 +39,8 @@ class _ProfileState extends State<Profile> {
             padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SearchPage()),
+                context,
+                MaterialPageRoute(builder: (context) => SearchPage()),
               );
             },
           ),
@@ -73,34 +73,44 @@ class _ProfileState extends State<Profile> {
                   ],
                 )),
             reviewButton,
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Courses Taught:',
+                        style: header2,
+                      )
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.all(5)),
+                  SizedBox(
+                    width: 333, //HARDCODED -- TO FIX
+                    height: 25,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: courses.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return Container(
+                            margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                            child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                    child: Text(
+                                      courses[position],
+                                      style: buttonText,
+                                    ))));
+                      },
+                    ),
+                  )
+                ])),
 
-            const Text(
-              'Courses Taught',
-              style: header2,
-              textAlign: TextAlign.left,
-            ),
-            SizedBox(
-              width: 333, //HARDCODED TO FIX
-              height: 25,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: courses.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                      child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              child: Text(
-                                courses[position],
-                                style: buttonText,
-                              ))));
-                },
-              ),
-            ),
             // averageRatings => replaced with this thing below
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
