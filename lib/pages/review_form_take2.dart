@@ -1,5 +1,3 @@
-//current working file
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
@@ -10,7 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/checkboxstate.dart';
-import 'package:profs_and_cons/objects/checkboxformfield.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 class ReviewForm extends StatefulWidget {
@@ -59,9 +56,9 @@ class _ReviewFormState extends State<ReviewForm> {
   }
 
   Widget _form() {
-    List<String> courses = professor.courses.split(", ");
-    // final courses =
-    //     coursesList.map((course) => CheckBoxState(title: course)).toList();
+    List<String> coursesList = professor.courses.split(", ");
+    final courses =
+        coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
     semesters.add({"id": 0, "name": "Intersession"});
     semesters.add({"id": 1, "name": "1st Sem"});
@@ -89,10 +86,16 @@ class _ReviewFormState extends State<ReviewForm> {
             child: ListView.builder(
                 itemCount: courses.length,
                 itemBuilder: (context, index) {
-                  return CheckboxFormField(
-                      title: Text(courses[index]),
-                      onSaved: (onSavedVal) {},
-                      validator: (onValidateVal) {});
+                  return buildCheckbox(courses[index]);
+                  // CheckboxListTile(
+                  //     controlAffinity: ListTileControlAffinity.leading,
+                  //     title: Text(courses[index]),
+                  //     value: checked,
+                  //     onChanged: (val) {
+                  //       setState(() {
+                  //         checked = val!;
+                  //       });
+                  //     });
                 }),
           ),
           Text(
@@ -316,12 +319,16 @@ class _ReviewFormState extends State<ReviewForm> {
               ),
             ],
           ),
-          CheckboxFormField(
-              title: Text('Submit anonymously'),
-              onSaved: (onSavedVal) {
-                review.anonymous = onSavedVal!;
-              },
-              validator: (onValidateVal) {}),
+          buildCheckbox(anonymous),
+          // CheckboxListTile(
+          //     controlAffinity: ListTileControlAffinity.leading,
+          //     title: Text("Submit anonymously"),
+          //     value: checked,
+          //     onChanged: (val) {
+          //       setState(() {
+          //         checked = val!;
+          //       });
+          //     }),
           Row(
             children: [
               Expanded(
@@ -363,15 +370,12 @@ class _ReviewFormState extends State<ReviewForm> {
     );
   }
 
-  // Widget buildCheckbox(CheckBoxState checkbox) => CheckboxListTile(
-  //     controlAffinity: ListTileControlAffinity.leading,
-  //     title: Text(checkbox.title),
-  //     value: checkbox.value,
-  //     onChanged: (value) {
-  //       if (checkbox.value == true) {
-  //         checkbox.value == false;
-  //       }
-  //       setState(() => checkbox.value = value!);
-  //       debugPrint('${checkbox.value}');
-  //     });
+  Widget buildCheckbox(CheckBoxState checkbox) => CheckboxListTile(
+      controlAffinity: ListTileControlAffinity.leading,
+      title: Text(checkbox.title),
+      value: checkbox.value,
+      onChanged: (bool? value) {
+        setState(() => checkbox.value = value!);
+        debugPrint('${checkbox.value}');
+      });
 }
