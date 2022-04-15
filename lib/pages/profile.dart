@@ -92,7 +92,10 @@ class _ProfileState extends State<Profile> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ReviewForm()),
+                        MaterialPageRoute(
+                            builder: (context) => ReviewForm(
+                                  professor: professor,
+                                )),
                       );
                     })),
             Container(

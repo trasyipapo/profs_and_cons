@@ -1,35 +1,35 @@
 class Review {
-  final String id;
-  final String courses;
-  final double teachingRating;
-  final double personalityRating;
-  final double gradingRating;
-  final double workloadRating;
-  final double leniencyRating;
-  final double attendanceRating;
-  final double feedbackRating;
-  final double overallRating;
-  final String title;
-  final String description;
-  final String semesterTaken;
-  final String yearTaken;
-  final bool anonymous;
+  String? id;
+  String? courses;
+  double? teachingRating;
+  double? personalityRating;
+  double? gradingRating;
+  double? workloadRating;
+  double? leniencyRating;
+  double? attendanceRating;
+  double? feedbackRating;
+  double? overallRating;
+  String? title;
+  String? description;
+  String? semesterTaken;
+  String? yearTaken;
+  bool anonymous;
 
   Review({
-    required this.id,
-    required this.courses,
-    required this.teachingRating,
-    required this.personalityRating,
-    required this.gradingRating,
-    required this.workloadRating,
-    required this.leniencyRating,
-    required this.attendanceRating,
-    required this.feedbackRating,
-    required this.overallRating,
-    required this.title,
-    required this.description,
-    required this.semesterTaken,
-    required this.yearTaken,
+    this.id,
+    this.courses,
+    this.teachingRating,
+    this.personalityRating,
+    this.gradingRating,
+    this.workloadRating,
+    this.leniencyRating,
+    this.attendanceRating,
+    this.feedbackRating,
+    this.overallRating,
+    this.title,
+    this.description,
+    this.semesterTaken,
+    this.yearTaken,
     required this.anonymous,
   });
 
