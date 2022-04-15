@@ -7,6 +7,7 @@ import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search.dart';
+import 'package:profs_and_cons/pages/review_form.dart';
 
 class Profile extends StatefulWidget {
   Professor professor;
@@ -72,7 +73,28 @@ class _ProfileState extends State<Profile> {
                         ])
                   ],
                 )),
-            reviewButton,
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.all(20)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue)),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Add new review',
+                            style: TextStyle(fontSize: 20.0),
+                          )
+                        ]),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ReviewForm()),
+                      );
+                    })),
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                 child: Column(children: [

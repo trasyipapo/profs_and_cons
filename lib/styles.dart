@@ -23,3 +23,6 @@ const TextStyle buttonText =
 
 const TextStyle smallText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 9, color: Colors.grey);
+
+const TextStyle formText =
+    TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black);
