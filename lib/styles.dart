@@ -22,7 +22,7 @@ const TextStyle buttonText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 12, color: Colors.white);
 
 const TextStyle smallText =
-    TextStyle(fontWeight: FontWeight.normal, fontSize: 9, color: Colors.grey);
+    TextStyle(fontWeight: FontWeight.normal, fontSize: 11, color: Colors.grey);
 
 const TextStyle formText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black);

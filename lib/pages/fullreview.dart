@@ -106,7 +106,7 @@ Widget reviewDetails(Review review) => Container(
                     },
                     color: Colors.grey,
                     iconSize: 20,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_upward)),
                 Text(
@@ -132,7 +132,7 @@ Widget reviewDetails(Review review) => Container(
                     },
                     color: Colors.grey,
                     iconSize: 20,
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_downward)),
               ]),
@@ -141,7 +141,7 @@ Widget reviewDetails(Review review) => Container(
           ]),
           SizedBox(height: 24),
           Text('${review.title}', style: header2),
-          SizedBox(height: 15),
+          SizedBox(height: 10),
           Wrap(
             alignment: WrapAlignment.start,
             spacing: 5,

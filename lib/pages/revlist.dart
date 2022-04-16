@@ -155,15 +155,15 @@ Widget reviewCard(Review review) => Container(
                               (error) => debugPrint('Update Failed: $error'));
                     },
                     color: Colors.grey,
-                    iconSize: 10,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_upward)),
                 Text(
                   review.votes.toString(),
                   style: const TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 10,
+                      fontSize: 15,
                       color: Colors.grey),
                 ),
                 IconButton(
@@ -179,8 +179,8 @@ Widget reviewCard(Review review) => Container(
                               (error) => debugPrint('Update Failed: $error'));
                     },
                     color: Colors.grey,
-                    iconSize: 10,
-                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_downward)),
               ]),
