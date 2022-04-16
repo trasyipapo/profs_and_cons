@@ -19,6 +19,7 @@ class RatingFormField extends FormField<double> {
                 children: [
                   title,
                   RatingBar.builder(
+                    initialRating: initialValue,
                     minRating: 1,
                     itemSize: 30,
                     itemBuilder: (context, _) =>

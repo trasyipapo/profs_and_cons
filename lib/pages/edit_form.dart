@@ -276,8 +276,8 @@ class _EditFormState extends State<EditForm> {
                   child: FormHelper.dropDownWidgetWithLabel(
                     context,
                     "Semester Taken",
-                    "${semesters[int.parse(review.semesterTaken!)]['name']}",
-                    "",
+                    "Select Semester",
+                    "${semesters[int.parse(review.semesterTaken!)]['id']}",
                     semesters,
                     (onChangedVal) {
                       review.semesterTaken = onChangedVal! ?? "";
