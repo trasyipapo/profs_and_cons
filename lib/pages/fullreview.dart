@@ -87,9 +87,32 @@ Widget reviewDetails(Review review) => Container(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [ratingBar(review.overallRating!)]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(children: [
+              IconButton(
+                  onPressed: () {},
+                  color: Colors.grey,
+                  iconSize: 10,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                  constraints: const BoxConstraints(),
+                  icon: const Icon(Icons.arrow_upward)),
+              Text(
+                review.votes.toString(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 10,
+                    color: Colors.grey),
+              ),
+              IconButton(
+                  onPressed: () {},
+                  color: Colors.grey,
+                  iconSize: 10,
+                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                  constraints: const BoxConstraints(),
+                  icon: const Icon(Icons.arrow_downward)),
+            ]),
+            ratingBar(review.overallRating!)
+          ]),
           SizedBox(height: 5),
           Text('${review.title}', style: header2),
           SizedBox(height: 5),

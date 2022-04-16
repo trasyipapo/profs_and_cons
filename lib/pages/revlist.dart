@@ -127,7 +127,7 @@ Widget reviewCard(Review review) => Container(
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_upward)),
                 Text(
-                  '0',
+                  review.votes.toString(),
                   style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 10,
