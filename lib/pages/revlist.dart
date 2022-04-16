@@ -111,6 +111,9 @@ class _RevListState extends State<RevList> {
                             List<Review> filteredReviews = reviews
                                 .where((rev) => (rev.profId == professor.id))
                                 .toList();
+                            filteredReviews = filteredReviews
+                              ..sort((rev1, rev2) =>
+                                  rev2.votes.compareTo(rev1.votes));
                             if (filteredReviews.length == 0) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
