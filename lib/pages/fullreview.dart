@@ -88,34 +88,60 @@ Widget reviewDetails(Review review) => Container(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(children: [
-              IconButton(
-                  onPressed: () {},
-                  color: Colors.grey,
-                  iconSize: 10,
-                  padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                  constraints: const BoxConstraints(),
-                  icon: const Icon(Icons.arrow_upward)),
-              Text(
-                review.votes.toString(),
-                style: const TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 10,
-                    color: Colors.grey),
-              ),
-              IconButton(
-                  onPressed: () {},
-                  color: Colors.grey,
-                  iconSize: 10,
-                  padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  constraints: const BoxConstraints(),
-                  icon: const Icon(Icons.arrow_downward)),
-            ]),
+            StatefulBuilder(
+              builder: (context, setState) => Row(children: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        review.votes += 1;
+                      });
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({'votes': review.votes})
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
+                    color: Colors.grey,
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_upward)),
+                Text(
+                  review.votes.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                      color: Colors.grey),
+                ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        review.votes -= 1;
+                      });
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({'votes': review.votes})
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
+                    color: Colors.grey,
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_downward)),
+              ]),
+            ),
             ratingBar(review.overallRating!)
           ]),
-          SizedBox(height: 5),
+          SizedBox(height: 24),
           Text('${review.title}', style: header2),
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           Wrap(
             alignment: WrapAlignment.start,
             spacing: 5,
@@ -132,12 +158,12 @@ Widget reviewDetails(Review review) => Container(
               Text('${review.yearTaken}', style: smallText),
             ],
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           Text(
             '${review.description}',
             style: bodyText,
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -184,7 +210,7 @@ Widget reviewDetails(Review review) => Container(
               ratingBar(review.feedbackRating!)
             ],
           ),
-          SizedBox(height: 5),
+          SizedBox(height: 15),
           Row(mainAxisAlignment: MainAxisAlignment.start, children: [
             Wrap(spacing: 10, children: [
               DecoratedBox(

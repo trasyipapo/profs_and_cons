@@ -143,7 +143,17 @@ Widget reviewCard(Review review) => Container(
             children: [
               Row(children: [
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      review.votes += 1;
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({'votes': review.votes})
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
                     color: Colors.grey,
                     iconSize: 10,
                     padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
@@ -157,7 +167,17 @@ Widget reviewCard(Review review) => Container(
                       color: Colors.grey),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      review.votes -= 1;
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({'votes': review.votes})
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
                     color: Colors.grey,
                     iconSize: 10,
                     padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
