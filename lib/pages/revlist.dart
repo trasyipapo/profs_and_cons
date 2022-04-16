@@ -8,13 +8,16 @@ import 'package:profs_and_cons/objects/reviewcard.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:profs_and_cons/pages/review_form.dart';
+import 'package:profs_and_cons/pages/edit_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 Stream<List<Review>> readReviews() => FirebaseFirestore.instance
     .collection('reviews')
     .snapshots()
     .map((snapshot) =>
         snapshot.docs.map((doc) => Review.fromJson(doc.data())).toList());
+final user = FirebaseAuth.instance.currentUser;
 
 class RevList extends StatefulWidget {
   Professor professor;
@@ -110,7 +113,8 @@ class _RevListState extends State<RevList> {
                                     final review = filteredReviews[index];
                                     return Card(
                                         child: InkWell(
-                                      child: reviewCard(review),
+                                      child: reviewCard(
+                                          review, professor, context),
                                       onTap: () {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
@@ -134,7 +138,7 @@ class _RevListState extends State<RevList> {
   }
 }
 
-Widget reviewCard(Review review) => Container(
+Widget reviewCard(Review review, Professor prof, context) => Container(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -198,7 +202,7 @@ Widget reviewCard(Review review) => Container(
             style: header2,
           ),
           SizedBox(height: 24),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Wrap(spacing: 10, children: [
               DecoratedBox(
                   decoration: BoxDecoration(
@@ -207,7 +211,22 @@ Widget reviewCard(Review review) => Container(
                   child: Padding(
                       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                       child: Text('${review.courses}', style: buttonText))),
-            ])
+            ]),
+            IconButton(
+              icon: Icon(Icons.edit),
+              disabledColor: Colors.white,
+              onPressed: () {
+                user!.displayName! != review.writer
+                    ? null
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditForm(
+                                  professor: prof,
+                                  review: review,
+                                )));
+              },
+            ),
           ])
         ]),
       ),

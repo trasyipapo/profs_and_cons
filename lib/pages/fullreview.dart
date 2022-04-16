@@ -7,6 +7,7 @@ import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:profs_and_cons/pages/edit_form.dart';
 
 class FullReview extends StatefulWidget {
   Review review;
@@ -66,7 +67,7 @@ class _FullReviewState extends State<FullReview> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [Text(professor.name, style: header)],
                     )),
-                Card(child: reviewDetails(review))
+                Card(child: reviewDetails(review, professor, context))
               ],
             ),
           ),
@@ -81,7 +82,7 @@ class _FullReviewState extends State<FullReview> {
 //       children: [const Text(professor.name, style: header)],
 //     ));
 
-Widget reviewDetails(Review review) => Container(
+Widget reviewDetails(Review review, Professor prof, context) => Container(
     padding: const EdgeInsets.fromLTRB(25, 32, 25, 32),
     child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -211,7 +212,7 @@ Widget reviewDetails(Review review) => Container(
             ],
           ),
           SizedBox(height: 15),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Wrap(spacing: 10, children: [
               DecoratedBox(
                   decoration: BoxDecoration(
@@ -220,8 +221,23 @@ Widget reviewDetails(Review review) => Container(
                   child: Padding(
                       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                       child: Text('${review.courses}', style: buttonText))),
-            ])
-          ])
+            ]),
+            IconButton(
+              icon: Icon(Icons.edit),
+              disabledColor: Colors.white,
+              onPressed: () {
+                user!.displayName! != review.writer
+                    ? null
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditForm(
+                                  professor: prof,
+                                  review: review,
+                                )));
+              },
+            ),
+          ]),
         ]));
 
 RatingBar ratingBar(double rating) {
