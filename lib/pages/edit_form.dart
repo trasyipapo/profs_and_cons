@@ -11,6 +11,7 @@ import 'package:profs_and_cons/objects/checkboxformfield.dart';
 import 'package:profs_and_cons/objects/ratingformfield.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:profs_and_cons/pages/revlist.dart';
 
 class EditForm extends StatefulWidget {
   Professor professor;
@@ -366,10 +367,17 @@ class _EditFormState extends State<EditForm> {
                               }
                               // ScaffoldMessenger.of(context).showSnackBar(
                               //     SnackBar(content: Text(message)));
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => RevList(
+                              //             professor: professor,
+                              //           )),
+                              // );
                               Navigator.pop(context);
                             }
                           },
-                          child: Text("Submit"),
+                          child: Text("Update"),
                           style: ButtonStyle(
                               backgroundColor:
                                   MaterialStateProperty.all(Colors.red),
