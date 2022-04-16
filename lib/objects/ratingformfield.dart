@@ -24,8 +24,7 @@ class RatingFormField extends FormField<double> {
                     itemBuilder: (context, _) =>
                         Icon(Icons.star, color: Colors.blue),
                     onRatingUpdate: (rating) {
-                      debugPrint('$rating');
-                      //state.value = rating;
+                      state.didChange(rating);
                     },
                   )
                 ],

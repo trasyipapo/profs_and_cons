@@ -1,5 +1,6 @@
 //current working file
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart';
@@ -32,14 +33,15 @@ class _ReviewFormState extends State<ReviewForm> {
 
   @override
   Widget build(BuildContext context) {
+    review.profId = professor.id;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             color: Colors.black87,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const RevList()));
+              Navigator.pop(context);
             }),
         actions: [
           IconButton(
@@ -86,7 +88,7 @@ class _ReviewFormState extends State<ReviewForm> {
           ),
           Container(
             height:
-                50, //hardcoded for now, might have to change if there's a lot of courses
+                150, //hardcoded for now, might have to change if there's a lot of courses
             child: ListView.builder(
                 itemCount: courses.length,
                 itemBuilder: (context, index) {
@@ -94,7 +96,10 @@ class _ReviewFormState extends State<ReviewForm> {
                       title: Text(courses[index]),
                       onSaved: (onSavedVal) {
                         if (onSavedVal == true) {
-                          review.courses!.add(courses[index]);
+                          review.courses = review.courses! +
+                              " " +
+                              courses[
+                                  index]; //errors if review courses is a list for some reason
                         }
                       },
                       validator: (onValidateVal) {});
@@ -113,7 +118,7 @@ class _ReviewFormState extends State<ReviewForm> {
                 review.teachingRating = onSavedVal;
               },
               validator: (onValidateVal) {
-                if (onValidateVal == 0) {
+                if (onValidateVal == 0.0) {
                   return "Please give a valid rating";
                 }
                 return null;
@@ -242,6 +247,7 @@ class _ReviewFormState extends State<ReviewForm> {
             }
             return null;
           }, (onSavedVal) {
+            debugPrint('$onSavedVal');
             review.description = onSavedVal;
           },
               initialValue: review.description ?? "",
@@ -263,7 +269,7 @@ class _ReviewFormState extends State<ReviewForm> {
                   "",
                   semesters,
                   (onChangedVal) {
-                    this.review.semesterTaken = onChangedVal! ?? "";
+                    review.semesterTaken = onChangedVal! ?? "";
                   },
                   (onValidateVal) {
                     if (onValidateVal == null) {
@@ -317,7 +323,9 @@ class _ReviewFormState extends State<ReviewForm> {
                   child: Padding(
                 padding: EdgeInsets.all(5),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    globalKey.currentState!.reset();
+                  },
                   child: Text("Clear"),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -332,7 +340,33 @@ class _ReviewFormState extends State<ReviewForm> {
                   child: Padding(
                       padding: EdgeInsets.all(5.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          if (globalKey.currentState!.validate()) {
+                            globalKey.currentState!.save();
+                            await createReview(review);
+                          }
+                        },
+                        // onPressed: () async {
+                        //   if (globalKey.currentState!.validate()) {
+                        //     globalKey.currentState!.save();
+                        //     String message;
+
+                        //     // try {
+                        //     final docReview = FirebaseFirestore.instance
+                        //         .collection('reviews')
+                        //         .doc();
+                        //     final json = review.toJson();
+                        //     await docReview.set(json);
+                        //     message = 'Review successfully submitted!';
+                        //     // } catch (e) {
+                        //     //   message = 'Error while submitting review.';
+                        //     // }
+
+                        //     ScaffoldMessenger.of(context)
+                        //         .showSnackBar(SnackBar(content: Text(message)));
+                        //     Navigator.pop(context);
+                        //   }
+                        // },
                         child: Text("Submit"),
                         style: ButtonStyle(
                             backgroundColor:
@@ -352,15 +386,10 @@ class _ReviewFormState extends State<ReviewForm> {
     );
   }
 
-  // Widget buildCheckbox(CheckBoxState checkbox) => CheckboxListTile(
-  //     controlAffinity: ListTileControlAffinity.leading,
-  //     title: Text(checkbox.title),
-  //     value: checkbox.value,
-  //     onChanged: (value) {
-  //       if (checkbox.value == true) {
-  //         checkbox.value == false;
-  //       }
-  //       setState(() => checkbox.value = value!);
-  //       debugPrint('${checkbox.value}');
-  //     });
+  Future createReview(Review rev) async {
+    final docReview = FirebaseFirestore.instance.collection('reviews').doc();
+    rev.id = docReview.id;
+    final json = rev.toJson();
+    await docReview.set(json);
+  }
 }

@@ -1,6 +1,6 @@
 class Review {
   String? id;
-  List<String>? courses;
+  String? courses;
   double? teachingRating;
   double? personalityRating;
   double? gradingRating;
@@ -14,24 +14,25 @@ class Review {
   String? semesterTaken;
   String? yearTaken;
   bool anonymous;
+  String? profId;
 
-  Review({
-    this.id,
-    this.courses,
-    this.teachingRating,
-    this.personalityRating,
-    this.gradingRating,
-    this.workloadRating,
-    this.leniencyRating,
-    this.attendanceRating,
-    this.feedbackRating,
-    this.overallRating,
-    this.title,
-    this.description,
-    this.semesterTaken,
-    this.yearTaken,
-    this.anonymous = false,
-  });
+  Review(
+      {this.id,
+      this.courses = "",
+      this.teachingRating,
+      this.personalityRating,
+      this.gradingRating,
+      this.workloadRating,
+      this.leniencyRating,
+      this.attendanceRating,
+      this.feedbackRating,
+      this.overallRating,
+      this.title,
+      this.description,
+      this.semesterTaken,
+      this.yearTaken,
+      this.anonymous = false,
+      this.profId});
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -48,7 +49,8 @@ class Review {
         'description': description,
         'semesterTaken': semesterTaken,
         'yearTaken': yearTaken,
-        'anonymous': anonymous
+        'anonymous': anonymous,
+        'profId': profId
       };
 
   static Review fromJson(Map<String, dynamic> json) => Review(
@@ -66,5 +68,6 @@ class Review {
       description: json['description'],
       semesterTaken: json['semesterTaken'],
       yearTaken: json['yearTaken'],
-      anonymous: json['anonymous']);
+      anonymous: json['anonymous'],
+      profId: json['profId']);
 }
