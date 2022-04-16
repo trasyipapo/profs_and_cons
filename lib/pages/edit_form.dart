@@ -336,9 +336,9 @@ class _EditFormState extends State<EditForm> {
                   padding: EdgeInsets.all(5),
                   child: ElevatedButton(
                     onPressed: () {
-                      globalKey.currentState!.reset();
+                      Navigator.pop(context);
                     },
-                    child: Text("Clear"),
+                    child: Text("Cancel"),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white),
