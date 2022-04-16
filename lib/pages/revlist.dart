@@ -5,235 +5,170 @@ import 'package:profs_and_cons/pages/fullreview.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
+import 'package:profs_and_cons/objects/professor.dart';
+import 'package:profs_and_cons/objects/review.dart';
+import 'package:profs_and_cons/pages/review_form.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+Stream<List<Review>> readReviews() => FirebaseFirestore.instance
+    .collection('reviews')
+    .snapshots()
+    .map((snapshot) =>
+        snapshot.docs.map((doc) => Review.fromJson(doc.data())).toList());
 
 class RevList extends StatefulWidget {
-  const RevList({Key? key}) : super(key: key);
+  Professor professor;
+
+  RevList({Key? key, required this.professor}) : super(key: key);
 
   @override
-  State<RevList> createState() => _RevListState();
+  State<RevList> createState() => _RevListState(professor: professor);
 }
 
 class _RevListState extends State<RevList> {
-  final filters = ['FILTER', 'FILTER 2', 'FILTER 3'];
-  String? value = 'FILTER'; // TO BE FIXED
-
-  List<ReviewCard> reviews = [
-    ReviewCard(
-        reviewHead: 'Great organizational...',
-        reviewer: 'Simon Garcia',
-        counter: 24,
-        stars: 5,
-        courseCode: ['CSCI 42']),
-    ReviewCard(
-        reviewHead: 'Run!!!',
-        reviewer: 'Anonymous',
-        counter: 17,
-        stars: 1,
-        courseCode: ['CSCI 42', 'CSCI 115']),
-  ];
-
-  List rainbow = [
-    Colors.red,
-    Colors.orange,
-    Colors.yellow,
-    Colors.green,
-    Colors.blue,
-    Colors.purple
-  ];
-
-  Widget reviewTemplate(review) {
-    return Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-        child: ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const FullReview()));
-            },
-            style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(245, 255, 255, 255),
-                onPrimary: Colors.black,
-                elevation: 5,
-                padding: const EdgeInsets.all(0)),
-            child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(children: [
-                          IconButton(
-                              onPressed: () {},
-                              color: Colors.grey,
-                              iconSize: 10,
-                              padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(Icons.arrow_upward)),
-                          Text(
-                            review.counter.toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 10,
-                                color: Colors.grey),
-                          ),
-                          IconButton(
-                              onPressed: () {},
-                              color: Colors.grey,
-                              iconSize: 10,
-                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                              constraints: const BoxConstraints(),
-                              icon: const Icon(Icons.arrow_downward)),
-                        ]),
-                        ratingBar(review.stars),
-                      ],
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 5),
-                        child: Row(children: [
-                          Text(review.reviewHead,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
-                        ])),
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                        child: Row(children: [
-                          Text(review.reviewer,
-                              style: const TextStyle(
-                                fontSize: 8,
-                                color: Colors.grey,
-                              )),
-                        ])),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            for (var i = 0; i < review.courseCode.length; i++)
-                              // for (var i in review.courseCode)
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                                  child: Container(
-                                      color: rainbow[i % 6],
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
-                                        review.courseCode[i],
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            color: Colors.white),
-                                      )))
-                          ],
-                        )
-                      ], // TO BE FIXED (ONLY ONE COLOR PALANG PWEDE)
-                    ),
-                  ],
-                ))));
-  }
+  Professor professor;
+  _RevListState({required this.professor});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Professor Reviews Screen',
         home: Scaffold(
-          // appBar: AppBar(
-          //   leading: IconButton(
-          //       icon: const Icon(Icons.search),
-          //       color: Colors.black87,
-          //       onPressed: () {
-          //         Navigator.push(context,
-          //             MaterialPageRoute(builder: (context) => const Home()));
-          //       }),
-          //   centerTitle: false,
-          //   backgroundColor: Colors.white,
-          //   title: const Text(
-          //     'Profs and Cons',
-          //     textAlign: TextAlign.left,
-          //   ),
-          // ),
-          appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                color: Colors.black87,
-                onPressed: () {
-                  Navigator.pop(context);
-                  // Navigator.of(context).push(
-                  // MaterialPageRoute(builder: (context) => Profile(professor: prof)));
-                }),
-            actions: [
-              IconButton(
-                icon: Image.asset('assets/appbar-logo.png'),
-                padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-                onPressed: () {
-                  Navigator.push(
+            appBar: AppBar(
+              leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  color: Colors.black87,
+                  onPressed: () {
+                    Navigator.pop(context);
+                    // Navigator.of(context).push(
+                    // MaterialPageRoute(builder: (context) => Profile(professor: prof)));
+                  }),
+              actions: [
+                IconButton(
+                  icon: Image.asset('assets/appbar-logo.png'),
+                  padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
+                  onPressed: () {
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => SearchPage()),
-                  );
-                },
+                    );
+                  },
+                ),
+              ],
+              centerTitle: false,
+              backgroundColor: Colors.white,
+              title: const Text(
+                'Profs and Cons',
+                textAlign: TextAlign.left,
               ),
-            ],
-            centerTitle: false,
-            backgroundColor: Colors.white,
-            title: const Text(
-              'Profs and Cons',
-              textAlign: TextAlign.left,
             ),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              profInfo,
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Column(children: [
-                    reviewButton,
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: reviews
-                            .map((review) => reviewTemplate(review))
-                            .toList())
-                  ]))
-            ],
-          ),
-        ));
+            body: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(children: [
+                StreamBuilder<List<Review>>(
+                    stream: readReviews(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('Something went wrong...${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        List<Review> reviews = snapshot.data!;
+                        List<Review> filteredReviews = reviews
+                            .where((rev) => (rev.profId == professor.id))
+                            .toList();
+                        if (filteredReviews.length == 0) {
+                          return Text('No Reviews Found');
+                        } else {
+                          return Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              child: ListView.builder(
+                                  itemCount: filteredReviews.length,
+                                  itemBuilder: (context, index) {
+                                    final review = filteredReviews[index];
+                                    return Card(
+                                        child: InkWell(
+                                      child: reviewCard(review),
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FullReview(
+                                                      review: review,
+                                                      professor: professor,
+                                                    )));
+                                      },
+                                    ));
+                                  }));
+                        }
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }),
+              ]),
+            )));
   }
 }
 
-DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
-      value: item,
-      child: Text(item),
-    );
-
-var instance = _RevListState();
-Widget profInfo = Container(
-    padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Text('Juan Dela Cruz', style: header),
-        DropdownButton<String>(
-            value: instance.value,
-            items: instance.filters.map(buildMenuItem).toList(),
-            onChanged: (value) => value = value) // TO BE FIXED
-      ],
-    ));
-
-Widget reviewButton = Container(
-    margin: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-    child: ElevatedButton(
-        style: ButtonStyle(
-            padding:
-                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(10)),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
+Widget reviewCard(Review review) => Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                IconButton(
+                    onPressed: () {},
+                    color: Colors.grey,
+                    iconSize: 10,
+                    padding: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_upward)),
+                Text(
+                  '0',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 10,
+                      color: Colors.grey),
+                ),
+                IconButton(
+                    onPressed: () {},
+                    color: Colors.grey,
+                    iconSize: 10,
+                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_downward)),
+              ]),
+              ratingBar(review.overallRating!),
+            ],
+          ),
+          SizedBox(height: 24),
           Text(
-            'Add new review',
-            style: TextStyle(fontSize: 20.0),
-          )
+            '${review.title}',
+            style: header,
+          ),
+          SizedBox(height: 24),
+          Text(
+            review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
+            style: header2,
+          ),
+          SizedBox(height: 24),
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Wrap(spacing: 10, children: [
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Text('${review.courses}', style: buttonText))),
+            ])
+          ])
         ]),
-        onPressed: () {}));
+      ),
+    );
 
 RatingBar ratingBar(double rating) {
   return RatingBar(

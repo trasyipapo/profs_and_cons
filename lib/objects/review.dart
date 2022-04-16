@@ -15,6 +15,7 @@ class Review {
   String? yearTaken;
   bool anonymous;
   String? profId;
+  String? writer;
 
   Review(
       {this.id,
@@ -32,7 +33,8 @@ class Review {
       this.semesterTaken,
       this.yearTaken,
       this.anonymous = false,
-      this.profId});
+      this.profId,
+      this.writer});
 
   Map<String, dynamic> toJson() => {
         'id': id,

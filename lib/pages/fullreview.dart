@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
+import 'package:profs_and_cons/objects/review.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class FullReview extends StatelessWidget {
-  const FullReview({Key? key}) : super(key: key);
+class FullReview extends StatefulWidget {
+  Review review;
+  Professor professor;
+  FullReview({Key? key, required this.review, required this.professor})
+      : super(key: key);
+
+  @override
+  State<FullReview> createState() =>
+      _FullReviewState(review: review, professor: professor);
+}
+
+class _FullReviewState extends State<FullReview> {
+  Review review;
+  Professor professor;
+  _FullReviewState({required this.review, required this.professor});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +34,7 @@ class FullReview extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back),
                 color: Colors.black87,
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const RevList()));
+                  Navigator.pop(context);
                 }),
             actions: [
               IconButton(
@@ -26,8 +42,8 @@ class FullReview extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchPage()),
+                    context,
+                    MaterialPageRoute(builder: (context) => SearchPage()),
                   );
                 },
               ),
@@ -43,21 +59,29 @@ class FullReview extends StatelessWidget {
             constraints: const BoxConstraints.expand(),
             child: Column(
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [profName, Card(child: review)],
+              children: [
+                Container(
+                    padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [Text(professor.name, style: header)],
+                    )),
+                Card(child: reviewDetails(review))
+              ],
             ),
           ),
         ));
   }
 }
 
-Widget profName = Container(
-    padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [const Text('Juan Dela Cruz', style: header)],
-    ));
+// Widget profName = Container(
+//     padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [const Text(professor.name, style: header)],
+//     ));
 
-Widget review = Container(
+Widget reviewDetails(Review review) => Container(
     padding: const EdgeInsets.fromLTRB(25, 32, 25, 32),
     child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,52 +89,77 @@ Widget review = Container(
         children: [
           Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [ratingBar(4)]),
+              children: [ratingBar(review.overallRating!)]),
           SizedBox(height: 5),
-          const Text('Lorem Ipsum', style: header2),
+          Text('${review.title}', style: header2),
           SizedBox(height: 5),
           Wrap(
             alignment: WrapAlignment.start,
             spacing: 5,
             children: [
-              const Text('Simon Garcia', style: smallText),
-              const Text('1st Sem', style: smallText),
-              const Text('2019-2020', style: smallText),
+              Text(review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
+                  style: smallText),
+              Text(
+                  review.semesterTaken! == 0
+                      ? 'Intersession'
+                      : review.semesterTaken! == 1
+                          ? '1st Sem'
+                          : '2nd Sem',
+                  style: smallText),
+              Text('${review.yearTaken}', style: smallText),
             ],
           ),
           SizedBox(height: 5),
-          const Text(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat congue lectus, tincidunt efficitur risus posuere ut. Mauris in vehicula libero, ut pulvinar enim. Etiam bibendum condimentum lacus sit amet maximus. Ut ultrices condimentum ex.',
+          Text(
+            '${review.description}',
             style: bodyText,
           ),
           SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Teaching Skill'), ratingBar(4)],
+            children: [
+              const Text('Teaching Skill'),
+              ratingBar(review.teachingRating!)
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Personality'), ratingBar(3)],
+            children: [
+              const Text('Personality'),
+              ratingBar(review.personalityRating!)
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Grading'), ratingBar(4)],
+            children: [const Text('Grading'), ratingBar(review.gradingRating!)],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Workload'), ratingBar(3)],
+            children: [
+              const Text('Workload'),
+              ratingBar(review.workloadRating!)
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Leniency'), ratingBar(5)],
+            children: [
+              const Text('Leniency'),
+              ratingBar(review.leniencyRating!)
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Attendance'), ratingBar(4)],
+            children: [
+              const Text('Attendance'),
+              ratingBar(review.attendanceRating!)
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Feedback'), ratingBar(4)],
+            children: [
+              const Text('Feedback'),
+              ratingBar(review.feedbackRating!)
+            ],
           ),
           SizedBox(height: 5),
           Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -119,16 +168,9 @@ Widget review = Container(
                   decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(5)),
-                  child: const Padding(
+                  child: Padding(
                       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: Text('CSCI 115', style: buttonText))),
-              DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.yellow,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Padding(
-                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: Text('CSCI 42', style: buttonText))),
+                      child: Text('${review.courses}', style: buttonText))),
             ])
           ])
         ]));

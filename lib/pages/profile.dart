@@ -229,7 +229,10 @@ class _ProfileState extends State<Profile> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RevList()),
+                      MaterialPageRoute(
+                          builder: (context) => RevList(
+                                professor: professor,
+                              )),
                     );
                   },
                 ))
