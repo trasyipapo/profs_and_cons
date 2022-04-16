@@ -100,9 +100,9 @@ Widget reviewDetails(Review review) => Container(
               Text(review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
                   style: smallText),
               Text(
-                  review.semesterTaken! == 0
+                  review.semesterTaken! == '0'
                       ? 'Intersession'
-                      : review.semesterTaken! == 1
+                      : review.semesterTaken! == '1'
                           ? '1st Sem'
                           : '2nd Sem',
                   style: smallText),

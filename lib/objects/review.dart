@@ -52,7 +52,8 @@ class Review {
         'semesterTaken': semesterTaken,
         'yearTaken': yearTaken,
         'anonymous': anonymous,
-        'profId': profId
+        'profId': profId,
+        'writer': writer
       };
 
   static Review fromJson(Map<String, dynamic> json) => Review(
@@ -71,5 +72,6 @@ class Review {
       semesterTaken: json['semesterTaken'],
       yearTaken: json['yearTaken'],
       anonymous: json['anonymous'],
-      profId: json['profId']);
+      profId: json['profId'],
+      writer: json['writer']);
 }
