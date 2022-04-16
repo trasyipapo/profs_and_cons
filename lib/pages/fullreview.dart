@@ -9,6 +9,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:profs_and_cons/pages/edit_form.dart';
 
+Stream<List<Review>> readReviews() => FirebaseFirestore.instance
+    .collection('reviews')
+    .snapshots()
+    .map((snapshot) =>
+        snapshot.docs.map((doc) => Review.fromJson(doc.data())).toList());
+
 class FullReview extends StatefulWidget {
   Review review;
   Professor professor;
@@ -56,21 +62,38 @@ class _FullReviewState extends State<FullReview> {
               textAlign: TextAlign.left,
             ),
           ),
-          body: Container(
-            constraints: const BoxConstraints.expand(),
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text(professor.name, style: header)],
-                    )),
-                Card(child: reviewDetails(review, professor, context))
-              ],
-            ),
-          ),
+          body: StreamBuilder<List<Review>>(
+              stream: readReviews(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Something went wrong...${snapshot.error}');
+                } else if (snapshot.hasData) {
+                  List<Review> reviews = snapshot.data!;
+                  List<Review> filteredReviews =
+                      reviews.where((rev) => (rev.id == review.id)).toList();
+                  return Container(
+                    constraints: const BoxConstraints.expand(),
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [Text(professor.name, style: header)],
+                            )),
+                        Card(
+                            child: reviewDetails(
+                                filteredReviews[0], professor, context))
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
         ));
   }
 }
@@ -89,13 +112,11 @@ Widget reviewDetails(Review review, Professor prof, context) => Container(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            StatefulBuilder(
-              builder: (context, setState) => Row(children: [
+            Row(
+              children: [
                 IconButton(
                     onPressed: () {
-                      setState(() {
-                        review.votes += 1;
-                      });
+                      review.votes += 1;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -119,9 +140,8 @@ Widget reviewDetails(Review review, Professor prof, context) => Container(
                 ),
                 IconButton(
                     onPressed: () {
-                      setState(() {
-                        review.votes -= 1;
-                      });
+                      review.votes -= 1;
+
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -136,7 +156,7 @@ Widget reviewDetails(Review review, Professor prof, context) => Container(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_downward)),
-              ]),
+              ],
             ),
             ratingBar(review.overallRating!)
           ]),
