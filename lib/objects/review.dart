@@ -1,6 +1,6 @@
 class Review {
   String? id;
-  String? courses;
+  List<String>? courses;
   double? teachingRating;
   double? personalityRating;
   double? gradingRating;
@@ -30,7 +30,7 @@ class Review {
     this.description,
     this.semesterTaken,
     this.yearTaken,
-    required this.anonymous,
+    this.anonymous = false,
   });
 
   Map<String, dynamic> toJson() => {

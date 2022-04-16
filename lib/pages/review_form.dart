@@ -11,6 +11,7 @@ import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/checkboxstate.dart';
 import 'package:profs_and_cons/objects/checkboxformfield.dart';
+import 'package:profs_and_cons/objects/ratingformfield.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 class ReviewForm extends StatefulWidget {
@@ -27,7 +28,7 @@ class _ReviewFormState extends State<ReviewForm> {
   _ReviewFormState({required this.professor});
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  Review review = Review(anonymous: true);
+  Review review = Review();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class _ReviewFormState extends State<ReviewForm> {
     semesters.add({"id": 0, "name": "Intersession"});
     semesters.add({"id": 1, "name": "1st Sem"});
     semesters.add({"id": 2, "name": "2nd Sem"});
-    CheckBoxState anonymous = CheckBoxState(title: "Submit Anonymously");
+    //CheckBoxState anonymous = CheckBoxState(title: "Submit Anonymously");
 
     return Form(
       key: globalKey,
@@ -91,7 +92,11 @@ class _ReviewFormState extends State<ReviewForm> {
                 itemBuilder: (context, index) {
                   return CheckboxFormField(
                       title: Text(courses[index]),
-                      onSaved: (onSavedVal) {},
+                      onSaved: (onSavedVal) {
+                        if (onSavedVal == true) {
+                          review.courses!.add(courses[index]);
+                        }
+                      },
                       validator: (onValidateVal) {});
                 }),
           ),
@@ -99,134 +104,118 @@ class _ReviewFormState extends State<ReviewForm> {
             "Rate your prof",
             style: header2,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+          RatingFormField(
+              title: Text(
                 "     • Teaching Skill",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.teachingRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Personality",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.personalityRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Grading",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.gradingRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Workload",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.workloadRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Leniency",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.leniencyRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Attendance",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.attendanceRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Feedback",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+              onSaved: (onSavedVal) {
+                review.feedbackRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
+          RatingFormField(
+              title: Text(
                 "     • Overall",
                 style: formText,
               ),
-              RatingBar.builder(
-                minRating: 1,
-                itemSize: 30,
-                itemBuilder: (context, _) =>
-                    Icon(Icons.star, color: Colors.blue),
-                onRatingUpdate: (rating) {},
-              )
-            ],
-          ),
+              onSaved: (onSavedVal) {
+                review.overallRating = onSavedVal;
+              },
+              validator: (onValidateVal) {
+                if (onValidateVal == 0) {
+                  return "Please give a valid rating";
+                }
+                return null;
+              }),
           FormHelper.inputFieldWidgetWithLabel(
               context, "title", "Add a title", "", (onValidateVal) {
             if (onValidateVal.isEmpty) {
