@@ -63,6 +63,7 @@ class _ReviewFormState extends State<ReviewForm> {
 
   Widget _form() {
     List<String> courses = professor.courses.split(", ");
+    bool selected = false;
     // final courses =
     //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
@@ -87,31 +88,29 @@ class _ReviewFormState extends State<ReviewForm> {
               "Choose the course",
               style: header2,
             ),
-            Container(
-              //width: 333,
-              height: 50, //need to fix layout to show all courses
-              child: ListView.builder(
-                  //scrollDirection: Axis.horizontal,
-                  itemCount: courses.length,
-                  itemBuilder: (context, index) {
-                    return CheckboxFormField(
-                        title: Text(courses[index]),
-                        onSaved: (onSavedVal) {
-                          if (onSavedVal == true) {
-                            review.courses = review.courses! +
-                                " " +
-                                courses[
-                                    index]; //errors if review courses is a list for some reason
-                          }
-                        },
-                        validator: (onValidateVal) {
-                          if (onValidateVal == false) {
-                            return "Please select a course";
-                          }
-                          return null;
-                        });
-                  }),
-            ),
+            ListView.builder(
+                //scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: courses.length,
+                itemBuilder: (context, index) {
+                  return CheckboxFormField(
+                      title: Text(courses[index]),
+                      onSaved: (onSavedVal) {
+                        if (onSavedVal == true) {
+                          selected = true;
+                          review.courses = review.courses! +
+                              " " +
+                              courses[
+                                  index]; //errors if review courses is a list for some reason
+                        }
+                      },
+                      validator: (onValidateVal) {
+                        if (selected == false) {
+                          return "Please select a course";
+                        }
+                        return null;
+                      });
+                }),
             Text(
               "Rate your prof",
               style: header2,
