@@ -14,20 +14,28 @@ class RatingFormField extends FormField<double> {
             validator: validator,
             initialValue: initialValue,
             builder: (FormFieldState<double> state) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  title,
-                  RatingBar.builder(
-                    initialRating: initialValue,
-                    minRating: 1,
-                    itemSize: 30,
-                    itemBuilder: (context, _) =>
-                        Icon(Icons.star, color: Colors.blue),
-                    onRatingUpdate: (rating) {
-                      state.didChange(rating);
-                    },
-                  )
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        title,
+                        RatingBar.builder(
+                          initialRating: initialValue,
+                          minRating: 1,
+                          itemSize: 30,
+                          itemBuilder: (context, _) =>
+                              Icon(Icons.star, color: Colors.blue),
+                          onRatingUpdate: (rating) {
+                            state.didChange(rating);
+                          },
+                        )
+                      ]),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: Text(state.errorText ?? '',
+                          style: TextStyle(color: Colors.red)))
                 ],
               );
             });

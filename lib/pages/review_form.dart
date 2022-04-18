@@ -104,7 +104,12 @@ class _ReviewFormState extends State<ReviewForm> {
                                     index]; //errors if review courses is a list for some reason
                           }
                         },
-                        validator: (onValidateVal) {});
+                        validator: (onValidateVal) {
+                          if (onValidateVal == false) {
+                            return "Please select a course";
+                          }
+                          return null;
+                        });
                   }),
             ),
             Text(

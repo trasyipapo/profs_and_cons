@@ -13,12 +13,22 @@ class CheckboxFormField extends FormField<bool> {
             validator: validator,
             initialValue: initialValue,
             builder: (FormFieldState<bool> state) {
-              return CheckboxListTile(
-                dense: state.hasError,
-                title: title,
-                value: state.value,
-                onChanged: state.didChange,
-                controlAffinity: ListTileControlAffinity.leading,
-              );
+              return Column(children: [
+                CheckboxListTile(
+                  dense: state.hasError,
+                  title: title,
+                  value: state.value,
+                  subtitle: state.hasError
+                      ? Builder(
+                          builder: (BuildContext context) => Text(
+                            state.errorText ?? '',
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
+                      : null,
+                  onChanged: state.didChange,
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+              ]);
             });
 }
