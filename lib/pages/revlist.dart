@@ -148,20 +148,55 @@ class _RevListState extends State<RevList> {
                                       itemCount: filteredReviews.length,
                                       itemBuilder: (context, index) {
                                         final review = filteredReviews[index];
-                                        return Card(
-                                            child: InkWell(
-                                          child: reviewCard(
-                                              review, professor, context),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        FullReview(
-                                                          review: review,
-                                                          professor: professor,
-                                                        )));
-                                          },
-                                        ));
+                                        if (review.isUp == null) {
+                                          return Card(
+                                              child: InkWell(
+                                            child: reviewCard(
+                                                review, professor, context),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FullReview(
+                                                            review: review,
+                                                            professor:
+                                                                professor,
+                                                          )));
+                                            },
+                                          ));
+                                        } else if (!(review.isUp!)) {
+                                          return Card(
+                                              child: InkWell(
+                                            child: down(
+                                                review, professor, context),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FullReview(
+                                                            review: review,
+                                                            professor:
+                                                                professor,
+                                                          )));
+                                            },
+                                          ));
+                                        } else {
+                                          return Card(
+                                              child: InkWell(
+                                            child:
+                                                up(review, professor, context),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FullReview(
+                                                            review: review,
+                                                            professor:
+                                                                professor,
+                                                          )));
+                                            },
+                                          ));
+                                        }
                                       }));
                             }
                           } else {
@@ -186,13 +221,18 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                 IconButton(
                     onPressed: () {
                       review.votes += 1;
-                      review.voter[user!.uid] = true;
+                      review.isUp = true;
+                      // review.voter?.add('value');
+                      review.voter?[user!.uid] = true;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
                           .doc(review.id)
-                          .update(
-                              {'votes': review.votes, 'voter': review.voter})
+                          .update({
+                            'votes': review.votes,
+                            // 'voter': review.voter,
+                            'isUp': review.isUp
+                          })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
                               (error) => debugPrint('Update Failed: $error'));
@@ -212,14 +252,18 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                 IconButton(
                     onPressed: () {
                       review.votes -= 1;
-                      print(review.voter);
-                      review.voter[user!.uid] = false;
+                      print(review.isUp);
+                      // review.voter?[user!.uid] = false;
+                      review.isUp = false;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
                           .doc(review.id)
-                          .update(
-                              {'votes': review.votes, 'voter': review.voter})
+                          .update({
+                            'votes': review.votes,
+                            // 'voter': review.voter,
+                            'isUp': review.isUp
+                          })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
                               (error) => debugPrint('Update Failed: $error'));
@@ -296,3 +340,217 @@ RatingBar ratingBar(double rating) {
       // }
       );
 }
+
+Widget down(Review review, Professor prof, context) => Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                IconButton(
+                    onPressed: () {
+                      review.votes += 2;
+                      review.isUp = true;
+                      // review.voter?.add('value');
+                      review.voter?[user!.uid] = true;
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({
+                            'votes': review.votes,
+                            // 'voter': review.voter,
+                            'isUp': review.isUp
+                          })
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
+                    color: Colors.grey,
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_upward)),
+                Text(
+                  review.votes.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                      color: Colors.grey),
+                ),
+                IconButton(
+                    onPressed: () {
+                      print(review.isUp);
+                      // review.voter?[user!.uid] = false;
+                      review.isUp = null;
+                      review.votes += 1;
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({
+                            'votes': review.votes,
+                            // 'voter': review.voter,
+                            'isUp': review.isUp
+                          })
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
+                    color: Colors.blue,
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_downward)),
+              ]),
+              ratingBar(review.overallRating!),
+            ],
+          ),
+          SizedBox(height: 24),
+          Text(
+            '${review.title}',
+            style: header,
+          ),
+          SizedBox(height: 24),
+          Text(
+            review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
+            style: header2,
+          ),
+          SizedBox(height: 24),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Wrap(spacing: 10, children: [
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Text('${review.courses}', style: buttonText))),
+            ]),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
+          ])
+        ]),
+      ),
+    );
+
+Widget up(Review review, Professor prof, context) => Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                IconButton(
+                    onPressed: () {
+                      review.votes -= 1;
+                      review.isUp = null;
+                      // review.voter?.add('value');
+                      review.voter?[user!.uid] = true;
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({
+                            'votes': review.votes,
+                            // 'voter': review.voter,
+                            'isUp': review.isUp
+                          })
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
+                    color: Colors.blue,
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_upward)),
+                Text(
+                  review.votes.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                      color: Colors.grey),
+                ),
+                IconButton(
+                    onPressed: () {
+                      print(review.isUp);
+                      // review.voter?[user!.uid] = false;
+                      review.votes -= 2;
+                      review.isUp = false;
+                      final collection =
+                          FirebaseFirestore.instance.collection('reviews');
+                      collection
+                          .doc(review.id)
+                          .update({
+                            'votes': review.votes,
+                            // 'voter': review.voter,
+                            'isUp': review.isUp
+                          })
+                          .then((_) => debugPrint('Updated'))
+                          .catchError(
+                              (error) => debugPrint('Update Failed: $error'));
+                    },
+                    color: Colors.grey,
+                    iconSize: 20,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    constraints: const BoxConstraints(),
+                    icon: const Icon(Icons.arrow_downward)),
+              ]),
+              ratingBar(review.overallRating!),
+            ],
+          ),
+          SizedBox(height: 24),
+          Text(
+            '${review.title}',
+            style: header,
+          ),
+          SizedBox(height: 24),
+          Text(
+            review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
+            style: header2,
+          ),
+          SizedBox(height: 24),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Wrap(spacing: 10, children: [
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Text('${review.courses}', style: buttonText))),
+            ]),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
+          ])
+        ]),
+      ),
+    );
