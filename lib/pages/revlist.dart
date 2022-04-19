@@ -71,6 +71,7 @@ class _RevListState extends State<RevList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(professor.name, style: header),
+                    Text(professor.department, style: smallText),
                     Container(
                         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                         child: ElevatedButton(
