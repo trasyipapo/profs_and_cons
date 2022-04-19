@@ -12,6 +12,7 @@ import 'package:profs_and_cons/objects/ratingformfield.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class EditForm extends StatefulWidget {
   Professor professor;
@@ -64,6 +65,11 @@ class _EditFormState extends State<EditForm> {
 
   Widget _form() {
     List<String> courses = professor.courses.split(", ");
+    List<FormBuilderFieldOption<dynamic>> courseList = [];
+    for (String course in courses) {
+      courseList
+          .add(FormBuilderFieldOption(child: Text(course), value: course));
+    }
     // final courses =
     //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
@@ -88,26 +94,21 @@ class _EditFormState extends State<EditForm> {
               "Choose the course",
               style: header2,
             ),
-            Container(
-              //width: 333,
-              height: 50, //need to fix layout to show all courses
-              child: ListView.builder(
-                  //scrollDirection: Axis.horizontal,
-                  itemCount: courses.length,
-                  itemBuilder: (context, index) {
-                    return CheckboxFormField(
-                        title: Text(courses[index]),
-                        onSaved: (onSavedVal) {
-                          if (onSavedVal == true) {
-                            review.courses = review.courses! +
-                                " " +
-                                courses[
-                                    index]; //errors if review courses is a list for some reason
-                          }
-                        },
-                        validator: (onValidateVal) {});
-                  }),
+            FormBuilderCheckboxGroup(
+              name: 'Courses',
+              options: courseList,
+              initialValue: review.courses?.split(','),
+              validator: (onValidateVal) {
+                if (onValidateVal == null) {
+                  return "Please select at least one course";
+                }
+                return null;
+              },
+              onSaved: (onSavedVal) {
+                review.courses = onSavedVal?.join(',');
+              },
             ),
+            SizedBox(height: 10),
             Text(
               "Rate your prof",
               style: header2,
