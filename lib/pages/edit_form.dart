@@ -323,13 +323,16 @@ class _EditFormState extends State<EditForm> {
                 ),
               ],
             ),
-            CheckboxFormField(
-                title: Text('Submit anonymously'),
-                initialValue: review.anonymous,
-                onSaved: (onSavedVal) {
+            FormBuilderCheckbox(
+              name: 'anonymous',
+              initialValue: review.anonymous,
+              title: Text('Submit anonymously'),
+              onSaved: (onSavedVal) {
                   review.anonymous = onSavedVal!;
                 },
-                validator: (onValidateVal) {}),
+              validator: (onValidateVal) {},
+            ),
+
             Row(
               children: [
                 Expanded(
