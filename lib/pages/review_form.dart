@@ -335,12 +335,15 @@ class _ReviewFormState extends State<ReviewForm> {
                 ),
               ],
             ),
-            CheckboxFormField(
-                title: Text('Submit anonymously'),
-                onSaved: (onSavedVal) {
+            FormBuilderCheckbox(
+              name: 'anonymous',
+              initialValue: false,
+              title: Text('Submit anonymously'),
+              onSaved: (onSavedVal) {
                   review.anonymous = onSavedVal!;
                 },
-                validator: (onValidateVal) {}),
+              validator: (onValidateVal) {},
+            ),
             Row(
               children: [
                 Expanded(

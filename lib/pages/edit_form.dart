@@ -12,6 +12,7 @@ import 'package:profs_and_cons/objects/ratingformfield.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class EditForm extends StatefulWidget {
   Professor professor;
@@ -322,13 +323,16 @@ class _EditFormState extends State<EditForm> {
                 ),
               ],
             ),
-            CheckboxFormField(
-                title: Text('Submit anonymously'),
-                initialValue: review.anonymous,
-                onSaved: (onSavedVal) {
+            FormBuilderCheckbox(
+              name: 'anonymous',
+              initialValue: review.anonymous,
+              title: Text('Submit anonymously'),
+              onSaved: (onSavedVal) {
                   review.anonymous = onSavedVal!;
                 },
-                validator: (onValidateVal) {}),
+              validator: (onValidateVal) {},
+            ),
+
             Row(
               children: [
                 Expanded(
