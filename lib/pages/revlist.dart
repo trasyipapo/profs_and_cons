@@ -222,15 +222,14 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                     onPressed: () {
                       review.votes += 1;
                       review.isUp = true;
-                      // review.voter?.add('value');
-                      review.voter?[user!.uid] = true;
+                      review.voter![user!.uid] = true;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            // 'voter': review.voter,
+                            'voter': review.voter,
                             'isUp': review.isUp
                           })
                           .then((_) => debugPrint('Updated'))
@@ -253,7 +252,7 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                     onPressed: () {
                       review.votes -= 1;
                       print(review.isUp);
-                      // review.voter?[user!.uid] = false;
+                      review.voter![user!.uid] = false;
                       review.isUp = false;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
@@ -261,7 +260,7 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            // 'voter': review.voter,
+                            'voter': review.voter,
                             'isUp': review.isUp
                           })
                           .then((_) => debugPrint('Updated'))
@@ -353,7 +352,6 @@ Widget down(Review review, Professor prof, context) => Container(
                     onPressed: () {
                       review.votes += 2;
                       review.isUp = true;
-                      // review.voter?.add('value');
                       review.voter?[user!.uid] = true;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
@@ -361,7 +359,7 @@ Widget down(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            // 'voter': review.voter,
+                            'voter': review.voter,
                             'isUp': review.isUp
                           })
                           .then((_) => debugPrint('Updated'))
@@ -383,7 +381,7 @@ Widget down(Review review, Professor prof, context) => Container(
                 IconButton(
                     onPressed: () {
                       print(review.isUp);
-                      // review.voter?[user!.uid] = false;
+                      review.voter?.remove(user!.uid);
                       review.isUp = null;
                       review.votes += 1;
                       final collection =
@@ -392,7 +390,7 @@ Widget down(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            // 'voter': review.voter,
+                            'voter': review.voter,
                             'isUp': review.isUp
                           })
                           .then((_) => debugPrint('Updated'))
@@ -460,15 +458,14 @@ Widget up(Review review, Professor prof, context) => Container(
                     onPressed: () {
                       review.votes -= 1;
                       review.isUp = null;
-                      // review.voter?.add('value');
-                      review.voter?[user!.uid] = true;
+                      review.voter?.remove(user!.uid);
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            // 'voter': review.voter,
+                            'voter': review.voter,
                             'isUp': review.isUp
                           })
                           .then((_) => debugPrint('Updated'))
@@ -490,7 +487,7 @@ Widget up(Review review, Professor prof, context) => Container(
                 IconButton(
                     onPressed: () {
                       print(review.isUp);
-                      // review.voter?[user!.uid] = false;
+                      review.voter?[user!.uid] = false;
                       review.votes -= 2;
                       review.isUp = false;
                       final collection =
@@ -499,7 +496,7 @@ Widget up(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            // 'voter': review.voter,
+                            'voter': review.voter,
                             'isUp': review.isUp
                           })
                           .then((_) => debugPrint('Updated'))

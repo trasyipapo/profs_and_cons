@@ -18,7 +18,7 @@ class Review {
   String? writer;
   String? writeruid;
   int votes;
-  Map<String, bool>? voter;
+  Map<String, bool>? voter = {};
   bool? isUp;
 
   Review({
@@ -41,9 +41,7 @@ class Review {
     this.writer,
     this.writeruid,
     this.votes = 0,
-    this.voter,
     this.isUp,
-    // required this.voter
   });
 
   Map<String, dynamic> toJson() => {
