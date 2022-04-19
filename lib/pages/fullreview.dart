@@ -33,6 +33,7 @@ class _FullReviewState extends State<FullReview> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> revCourses = review.courses!.split(',');
     return MaterialApp(
         title: 'Full Review Screen',
         home: Scaffold(
@@ -83,8 +84,8 @@ class _FullReviewState extends State<FullReview> {
                               children: [Text(professor.name, style: header)],
                             )),
                         Card(
-                            child: reviewDetails(
-                                filteredReviews[0], professor, context))
+                            child: reviewDetails(filteredReviews[0], professor,
+                                context, revCourses))
                       ],
                     ),
                   );
@@ -105,160 +106,182 @@ class _FullReviewState extends State<FullReview> {
 //       children: [const Text(professor.name, style: header)],
 //     ));
 
-Widget reviewDetails(Review review, Professor prof, context) => Container(
-    padding: const EdgeInsets.fromLTRB(25, 32, 25, 32),
-    child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      review.votes += 1;
-                      final collection =
-                          FirebaseFirestore.instance.collection('reviews');
-                      collection
-                          .doc(review.id)
-                          .update({'votes': review.votes})
-                          .then((_) => debugPrint('Updated'))
-                          .catchError(
-                              (error) => debugPrint('Update Failed: $error'));
+Widget reviewDetails(
+        Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
+        padding: const EdgeInsets.fromLTRB(25, 32, 25, 32),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          review.votes += 1;
+                          final collection =
+                              FirebaseFirestore.instance.collection('reviews');
+                          collection
+                              .doc(review.id)
+                              .update({'votes': review.votes})
+                              .then((_) => debugPrint('Updated'))
+                              .catchError((error) =>
+                                  debugPrint('Update Failed: $error'));
+                        },
+                        color: Colors.grey,
+                        iconSize: 20,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.arrow_upward)),
+                    Text(
+                      review.votes.toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 15,
+                          color: Colors.grey),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          review.votes -= 1;
+
+                          final collection =
+                              FirebaseFirestore.instance.collection('reviews');
+                          collection
+                              .doc(review.id)
+                              .update({'votes': review.votes})
+                              .then((_) => debugPrint('Updated'))
+                              .catchError((error) =>
+                                  debugPrint('Update Failed: $error'));
+                        },
+                        color: Colors.grey,
+                        iconSize: 20,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.arrow_downward)),
+                  ],
+                ),
+                ratingBar(review.overallRating!)
+              ]),
+              SizedBox(height: 24),
+              Text('${review.title}', style: header2),
+              SizedBox(height: 10),
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 5,
+                children: [
+                  Text(
+                      review.anonymous
+                          ? 'Anonymous Reviewer'
+                          : '${review.writer}',
+                      style: smallText),
+                  Text(
+                      review.semesterTaken! == '0'
+                          ? 'Intersession'
+                          : review.semesterTaken! == '1'
+                              ? '1st Sem'
+                              : '2nd Sem',
+                      style: smallText),
+                  Text('${review.yearTaken}', style: smallText),
+                ],
+              ),
+              SizedBox(height: 15),
+              Text(
+                '${review.description}',
+                style: bodyText,
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Teaching Skill'),
+                  ratingBar(review.teachingRating!)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Personality'),
+                  ratingBar(review.personalityRating!)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Grading'),
+                  ratingBar(review.gradingRating!)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Workload'),
+                  ratingBar(review.workloadRating!)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Leniency'),
+                  ratingBar(review.leniencyRating!)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Attendance'),
+                  ratingBar(review.attendanceRating!)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Feedback'),
+                  ratingBar(review.feedbackRating!)
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                SizedBox(
+                  width: 286, //HARDCODED -- TO FIX
+                  height: 25,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: revCourses.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                          child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Text(
+                                    revCourses[position],
+                                    style: buttonText,
+                                  ))));
                     },
-                    color: Colors.grey,
-                    iconSize: 20,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.arrow_upward)),
-                Text(
-                  review.votes.toString(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 15,
-                      color: Colors.grey),
+                  ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      review.votes -= 1;
-
-                      final collection =
-                          FirebaseFirestore.instance.collection('reviews');
-                      collection
-                          .doc(review.id)
-                          .update({'votes': review.votes})
-                          .then((_) => debugPrint('Updated'))
-                          .catchError(
-                              (error) => debugPrint('Update Failed: $error'));
-                    },
-                    color: Colors.grey,
-                    iconSize: 20,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    constraints: const BoxConstraints(),
-                    icon: const Icon(Icons.arrow_downward)),
-              ],
-            ),
-            ratingBar(review.overallRating!)
-          ]),
-          SizedBox(height: 24),
-          Text('${review.title}', style: header2),
-          SizedBox(height: 10),
-          Wrap(
-            alignment: WrapAlignment.start,
-            spacing: 5,
-            children: [
-              Text(review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-                  style: smallText),
-              Text(
-                  review.semesterTaken! == '0'
-                      ? 'Intersession'
-                      : review.semesterTaken! == '1'
-                          ? '1st Sem'
-                          : '2nd Sem',
-                  style: smallText),
-              Text('${review.yearTaken}', style: smallText),
-            ],
-          ),
-          SizedBox(height: 15),
-          Text(
-            '${review.description}',
-            style: bodyText,
-          ),
-          SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Teaching Skill'),
-              ratingBar(review.teachingRating!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Personality'),
-              ratingBar(review.personalityRating!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [const Text('Grading'), ratingBar(review.gradingRating!)],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Workload'),
-              ratingBar(review.workloadRating!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Leniency'),
-              ratingBar(review.leniencyRating!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Attendance'),
-              ratingBar(review.attendanceRating!)
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Feedback'),
-              ratingBar(review.feedbackRating!)
-            ],
-          ),
-          SizedBox(height: 15),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Wrap(spacing: 10, children: [
-              DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: Text('${review.courses}', style: buttonText))),
-            ]),
-            IconButton(
-              icon: Icon(Icons.edit),
-              disabledColor: Colors.white,
-              onPressed: () {
-                user!.displayName! != review.writer
-                    ? null
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditForm(
-                                  professor: prof,
-                                  review: review,
-                                )));
-              },
-            ),
-          ]),
-        ]));
+                  icon: Icon(Icons.edit),
+                  disabledColor: Colors.white,
+                  onPressed: () {
+                    user!.displayName! != review.writer
+                        ? null
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditForm(
+                                      professor: prof,
+                                      review: review,
+                                    )));
+                  },
+                ),
+              ]),
+            ]));
 
 RatingBar ratingBar(double rating) {
   return RatingBar(
