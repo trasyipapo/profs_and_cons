@@ -63,7 +63,13 @@ class _ProfileState extends State<Profile> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(professor.name, style: header),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(professor.name, style: header),
+                        Text(professor.department, style: smallText),
+                      ],
+                    ),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
