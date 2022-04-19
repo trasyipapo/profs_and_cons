@@ -249,21 +249,20 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                       child: Text('${review.courses}', style: buttonText))),
             ]),
-            IconButton(
-              icon: Icon(Icons.edit),
-              disabledColor: Colors.white,
-              onPressed: () {
-                user!.displayName! != review.writer
-                    ? null
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditForm(
-                                  professor: prof,
-                                  review: review,
-                                )));
-              },
-            ),
+            if (user!.displayName! == review.writer)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
           ])
         ]),
       ),
