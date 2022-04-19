@@ -265,21 +265,22 @@ Widget reviewDetails(
                     },
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  disabledColor: Colors.white,
-                  onPressed: () {
-                    user!.displayName! != review.writer
-                        ? null
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EditForm(
-                                      professor: prof,
-                                      review: review,
-                                    )));
-                  },
-                ),
+                if (user!.uid == review.writeruid)
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    disabledColor: Colors.white,
+                    onPressed: () {
+                      user!.uid != review.writeruid
+                          ? null
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditForm(
+                                        professor: prof,
+                                        review: review,
+                                      )));
+                    },
+                  ),
               ]),
             ]));
 
