@@ -16,6 +16,8 @@ class CheckboxFormField extends FormField<bool> {
               return CheckboxListTile(
                 dense: state.hasError,
                 title: title,
+                subtitle: Text(state.errorText ?? '',
+                    style: TextStyle(color: Colors.red)),
                 value: state.value,
                 onChanged: state.didChange,
                 controlAffinity: ListTileControlAffinity.leading,
