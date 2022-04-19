@@ -151,7 +151,10 @@ class _RevListState extends State<RevList> {
                                         return Card(
                                             child: InkWell(
                                           child: reviewCard(
-                                              review, professor, context),
+                                              review,
+                                              professor,
+                                              context,
+                                              review.courses!.split(',')),
                                           onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
@@ -175,7 +178,9 @@ class _RevListState extends State<RevList> {
   }
 }
 
-Widget reviewCard(Review review, Professor prof, context) => Container(
+Widget reviewCard(
+        Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

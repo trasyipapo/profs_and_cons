@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,6 +67,11 @@ class _ReviewFormState extends State<ReviewForm> {
 
   Widget _form() {
     List<String> courses = professor.courses.split(", ");
+    List<FormBuilderFieldOption<dynamic>> courseList = [];
+    for (String course in courses) {
+      courseList
+          .add(FormBuilderFieldOption(child: Text(course), value: course));
+    }
     // final courses =
     //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
@@ -90,26 +96,42 @@ class _ReviewFormState extends State<ReviewForm> {
               "Choose the course",
               style: header2,
             ),
-            Container(
-              //width: 333,
-              height: 50, //need to fix layout to show all courses
-              child: ListView.builder(
-                  //scrollDirection: Axis.horizontal,
-                  itemCount: courses.length,
-                  itemBuilder: (context, index) {
-                    return CheckboxFormField(
-                        title: Text(courses[index]),
-                        onSaved: (onSavedVal) {
-                          if (onSavedVal == true) {
-                            review.courses = review.courses! +
-                                " " +
-                                courses[
-                                    index]; //errors if review courses is a list for some reason
-                          }
-                        },
-                        validator: (onValidateVal) {});
-                  }),
+            FormBuilderCheckboxGroup(
+              name: 'Courses',
+              options: courseList,
+              validator: (onValidateVal) {
+                if (onValidateVal == null) {
+                  return "Please select at least one course";
+                }
+                return null;
+              },
+              onSaved: (onSavedVal) {
+                review.courses = onSavedVal?.join(',');
+              },
             ),
+            SizedBox(height: 10),
+            // ListView.builder(
+            //     //scrollDirection: Axis.horizontal,
+            //     shrinkWrap: true,
+            //     itemCount: courses.length,
+            //     itemBuilder: (context, index) {
+            //       return CheckboxFormField(
+            //           title: Text(courses[index]),
+            //           onSaved: (onSavedVal) {
+            //             if (onSavedVal == true) {
+            //               review.courses = review.courses! +
+            //                   " " +
+            //                   courses[
+            //                       index]; //errors if review courses is a list for some reason
+            //             }
+            //           },
+            //           validator: (onValidateVal) {
+            //             if (selected == false) {
+            //               return "Please select a course";
+            //             }
+            //             return null;
+            //           });
+            //     }),
             Text(
               "Rate your prof",
               style: header2,
@@ -293,11 +315,11 @@ class _ReviewFormState extends State<ReviewForm> {
                   child: FormHelper.inputFieldWidgetWithLabel(
                     context,
                     "yearTaken",
-                    "Year Taken",
+                    "Latest A.Y. Taken",
                     "2019-2020",
                     (onValidateVal) {
                       if (onValidateVal.isEmpty) {
-                        return 'Please state the school year you took the course';
+                        return 'Please state the latest academic year you took the course';
                       }
                       return null;
                     },
@@ -316,12 +338,15 @@ class _ReviewFormState extends State<ReviewForm> {
                 ),
               ],
             ),
-            CheckboxFormField(
-                title: Text('Submit anonymously'),
-                onSaved: (onSavedVal) {
+            FormBuilderCheckbox(
+              name: 'anonymous',
+              initialValue: false,
+              title: Text('Submit anonymously'),
+              onSaved: (onSavedVal) {
                   review.anonymous = onSavedVal!;
                 },
-                validator: (onValidateVal) {}),
+              validator: (onValidateVal) {},
+            ),
             Row(
               children: [
                 Expanded(
@@ -329,9 +354,9 @@ class _ReviewFormState extends State<ReviewForm> {
                   padding: EdgeInsets.all(5),
                   child: ElevatedButton(
                     onPressed: () {
-                      globalKey.currentState!.reset();
+                      Navigator.pop(context);
                     },
-                    child: Text("Clear"),
+                    child: Text("Cancel"),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white),
@@ -388,5 +413,58 @@ class _ReviewFormState extends State<ReviewForm> {
     rev.id = docReview.id;
     final json = rev.toJson();
     await docReview.set(json);
+
+    final tester = FirebaseFirestore.instance
+        .collection('reviews')
+        .where('profId', isEqualTo: rev.profId);
+
+    double attend = 0,
+        feedback = 0,
+        grading = 0,
+        leniency = 0,
+        overall = 0,
+        personality = 0,
+        teaching = 0,
+        workload = 0;
+    int total = 0;
+
+    await tester.get().then((snapShot) {
+      snapShot.docs.forEach((doc) {
+        attend = attend + doc["attendanceRating"];
+        feedback += doc["feedbackRating"];
+        grading += doc["gradingRating"];
+        leniency += doc["leniencyRating"];
+        overall += doc["overallRating"];
+        personality += doc["personalityRating"];
+        teaching += doc["teachingRating"];
+        workload += doc["workloadRating"];
+        total += 1;
+      });
+    });
+
+    attend /= total;
+    feedback /= total;
+    grading /= total;
+    leniency /= total;
+    overall /= total;
+    personality /= total;
+    teaching /= total;
+    workload /= total;
+
+    final updateProf = FirebaseFirestore.instance.collection('professors');
+    updateProf
+        .doc(rev.profId)
+        .update({
+          'attendanceRating': num.parse(attend.toStringAsFixed(2)),
+          'feedbackRating': num.parse(feedback.toStringAsFixed(2)),
+          'gradingRating': num.parse(grading.toStringAsFixed(2)),
+          'leniencyRating': num.parse(leniency.toStringAsFixed(2)),
+          'overallRating': num.parse(overall.toStringAsFixed(2)),
+          'personalityRating': num.parse(personality.toStringAsFixed(2)),
+          'teachingRating': num.parse(teaching.toStringAsFixed(2)),
+          'workloadRating': num.parse(workload.toStringAsFixed(2)),
+        })
+        .then((_) => debugPrint('Updated'))
+        .catchError((error) => debugPrint('Update Failed: $error'));
   }
 }
