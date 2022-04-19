@@ -37,8 +37,6 @@ class _ReviewFormState extends State<ReviewForm> {
     review.writer = user!.displayName!;
     review.writeruid = user!.uid;
 
-    print(review.writeruid); // delete later
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -343,8 +341,8 @@ class _ReviewFormState extends State<ReviewForm> {
               initialValue: false,
               title: Text('Submit anonymously'),
               onSaved: (onSavedVal) {
-                  review.anonymous = onSavedVal!;
-                },
+                review.anonymous = onSavedVal!;
+              },
               validator: (onValidateVal) {},
             ),
             Row(

@@ -66,7 +66,7 @@ class _RevListState extends State<RevList> {
               ),
             ),
             body: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -97,7 +97,7 @@ class _RevListState extends State<RevList> {
                                         )),
                               );
                             })),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     StreamBuilder<List<Review>>(
@@ -141,7 +141,7 @@ class _RevListState extends State<RevList> {
                                 ],
                               );
                             } else {
-                              return Container(
+                              return SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   height: 500,
                                   child: ListView.builder(
@@ -151,10 +151,7 @@ class _RevListState extends State<RevList> {
                                         return Card(
                                             child: InkWell(
                                           child: reviewCard(
-                                              review,
-                                              professor,
-                                              context,
-                                              review.courses!.split(',')),
+                                              review, professor, context),
                                           onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
@@ -178,9 +175,7 @@ class _RevListState extends State<RevList> {
   }
 }
 
-Widget reviewCard(
-        Review review, Professor prof, context, List<String> revCourses) =>
-    Container(
+Widget reviewCard(Review review, Professor prof, context) => Container(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -191,11 +186,13 @@ Widget reviewCard(
                 IconButton(
                     onPressed: () {
                       review.votes += 1;
+                      review.voter[user!.uid] = true;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
                           .doc(review.id)
-                          .update({'votes': review.votes})
+                          .update(
+                              {'votes': review.votes, 'voter': review.voter})
                           .then((_) => debugPrint('Updated'))
                           .catchError(
                               (error) => debugPrint('Update Failed: $error'));
@@ -215,11 +212,14 @@ Widget reviewCard(
                 IconButton(
                     onPressed: () {
                       review.votes -= 1;
+                      print(review.voter);
+                      review.voter[user!.uid] = false;
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
                           .doc(review.id)
-                          .update({'votes': review.votes})
+                          .update(
+                              {'votes': review.votes, 'voter': review.voter})
                           .then((_) => debugPrint('Updated'))
                           .catchError(
                               (error) => debugPrint('Update Failed: $error'));
