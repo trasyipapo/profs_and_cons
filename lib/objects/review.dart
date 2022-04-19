@@ -16,6 +16,7 @@ class Review {
   bool anonymous;
   String? profId;
   String? writer;
+  String? writeruid;
   int votes;
 
   Review(
@@ -36,6 +37,7 @@ class Review {
       this.anonymous = false,
       this.profId,
       this.writer,
+      this.writeruid,
       this.votes = 0});
 
   Map<String, dynamic> toJson() => {
@@ -56,6 +58,7 @@ class Review {
         'anonymous': anonymous,
         'profId': profId,
         'writer': writer,
+        'writeruid': writeruid,
         'votes': votes
       };
 
@@ -77,5 +80,6 @@ class Review {
       anonymous: json['anonymous'],
       profId: json['profId'],
       writer: json['writer'],
+      writeruid: json['writeruid'],
       votes: json['votes']);
 }
