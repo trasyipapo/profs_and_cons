@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,7 +64,11 @@ class _ReviewFormState extends State<ReviewForm> {
 
   Widget _form() {
     List<String> courses = professor.courses.split(", ");
-    bool selected = false;
+    List<FormBuilderFieldOption<dynamic>> courseList = [];
+    for (String course in courses) {
+      courseList
+          .add(FormBuilderFieldOption(child: Text(course), value: course));
+    }
     // final courses =
     //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
@@ -88,29 +93,42 @@ class _ReviewFormState extends State<ReviewForm> {
               "Choose the course",
               style: header2,
             ),
-            ListView.builder(
-                //scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: courses.length,
-                itemBuilder: (context, index) {
-                  return CheckboxFormField(
-                      title: Text(courses[index]),
-                      onSaved: (onSavedVal) {
-                        if (onSavedVal == true) {
-                          selected = true;
-                          review.courses = review.courses! +
-                              " " +
-                              courses[
-                                  index]; //errors if review courses is a list for some reason
-                        }
-                      },
-                      validator: (onValidateVal) {
-                        if (selected == false) {
-                          return "Please select a course";
-                        }
-                        return null;
-                      });
-                }),
+            FormBuilderCheckboxGroup(
+              name: 'Courses',
+              options: courseList,
+              validator: (onValidateVal) {
+                print(onValidateVal);
+                if (onValidateVal == null) {
+                  return "Please select a course";
+                }
+                return null;
+              },
+              onSaved: (onSavedVal) {
+                review.courses = onSavedVal?.join(',');
+              },
+            ),
+            // ListView.builder(
+            //     //scrollDirection: Axis.horizontal,
+            //     shrinkWrap: true,
+            //     itemCount: courses.length,
+            //     itemBuilder: (context, index) {
+            //       return CheckboxFormField(
+            //           title: Text(courses[index]),
+            //           onSaved: (onSavedVal) {
+            //             if (onSavedVal == true) {
+            //               review.courses = review.courses! +
+            //                   " " +
+            //                   courses[
+            //                       index]; //errors if review courses is a list for some reason
+            //             }
+            //           },
+            //           validator: (onValidateVal) {
+            //             if (selected == false) {
+            //               return "Please select a course";
+            //             }
+            //             return null;
+            //           });
+            //     }),
             Text(
               "Rate your prof",
               style: header2,
