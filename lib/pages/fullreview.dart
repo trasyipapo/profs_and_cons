@@ -81,7 +81,16 @@ class _FullReviewState extends State<FullReview> {
                             padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text(professor.name, style: header)],
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(professor.name, style: header),
+                                    Text(professor.department,
+                                        style: smallText),
+                                  ],
+                                ),
+                              ],
                             )),
                         Card(
                             child: reviewDetails(filteredReviews[0], professor,
