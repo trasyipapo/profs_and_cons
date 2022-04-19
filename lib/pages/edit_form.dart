@@ -328,11 +328,10 @@ class _EditFormState extends State<EditForm> {
               initialValue: review.anonymous,
               title: Text('Submit anonymously'),
               onSaved: (onSavedVal) {
-                  review.anonymous = onSavedVal!;
-                },
+                review.anonymous = onSavedVal!;
+              },
               validator: (onValidateVal) {},
             ),
-
             Row(
               children: [
                 Expanded(
@@ -403,7 +402,7 @@ class _EditFormState extends State<EditForm> {
 
   Future updateReview(Review rev) async {
     final collection = FirebaseFirestore.instance.collection('reviews');
-    collection
+    await collection
         .doc(rev.id)
         .update({
           'courses': rev.courses,
@@ -420,6 +419,59 @@ class _EditFormState extends State<EditForm> {
           'semesterTaken': rev.semesterTaken,
           'yearTaken': rev.yearTaken,
           'anonymous': rev.anonymous,
+        })
+        .then((_) => debugPrint('Updated'))
+        .catchError((error) => debugPrint('Update Failed: $error'));
+
+    final tester = FirebaseFirestore.instance
+        .collection('reviews')
+        .where('profId', isEqualTo: rev.profId);
+
+    double attend = 0,
+        feedback = 0,
+        grading = 0,
+        leniency = 0,
+        overall = 0,
+        personality = 0,
+        teaching = 0,
+        workload = 0;
+    int total = 0;
+
+    await tester.get().then((snapShot) {
+      snapShot.docs.forEach((doc) {
+        attend = attend + doc["attendanceRating"];
+        feedback += doc["feedbackRating"];
+        grading += doc["gradingRating"];
+        leniency += doc["leniencyRating"];
+        overall += doc["overallRating"];
+        personality += doc["personalityRating"];
+        teaching += doc["teachingRating"];
+        workload += doc["workloadRating"];
+        total += 1;
+      });
+    });
+
+    attend /= total;
+    feedback /= total;
+    grading /= total;
+    leniency /= total;
+    overall /= total;
+    personality /= total;
+    teaching /= total;
+    workload /= total;
+
+    final updateProf = FirebaseFirestore.instance.collection('professors');
+    updateProf
+        .doc(rev.profId)
+        .update({
+          'attendanceRating': num.parse(attend.toStringAsFixed(2)),
+          'feedbackRating': num.parse(feedback.toStringAsFixed(2)),
+          'gradingRating': num.parse(grading.toStringAsFixed(2)),
+          'leniencyRating': num.parse(leniency.toStringAsFixed(2)),
+          'overallRating': num.parse(overall.toStringAsFixed(2)),
+          'personalityRating': num.parse(personality.toStringAsFixed(2)),
+          'teachingRating': num.parse(teaching.toStringAsFixed(2)),
+          'workloadRating': num.parse(workload.toStringAsFixed(2)),
         })
         .then((_) => debugPrint('Updated'))
         .catchError((error) => debugPrint('Update Failed: $error'));
