@@ -245,43 +245,29 @@ Widget reviewCard(
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-              width: 284, //HARDCODED -- TO FIX
-              height: 25,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: revCourses.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                      child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              child: Text(
-                                revCourses[position],
-                                style: buttonText,
-                              ))));
+            Wrap(spacing: 10, children: [
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Text('${review.courses}', style: buttonText))),
+            ]),
+            if (user!.displayName! == review.writer)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
                 },
               ),
-            ),
-            IconButton(
-              icon: Icon(Icons.edit),
-              disabledColor: Colors.white,
-              onPressed: () {
-                user!.displayName! != review.writer
-                    ? null
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EditForm(
-                                  professor: prof,
-                                  review: review,
-                                )));
-              },
-            ),
           ])
         ]),
       ),

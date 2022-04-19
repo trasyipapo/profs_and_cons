@@ -35,6 +35,9 @@ class _ReviewFormState extends State<ReviewForm> {
   Widget build(BuildContext context) {
     review.profId = professor.id;
     review.writer = user!.displayName!;
+    review.writeruid = user!.uid;
+
+    print(review.writeruid); // delete later
 
     return Scaffold(
       appBar: AppBar(
