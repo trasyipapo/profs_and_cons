@@ -249,7 +249,7 @@ Widget reviewCard(Review review, Professor prof, context) => Container(
                       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                       child: Text('${review.courses}', style: buttonText))),
             ]),
-            if (user!.displayName! == review.writer)
+            if (user!.uid == review.writeruid)
               IconButton(
                 icon: Icon(Icons.edit),
                 disabledColor: Colors.white,
