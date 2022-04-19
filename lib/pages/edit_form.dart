@@ -90,6 +90,7 @@ class _EditFormState extends State<EditForm> {
               professor.name,
               style: header,
             ),
+            Text(professor.department, style: smallText),
             Text(
               "Choose the course",
               style: header2,

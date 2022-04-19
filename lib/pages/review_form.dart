@@ -92,6 +92,7 @@ class _ReviewFormState extends State<ReviewForm> {
               professor.name,
               style: header,
             ),
+            Text(professor.department, style: smallText),
             Text(
               "Choose the course",
               style: header2,
@@ -343,8 +344,8 @@ class _ReviewFormState extends State<ReviewForm> {
               initialValue: false,
               title: Text('Submit anonymously'),
               onSaved: (onSavedVal) {
-                  review.anonymous = onSavedVal!;
-                },
+                review.anonymous = onSavedVal!;
+              },
               validator: (onValidateVal) {},
             ),
             Row(
