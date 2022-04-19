@@ -97,9 +97,8 @@ class _ReviewFormState extends State<ReviewForm> {
               name: 'Courses',
               options: courseList,
               validator: (onValidateVal) {
-                print(onValidateVal);
                 if (onValidateVal == null) {
-                  return "Please select a course";
+                  return "Please select at least one course";
                 }
                 return null;
               },
@@ -107,6 +106,7 @@ class _ReviewFormState extends State<ReviewForm> {
                 review.courses = onSavedVal?.join(',');
               },
             ),
+            SizedBox(height: 10),
             // ListView.builder(
             //     //scrollDirection: Axis.horizontal,
             //     shrinkWrap: true,
@@ -348,9 +348,9 @@ class _ReviewFormState extends State<ReviewForm> {
                   padding: EdgeInsets.all(5),
                   child: ElevatedButton(
                     onPressed: () {
-                      globalKey.currentState!.reset();
+                      Navigator.pop(context);
                     },
-                    child: Text("Clear"),
+                    child: Text("Cancel"),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Colors.white),
