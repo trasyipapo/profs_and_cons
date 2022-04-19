@@ -81,29 +81,16 @@ class _ProfileState extends State<Profile> {
                 )),
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.all(20)),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.blue)),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            'Add new review',
-                            style: TextStyle(fontSize: 20.0),
-                          )
-                        ]),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ReviewForm(
-                                  professor: professor,
-                                )),
-                      );
-                    })),
+                child: FutureBuilder<bool>(
+                  future: exists(professor.id),
+                  builder: (contextF, snapshot) {
+                    if (snapshot.data == true) {
+                      return editRev(professor, context);
+                    } else {
+                      return addRev(professor, context);
+                    }
+                  },
+                )),
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                 child: Column(children: [
