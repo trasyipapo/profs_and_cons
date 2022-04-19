@@ -7,6 +7,7 @@ import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search.dart';
+import 'package:profs_and_cons/pages/review_form.dart';
 
 class Profile extends StatefulWidget {
   Professor professor;
@@ -20,8 +21,10 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   Professor professor;
   _ProfileState({required this.professor});
+
   @override
   Widget build(BuildContext context) {
+    List<String> courses = professor.courses.split(", ");
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,6 +34,18 @@ class _ProfileState extends State<Profile> {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SearchPage()));
             }),
+        actions: [
+          IconButton(
+            icon: Image.asset('assets/appbar-logo.png'),
+            padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPage()),
+              );
+            },
+          ),
+        ],
         centerTitle: false,
         backgroundColor: Colors.white,
         title: const Text(
@@ -51,21 +66,152 @@ class _ProfileState extends State<Profile> {
                     Text(professor.name, style: header),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
-                          Text('4.5', style: overallRating),
-                          Text('Overall Rating', style: bodyText)
+                        children: [
+                          Text(professor.overallRating.toString(),
+                              style: overallRating),
+                          const Text('Overall Rating', style: bodyText)
                         ])
                   ],
                 )),
-            reviewButton,
-            coursesTaught,
-            averageRatings,
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.all(20)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blue)),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Add new review',
+                            style: TextStyle(fontSize: 20.0),
+                          )
+                        ]),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ReviewForm(
+                                  professor: professor,
+                                )),
+                      );
+                    })),
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Courses Taught:',
+                        style: header2,
+                      )
+                    ],
+                  ),
+                  const Padding(padding: EdgeInsets.all(5)),
+                  SizedBox(
+                    width: 333, //HARDCODED -- TO FIX
+                    height: 25,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: courses.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return Container(
+                            margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                            child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                    child: Text(
+                                      courses[position],
+                                      style: buttonText,
+                                    ))));
+                      },
+                    ),
+                  )
+                ])),
+
+            // averageRatings => replaced with this thing below
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Average Ratings', style: header2),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Teaching Skill'),
+                                    ratingBar(professor.teachingRating)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Personality'),
+                                    ratingBar(professor.personalityRating)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Grading'),
+                                    ratingBar(professor.gradingRating)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Workload'),
+                                    ratingBar(professor.workloadRating)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Leniency'),
+                                    ratingBar(professor.leniencyRating)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Attendance'),
+                                    ratingBar(professor.attendanceRating)
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Feedback'),
+                                    ratingBar(professor.feedbackRating)
+                                  ],
+                                )
+                              ]))
+                    ])),
             Container(
                 margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
                 child: TextButton(
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.all(20)),
+                        const EdgeInsets.all(20)),
                   ),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +229,10 @@ class _ProfileState extends State<Profile> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RevList()),
+                      MaterialPageRoute(
+                          builder: (context) => RevList(
+                                professor: professor,
+                              )),
                     );
                   },
                 ))
@@ -111,7 +260,8 @@ Widget reviewButton = Container(
     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: ElevatedButton(
         style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
+            padding:
+                MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
             backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
@@ -135,64 +285,49 @@ Widget coursesTaught = Container(
               child: const Padding(
                   padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Text('CSCI 115', style: buttonText))),
-          DecoratedBox(
-              decoration: BoxDecoration(
-                  color: Colors.yellow, borderRadius: BorderRadius.circular(5)),
-              child: const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  child: Text('CSCI 42', style: buttonText))),
-          DecoratedBox(
-              decoration: BoxDecoration(
-                  color: Colors.green, borderRadius: BorderRadius.circular(5)),
-              child: const Padding(
-                  padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                  child: Text(
-                    'CSCI 21',
-                    style: buttonText,
-                  )))
         ])
       ])
     ]));
 
-Widget averageRatings = Container(
-    padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const Text('Average Ratings', style: header2),
-      Padding(
-          padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Teaching Skill'), ratingBar(4)],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Personality'), ratingBar(3)],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Grading'), ratingBar(4)],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Workload'), ratingBar(3)],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Leniency'), ratingBar(5)],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Attendance'), ratingBar(4)],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [const Text('Feedback'), ratingBar(4)],
-                )
-              ]))
-    ]));
+// Widget averageRatings = Container(
+//     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+//     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//       const Text('Average Ratings', style: header2),
+//       Padding(
+//           padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
+//           child: Column(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Teaching Skill'), ratingBar(4)],
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Personality'), ratingBar(3)],
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Grading'), ratingBar(4)],
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Workload'), ratingBar(3)],
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Leniency'), ratingBar(5)],
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Attendance'), ratingBar(4)],
+//                 ),
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [const Text('Feedback'), ratingBar(4)],
+//                 )
+//               ]))
+//     ]));
 
 RatingBar ratingBar(double rating) {
   return RatingBar(

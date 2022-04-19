@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
@@ -9,8 +7,6 @@ import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-List<Professor> professors = [];
 
 Stream<List<Professor>> readProfs() => FirebaseFirestore.instance
     .collection('professors')
@@ -44,6 +40,18 @@ class _SearchResultsState extends State<SearchResults> {
                       MaterialPageRoute(builder: (context) => SearchPage()),
                     );
                   }),
+              actions: [
+                IconButton(
+                  icon: Image.asset('assets/appbar-logo.png'),
+                  padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SearchPage()),
+                    );
+                  },
+                ),
+              ],
               centerTitle: false,
               backgroundColor: Colors.white,
               title: const Text(
@@ -63,7 +71,8 @@ class _SearchResultsState extends State<SearchResults> {
                         stream: readProfs(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
-                            return Text('Something went wrong...');
+                            return Text(
+                                'Something went wrong...${snapshot.error}');
                           } else if (snapshot.hasData) {
                             List<Professor> professors = snapshot.data!;
                             List<Professor> filteredProfs = [];
@@ -72,7 +81,28 @@ class _SearchResultsState extends State<SearchResults> {
                                 .toLowerCase()
                                 .contains(query.toLowerCase()));
                             if (filteredProfs.length == 0) {
-                              return const Text('No results found');
+                              return Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(120, 56, 120, 24),
+                                          child: Image.asset('assets/appbar-logo.png'),
+                                        ),
+                                        const Text("Sorry, we couldn't find any matches",
+                                            textAlign: TextAlign.center,
+                                            style:
+                                              TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 32,
+                                                color: Colors.black)),
+                                        const Text('\n',
+                                            style:
+                                                TextStyle(fontSize: 5, color: Colors.white)),
+                                        const Text('Please try another keyword',
+                                            style:
+                                                TextStyle(fontSize: 16, color: Colors.black)),
+                                      ],
+                                    );
                             } else {
                               return ListView.builder(
                                 scrollDirection: Axis.vertical,
@@ -82,7 +112,11 @@ class _SearchResultsState extends State<SearchResults> {
                                   final prof = filteredProfs[index];
                                   return Card(
                                       child: ListTile(
-                                    title: Text(prof.name),
+                                    title: Text(prof.name, style: resultName),
+                                    subtitle: Text(prof.department),
+                                    trailing: Text(
+                                        prof.overallRating.toStringAsFixed(2),
+                                        style: resultsRating),
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(

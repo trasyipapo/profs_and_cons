@@ -44,6 +44,10 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
+    String displayName = user!.displayName!;
+    final nameSplit = displayName.split(' ');
+    final firstName =
+        nameSplit[0][0].toUpperCase() + nameSplit[0].substring(1).toLowerCase();
 
     return Scaffold(
         extendBodyBehindAppBar: true,
@@ -51,10 +55,11 @@ class _SearchPageState extends State<SearchPage> {
           automaticallyImplyLeading: false,
           centerTitle: false,
           backgroundColor: Colors.transparent,
-          title: const Text(
-            'Profs and Cons',
-            textAlign: TextAlign.left,
+          title: Padding(
+            padding: const EdgeInsets.fromLTRB(6.0, 0, 150.0, 0),
+            child: Image.asset('assets/home-logo.png'),
           ),
+          leadingWidth: 500,
         ),
         body: Container(
             constraints: const BoxConstraints.expand(),
@@ -66,17 +71,20 @@ class _SearchPageState extends State<SearchPage> {
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               const Spacer(),
               Container(
-                  padding: const EdgeInsets.all(32),
+                  padding: const EdgeInsets.fromLTRB(25, 50, 25, 25),
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Hello,\n' + user!.displayName! + '!',
+                          Text('Hello,\n' + firstName + '!',
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 32,
                                   color: Colors.white)),
+                          const Text('\n',
+                              style:
+                                  TextStyle(fontSize: 5, color: Colors.white)),
                           const Text('Let\'s search for your profs',
                               style:
                                   TextStyle(fontSize: 16, color: Colors.white))
