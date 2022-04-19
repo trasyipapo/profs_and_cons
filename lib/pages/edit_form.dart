@@ -299,11 +299,11 @@ class _EditFormState extends State<EditForm> {
                   child: FormHelper.inputFieldWidgetWithLabel(
                     context,
                     "yearTaken",
-                    "Year Taken",
+                    "Latest A.Y. Taken",
                     "2019-2020",
                     (onValidateVal) {
                       if (onValidateVal.isEmpty) {
-                        return 'Please state the school year you took the course';
+                        return 'Please state the latest academic year you took the course';
                       }
                       return null;
                     },
