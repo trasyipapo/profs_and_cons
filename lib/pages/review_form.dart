@@ -37,8 +37,6 @@ class _ReviewFormState extends State<ReviewForm> {
     review.writer = user!.displayName!;
     review.writeruid = user!.uid;
 
-    print(review.writeruid); // delete later
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
