@@ -109,28 +109,6 @@ class _ReviewFormState extends State<ReviewForm> {
               },
             ),
             SizedBox(height: 10),
-            // ListView.builder(
-            //     //scrollDirection: Axis.horizontal,
-            //     shrinkWrap: true,
-            //     itemCount: courses.length,
-            //     itemBuilder: (context, index) {
-            //       return CheckboxFormField(
-            //           title: Text(courses[index]),
-            //           onSaved: (onSavedVal) {
-            //             if (onSavedVal == true) {
-            //               review.courses = review.courses! +
-            //                   " " +
-            //                   courses[
-            //                       index]; //errors if review courses is a list for some reason
-            //             }
-            //           },
-            //           validator: (onValidateVal) {
-            //             if (selected == false) {
-            //               return "Please select a course";
-            //             }
-            //             return null;
-            //           });
-            //     }),
             Text(
               "Rate your prof",
               style: header2,
