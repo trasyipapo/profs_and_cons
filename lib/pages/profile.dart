@@ -326,6 +326,7 @@ RatingBar ratingBar(double rating) {
   return RatingBar(
       initialRating: rating,
       itemSize: 20,
+      ignoreGestures: true,
       direction: Axis.horizontal,
       allowHalfRating: true,
       itemCount: 5,
