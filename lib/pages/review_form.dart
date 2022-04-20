@@ -90,6 +90,7 @@ class _ReviewFormState extends State<ReviewForm> {
               professor.name,
               style: header,
             ),
+            Text(professor.department, style: smallText),
             Text(
               "Choose the course",
               style: header2,

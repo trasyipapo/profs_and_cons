@@ -81,7 +81,16 @@ class _FullReviewState extends State<FullReview> {
                             padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text(professor.name, style: header)],
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(professor.name, style: header),
+                                    Text(professor.department,
+                                        style: smallText),
+                                  ],
+                                ),
+                              ],
                             )),
                         Card(
                             child: reviewDetails(filteredReviews[0], professor,
@@ -265,21 +274,22 @@ Widget reviewDetails(
                     },
                   ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  disabledColor: Colors.white,
-                  onPressed: () {
-                    user!.displayName! != review.writer
-                        ? null
-                        : Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EditForm(
-                                      professor: prof,
-                                      review: review,
-                                    )));
-                  },
-                ),
+                if (user!.uid == review.writeruid)
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    disabledColor: Colors.white,
+                    onPressed: () {
+                      user!.uid != review.writeruid
+                          ? null
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditForm(
+                                        professor: prof,
+                                        review: review,
+                                      )));
+                    },
+                  ),
               ]),
             ]));
 

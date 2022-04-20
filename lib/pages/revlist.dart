@@ -34,6 +34,7 @@ class _RevListState extends State<RevList> {
 
   @override
   Widget build(BuildContext context) {
+    Review review;
     return MaterialApp(
         title: 'Professor Reviews Screen',
         home: Scaffold(
@@ -71,33 +72,20 @@ class _RevListState extends State<RevList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(professor.name, style: header),
+                    Text(professor.department, style: smallText),
                     Container(
                         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                                padding: MaterialStateProperty.all<EdgeInsets>(
-                                    const EdgeInsets.all(20)),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.blue)),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text(
-                                    'Add new review',
-                                    style: TextStyle(fontSize: 20.0),
-                                  )
-                                ]),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ReviewForm(
-                                          professor: professor,
-                                        )),
-                              );
-                            })),
-                    const SizedBox(
+                        child: FutureBuilder<bool>(
+                          future: exists(professor.id),
+                          builder: (contextF, snapshot) {
+                            if (snapshot.data == true) {
+                              return editRev(professor, context);
+                            } else {
+                              return addRev(professor, context);
+                            }
+                          },
+                        )),
+                    SizedBox(
                       height: 10,
                     ),
                     StreamBuilder<List<Review>>(
@@ -551,3 +539,69 @@ Widget up(Review review, Professor prof, context) => Container(
         ]),
       ),
     );
+
+Review? userReview;
+
+Future<bool> exists(String profId) async {
+  bool edit = false;
+
+  var btnChanger = FirebaseFirestore.instance
+      .collection('reviews')
+      .where('profId', isEqualTo: profId)
+      .where('writeruid', isEqualTo: user!.uid);
+
+  await btnChanger.get().then((snapShot) {
+    snapShot.docs.forEach((doc) {
+      edit = true;
+      userReview = Review.fromJson(doc.data());
+    });
+  });
+  return edit;
+}
+
+ElevatedButton addRev(Professor professor, BuildContext context) {
+  return ElevatedButton(
+      style: ButtonStyle(
+          padding:
+              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          'Add New Review',
+          style: TextStyle(fontSize: 20.0),
+        )
+      ]),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ReviewForm(
+                    professor: professor,
+                  )),
+        );
+      });
+}
+
+ElevatedButton editRev(Professor professor, BuildContext context) {
+  return ElevatedButton(
+      style: ButtonStyle(
+          padding:
+              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          'Edit Review',
+          style: TextStyle(fontSize: 20.0),
+        )
+      ]),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => EditForm(
+                    professor: professor,
+                    review: userReview!,
+                  )),
+        );
+      });
+}
