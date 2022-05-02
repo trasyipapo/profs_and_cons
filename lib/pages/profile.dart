@@ -81,16 +81,32 @@ class _ProfileState extends State<Profile> {
                 )),
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                child: FutureBuilder<bool>(
-                  future: exists(professor.id!),
-                  builder: (contextF, snapshot) {
-                    if (snapshot.data == true) {
-                      return editRev(professor, context);
-                    } else {
-                      return addRev(professor, context);
-                    }
-                  },
-                )),
+                child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: FutureBuilder<bool>(
+                        future: exists(professor.id!),
+                        builder: (contextF, snapshot) {
+                          if (snapshot.data == true) {
+                            return editRev(professor, context);
+                          } else {
+                            return addRev(professor, context);
+                          }
+                        },
+                      )),
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.all(20)),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.blue)),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [Icon(Icons.bookmark)]),
+                          onPressed: () {})
+                    ])),
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                 child: Column(children: [
