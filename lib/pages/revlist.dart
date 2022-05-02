@@ -275,14 +275,30 @@ Widget reviewCard(
             style: header,
           ),
           SizedBox(height: 24),
+          Row(children: [
+            Text(
+                review.semesterTaken! == '0'
+                    ? 'Intersession'
+                    : review.semesterTaken! == '1'
+                        ? '1st Sem'
+                        : '2nd Sem',
+                style: header2),
+            SizedBox(width: 2),
+            Icon(
+              Icons.brightness_1,
+              size: 5,
+            ),
+            SizedBox(width: 2),
+            Text('${review.yearTaken}', style: header2),
+          ]),
           Text(
             review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: header2,
+            style: smallText,
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             SizedBox(
-              width: 284, //HARDCODED -- TO FIX
+              width: 239, //HARDCODED -- TO FIX
               height: 25,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -303,20 +319,6 @@ Widget reviewCard(
                 },
               ),
             ),
-            if (user!.uid == review.writeruid)
-              IconButton(
-                icon: Icon(Icons.edit),
-                disabledColor: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditForm(
-                                professor: prof,
-                                review: review,
-                              )));
-                },
-              ),
           ])
         ]),
       ),
