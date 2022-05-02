@@ -31,6 +31,7 @@ class RevList extends StatefulWidget {
 class _RevListState extends State<RevList> {
   Professor professor;
   _RevListState({required this.professor});
+  String sortBy = 'Most Voted';
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +72,44 @@ class _RevListState extends State<RevList> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(professor.name, style: header),
-                    Text(professor.department, style: smallText),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(professor.name, style: header),
+                              Text(professor.department, style: smallText),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              DropdownButton(
+                                  value: sortBy,
+                                  icon: Icon(Icons.filter_alt),
+                                  items: <String>[
+                                    'Most Voted',
+                                    'Least Voted',
+                                    'Newest',
+                                    'Oldest',
+                                    'Highest Rating',
+                                    'Lowest Rating'
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      sortBy = newValue!;
+                                    });
+                                  })
+                            ],
+                          )
+                        ]),
                     Container(
                         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                         child: FutureBuilder<bool>(
@@ -88,114 +125,152 @@ class _RevListState extends State<RevList> {
                     SizedBox(
                       height: 10,
                     ),
-                    StreamBuilder<List<Review>>(
-                        stream: readReviews(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return Text(
-                                'Something went wrong...${snapshot.error}');
-                          } else if (snapshot.hasData) {
-                            List<Review> reviews = snapshot.data!;
-                            List<Review> filteredReviews = reviews
-                                .where((rev) => (rev.profId == professor.id))
-                                .toList();
-                            filteredReviews = filteredReviews
-                              ..sort((rev1, rev2) =>
-                                  rev2.votes.compareTo(rev1.votes));
-                            if (filteredReviews.length == 0) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        120, 56, 120, 24),
-                                    child:
-                                        Image.asset('assets/appbar-logo.png'),
-                                  ),
-                                  const Text(
-                                      "There are no reviews for this prof yet.",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 32,
-                                          color: Colors.black)),
-                                  const Text('\n',
-                                      style: TextStyle(
-                                          fontSize: 5, color: Colors.white)),
-                                  const Text('Be the first to review?',
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.black)),
-                                ],
-                              );
-                            } else {
-                              return SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 500,
-                                  child: ListView.builder(
-                                      itemCount: filteredReviews.length,
-                                      itemBuilder: (context, index) {
-                                        final review = filteredReviews[index];
-                                        if (review.isUp == null) {
-                                          return Card(
-                                              child: InkWell(
-                                            child: reviewCard(
-                                                review,
-                                                professor,
-                                                context,
-                                                review.courses!.split(',')),
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          FullReview(
-                                                            review: review,
-                                                            professor:
-                                                                professor,
-                                                          )));
-                                            },
-                                          ));
-                                        } else if (!(review.isUp!)) {
-                                          return Card(
-                                              child: InkWell(
-                                            child: down(
-                                                review, professor, context),
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          FullReview(
-                                                            review: review,
-                                                            professor:
-                                                                professor,
-                                                          )));
-                                            },
-                                          ));
-                                        } else {
-                                          return Card(
-                                              child: InkWell(
-                                            child:
-                                                up(review, professor, context),
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          FullReview(
-                                                            review: review,
-                                                            professor:
-                                                                professor,
-                                                          )));
-                                            },
-                                          ));
-                                        }
-                                      }));
-                            }
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        }),
+                    Expanded(
+                        child: StreamBuilder<List<Review>>(
+                            stream: readReviews(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return Text(
+                                    'Something went wrong...${snapshot.error}');
+                              } else if (snapshot.hasData) {
+                                List<Review> reviews = snapshot.data!;
+                                List<Review> filteredReviews = reviews
+                                    .where(
+                                        (rev) => (rev.profId == professor.id))
+                                    .toList();
+
+                                if (sortBy == 'Most Voted') {
+                                  filteredReviews = filteredReviews
+                                    ..sort((rev1, rev2) =>
+                                        rev2.votes.compareTo(rev1.votes));
+                                } else if (sortBy == 'Least Voted') {
+                                  filteredReviews = filteredReviews
+                                    ..sort((rev1, rev2) =>
+                                        rev1.votes.compareTo(rev2.votes));
+                                } else if (sortBy == 'Newest') {
+                                  filteredReviews = filteredReviews
+                                    ..sort((rev1, rev2) =>
+                                        ("${rev2.yearTaken}${rev2.semesterTaken}")
+                                            .toString()
+                                            .compareTo(
+                                                ("${rev1.yearTaken}${rev1.semesterTaken}")
+                                                    .toString()));
+                                } else if (sortBy == 'Oldest') {
+                                  filteredReviews = filteredReviews
+                                    ..sort((rev1, rev2) =>
+                                        ("${rev1.yearTaken}${rev1.semesterTaken}")
+                                            .toString()
+                                            .compareTo(
+                                                ("${rev2.yearTaken}${rev2.semesterTaken}")
+                                                    .toString()));
+                                } else if (sortBy == 'Highest Rating') {
+                                  filteredReviews = filteredReviews
+                                    ..sort((rev1, rev2) => rev2.overallRating!
+                                        .compareTo(rev1.overallRating!));
+                                } else if (sortBy == 'Lowest Rating') {
+                                  filteredReviews = filteredReviews
+                                    ..sort((rev1, rev2) => rev1.overallRating!
+                                        .compareTo(rev2.overallRating!));
+                                }
+
+                                if (filteredReviews.length == 0) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            120, 56, 120, 24),
+                                        child: Image.asset(
+                                            'assets/appbar-logo.png'),
+                                      ),
+                                      const Text(
+                                          "There are no reviews for this prof yet.",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 32,
+                                              color: Colors.black)),
+                                      const Text('\n',
+                                          style: TextStyle(
+                                              fontSize: 5,
+                                              color: Colors.white)),
+                                      const Text('Be the first to review?',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black)),
+                                    ],
+                                  );
+                                } else {
+                                  return SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 500,
+                                      child: ListView.builder(
+                                          itemCount: filteredReviews.length,
+                                          itemBuilder: (context, index) {
+                                            final review =
+                                                filteredReviews[index];
+                                            if (review.isUp == null) {
+                                              return Card(
+                                                  child: InkWell(
+                                                child: reviewCard(
+                                                    review,
+                                                    professor,
+                                                    context,
+                                                    review.courses!.split(',')),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              FullReview(
+                                                                review: review,
+                                                                professor:
+                                                                    professor,
+                                                              )));
+                                                },
+                                              ));
+                                            } else if (!(review.isUp!)) {
+                                              return Card(
+                                                  child: InkWell(
+                                                child: down(
+                                                    review, professor, context),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              FullReview(
+                                                                review: review,
+                                                                professor:
+                                                                    professor,
+                                                              )));
+                                                },
+                                              ));
+                                            } else {
+                                              return Card(
+                                                  child: InkWell(
+                                                child: up(
+                                                    review, professor, context),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              FullReview(
+                                                                review: review,
+                                                                professor:
+                                                                    professor,
+                                                              )));
+                                                },
+                                              ));
+                                            }
+                                          }));
+                                }
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            })),
                   ]),
             )));
   }
@@ -421,9 +496,25 @@ Widget down(Review review, Professor prof, context) => Container(
             style: header,
           ),
           SizedBox(height: 24),
+          Row(children: [
+            Text(
+                review.semesterTaken! == '0'
+                    ? 'Intersession'
+                    : review.semesterTaken! == '1'
+                        ? '1st Sem'
+                        : '2nd Sem',
+                style: header2),
+            SizedBox(width: 2),
+            Icon(
+              Icons.brightness_1,
+              size: 5,
+            ),
+            SizedBox(width: 2),
+            Text('${review.yearTaken}', style: header2),
+          ]),
           Text(
             review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: header2,
+            style: smallText,
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -527,9 +618,25 @@ Widget up(Review review, Professor prof, context) => Container(
             style: header,
           ),
           SizedBox(height: 24),
+          Row(children: [
+            Text(
+                review.semesterTaken! == '0'
+                    ? 'Intersession'
+                    : review.semesterTaken! == '1'
+                        ? '1st Sem'
+                        : '2nd Sem',
+                style: header2),
+            SizedBox(width: 2),
+            Icon(
+              Icons.brightness_1,
+              size: 5,
+            ),
+            SizedBox(width: 2),
+            Text('${review.yearTaken}', style: header2),
+          ]),
           Text(
             review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: header2,
+            style: smallText,
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -384,6 +385,40 @@ class _EditFormState extends State<EditForm> {
                           child: Text("Update"),
                           style: ButtonStyle(
                               backgroundColor:
+                                  MaterialStateProperty.all(Colors.blue),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(2.0),
+                                      side: BorderSide(color: Colors.blue)))),
+                        ))),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            globalKey.currentState!.save();
+                            String message;
+                            try {
+                              await deleteReview(review);
+                              message = "Successfully deleted review!";
+                            } catch (e) {
+                              message =
+                                  "An error occured while deleting review";
+                            }
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //     SnackBar(content: Text(message)));
+                            Navigator.pop(context);
+                          },
+                          child: Text("Delete Review"),
+                          style: ButtonStyle(
+                              backgroundColor:
                                   MaterialStateProperty.all(Colors.red),
                               foregroundColor:
                                   MaterialStateProperty.all(Colors.white),
@@ -424,6 +459,21 @@ class _EditFormState extends State<EditForm> {
         .then((_) => debugPrint('Updated'))
         .catchError((error) => debugPrint('Update Failed: $error'));
 
+    await updateRating(rev);
+  }
+
+  Future deleteReview(Review rev) async {
+    final deleteRev = FirebaseFirestore.instance.collection('reviews');
+    deleteRev
+        .doc(rev.id)
+        .delete()
+        .then((_) => debugPrint('Deleted'))
+        .catchError((error) => debugPrint('Delete Failed: $error'));
+
+    await updateRating(rev);
+  }
+
+  Future updateRating(Review rev) async {
     final tester = FirebaseFirestore.instance
         .collection('reviews')
         .where('profId', isEqualTo: rev.profId);

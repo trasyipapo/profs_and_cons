@@ -368,14 +368,14 @@ class _ReviewFormState extends State<ReviewForm> {
                           child: Text("Submit"),
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.red),
+                                  MaterialStateProperty.all(Colors.blue),
                               foregroundColor:
                                   MaterialStateProperty.all(Colors.white),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2.0),
-                                      side: BorderSide(color: Colors.red)))),
+                                      side: BorderSide(color: Colors.blue)))),
                         ))),
               ],
             )
