@@ -31,6 +31,7 @@ class RevList extends StatefulWidget {
 class _RevListState extends State<RevList> {
   Professor professor;
   _RevListState({required this.professor});
+  String filterBy = 'Most Voted';
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +72,44 @@ class _RevListState extends State<RevList> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(professor.name, style: header),
-                    Text(professor.department, style: smallText),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(professor.name, style: header),
+                              Text(professor.department, style: smallText),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              DropdownButton(
+                                  value: filterBy,
+                                  icon: Icon(Icons.filter_alt),
+                                  items: <String>[
+                                    'Most Voted',
+                                    'Least Voted',
+                                    'Newest',
+                                    'Oldest',
+                                    'Highest Rating',
+                                    'Lowest Rating'
+                                  ].map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      filterBy = newValue!;
+                                    });
+                                  })
+                            ],
+                          )
+                        ]),
                     Container(
                         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                         child: FutureBuilder<bool>(
@@ -99,9 +136,41 @@ class _RevListState extends State<RevList> {
                             List<Review> filteredReviews = reviews
                                 .where((rev) => (rev.profId == professor.id))
                                 .toList();
-                            filteredReviews = filteredReviews
-                              ..sort((rev1, rev2) =>
-                                  rev2.votes.compareTo(rev1.votes));
+
+                            if (filterBy == 'Most Voted') {
+                              filteredReviews = filteredReviews
+                                ..sort((rev1, rev2) =>
+                                    rev2.votes.compareTo(rev1.votes));
+                            } else if (filterBy == 'Least Voted') {
+                              filteredReviews = filteredReviews
+                                ..sort((rev1, rev2) =>
+                                    rev1.votes.compareTo(rev2.votes));
+                            } else if (filterBy == 'Newest') {
+                              filteredReviews = filteredReviews
+                                ..sort((rev1, rev2) =>
+                                    ("${rev2.yearTaken}${rev2.semesterTaken}")
+                                        .toString()
+                                        .compareTo(
+                                            ("${rev1.yearTaken}${rev1.semesterTaken}")
+                                                .toString()));
+                            } else if (filterBy == 'Oldest') {
+                              filteredReviews = filteredReviews
+                                ..sort((rev1, rev2) =>
+                                    ("${rev1.yearTaken}${rev1.semesterTaken}")
+                                        .toString()
+                                        .compareTo(
+                                            ("${rev2.yearTaken}${rev2.semesterTaken}")
+                                                .toString()));
+                            } else if (filterBy == 'Highest Rating') {
+                              filteredReviews = filteredReviews
+                                ..sort((rev1, rev2) => rev2.overallRating!
+                                    .compareTo(rev1.overallRating!));
+                            } else if (filterBy == 'Lowest Rating') {
+                              filteredReviews = filteredReviews
+                                ..sort((rev1, rev2) => rev1.overallRating!
+                                    .compareTo(rev2.overallRating!));
+                            }
+
                             if (filteredReviews.length == 0) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
