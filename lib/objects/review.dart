@@ -1,14 +1,14 @@
 class Review {
   String? id;
   String? courses;
-  num? teachingRating;
-  num? personalityRating;
-  num? gradingRating;
-  num? workloadRating;
-  num? leniencyRating;
-  num? attendanceRating;
-  num? feedbackRating;
-  num? overallRating;
+  double? teachingRating;
+  double? personalityRating;
+  double? gradingRating;
+  double? workloadRating;
+  double? leniencyRating;
+  double? attendanceRating;
+  double? feedbackRating;
+  double? overallRating;
   String? title;
   String? description;
   String? semesterTaken;
@@ -20,6 +20,8 @@ class Review {
   int votes;
   Map<String, bool>? voter = {};
   bool? isUp;
+  String? upvoters;
+  String? downvoters;
 
   Review({
     this.id,
@@ -42,6 +44,8 @@ class Review {
     this.writeruid,
     this.votes = 0,
     this.isUp,
+    this.upvoters = "",
+    this.downvoters = "",
   });
 
   Map<String, dynamic> toJson() => {
@@ -66,6 +70,8 @@ class Review {
         'votes': votes,
         'voter': voter,
         'isUp': isUp,
+        'upvoters': upvoters,
+        'downvoters': downvoters,
       };
 
   static Review fromJson(Map<String, dynamic> json) => Review(
@@ -89,6 +95,8 @@ class Review {
         writeruid: json['writeruid'],
         votes: json['votes'],
         isUp: json['isUp'],
-        // voter: json['voter']
+        // voter: json['voter'], // try not using json[] if i dont give up
+        upvoters: json['upvoters'],
+        downvoters: json['downvoters'],
       );
 }
