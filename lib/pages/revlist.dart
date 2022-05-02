@@ -136,26 +136,20 @@ class _RevListState extends State<RevList> {
                                       itemCount: filteredReviews.length,
                                       itemBuilder: (context, index) {
                                         final review = filteredReviews[index];
-                                        if (review.isUp == null) {
-                                          return Card(
-                                              child: InkWell(
-                                            child: reviewCard(
-                                                review,
-                                                professor,
-                                                context,
-                                                review.courses!.split(',')),
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          FullReview(
-                                                            review: review,
-                                                            professor:
-                                                                professor,
-                                                          )));
-                                            },
-                                          ));
-                                        } else if (!(review.isUp!)) {
+                                        //
+                                        List<String> upvoters =
+                                            review.upvoters!.split(',');
+                                        List<String> downvoters =
+                                            review.downvoters!.split(',');
+
+                                        bool isUp = upvoters.any((element) =>
+                                            (element == user!.uid));
+                                        bool isDown = downvoters.any(
+                                            (element) =>
+                                                (element == user!.uid));
+                                        if (isDown) {
+                                          print("down");
+
                                           return Card(
                                               child: InkWell(
                                             child: down(
@@ -171,11 +165,31 @@ class _RevListState extends State<RevList> {
                                                           )));
                                             },
                                           ));
-                                        } else {
+                                        } else if (isUp) {
+                                          print("UP");
                                           return Card(
                                               child: InkWell(
                                             child:
                                                 up(review, professor, context),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FullReview(
+                                                            review: review,
+                                                            professor:
+                                                                professor,
+                                                          )));
+                                            },
+                                          ));
+                                        } else {
+                                          return Card(
+                                              child: InkWell(
+                                            child: reviewCard(
+                                                review,
+                                                professor,
+                                                context,
+                                                review.courses!.split(',')),
                                             onTap: () {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
