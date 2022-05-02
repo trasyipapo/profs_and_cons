@@ -216,6 +216,16 @@ Widget reviewCard(
                       review.votes += 1;
                       review.isUp = true;
                       review.voter![user!.uid] = true;
+                      // review.upvoters = review.upvoters! + ',' + user!.uid;
+                      // List<String> result = review.upvoters!.split(',');
+                      // result.removeAt(0);
+                      // print(result);
+                      if (review.upvoters == "") {
+                        review.upvoters = review.upvoters! + user!.uid;
+                      } else {
+                        review.upvoters = review.upvoters! + ',' + user!.uid;
+                      }
+                      //
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -223,7 +233,8 @@ Widget reviewCard(
                           .update({
                             'votes': review.votes,
                             'voter': review.voter,
-                            'isUp': review.isUp
+                            'isUp': review.isUp,
+                            'upvoters': review.upvoters,
                           })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
@@ -247,6 +258,12 @@ Widget reviewCard(
                       print(review.isUp);
                       review.voter![user!.uid] = false;
                       review.isUp = false;
+                      if (review.downvoters == "") {
+                        review.downvoters = review.downvoters! + user!.uid;
+                      } else {
+                        review.downvoters =
+                            review.downvoters! + ',' + user!.uid;
+                      }
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -254,7 +271,8 @@ Widget reviewCard(
                           .update({
                             'votes': review.votes,
                             'voter': review.voter,
-                            'isUp': review.isUp
+                            'isUp': review.isUp,
+                            'downvoters': review.downvoters,
                           })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
@@ -362,6 +380,19 @@ Widget down(Review review, Professor prof, context) => Container(
                       review.votes += 2;
                       review.isUp = true;
                       review.voter?[user!.uid] = true;
+                      // add to upvoters
+                      if (review.upvoters == "") {
+                        review.upvoters = review.upvoters! + user!.uid;
+                      } else {
+                        review.upvoters = review.upvoters! + ',' + user!.uid;
+                      }
+                      // remove from downvoters
+                      List<String> result = review.downvoters!.split(',');
+                      print(result);
+
+                      result = result
+                          .where((element) => (element != user!.uid))
+                          .toList();
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -369,7 +400,9 @@ Widget down(Review review, Professor prof, context) => Container(
                           .update({
                             'votes': review.votes,
                             'voter': review.voter,
-                            'isUp': review.isUp
+                            'isUp': review.isUp,
+                            'upvoters': review.upvoters,
+                            'downvoters': result.join(','),
                           })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
@@ -393,6 +426,14 @@ Widget down(Review review, Professor prof, context) => Container(
                       review.voter?.remove(user!.uid);
                       review.isUp = null;
                       review.votes += 1;
+                      // remove from downvoters
+                      List<String> result = review.downvoters!.split(',');
+                      print(result);
+
+                      result = result
+                          .where((element) => (element != user!.uid))
+                          .toList();
+                      print(result);
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -400,7 +441,8 @@ Widget down(Review review, Professor prof, context) => Container(
                           .update({
                             'votes': review.votes,
                             'voter': review.voter,
-                            'isUp': review.isUp
+                            'isUp': review.isUp,
+                            'downvoters': result.join(','),
                           })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
@@ -468,6 +510,11 @@ Widget up(Review review, Professor prof, context) => Container(
                       review.votes -= 1;
                       review.isUp = null;
                       review.voter?.remove(user!.uid);
+                      // remove from upvoters
+                      List<String> result = review.upvoters!.split(',');
+                      result = result
+                          .where((element) => (element != user!.uid))
+                          .toList();
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -475,7 +522,8 @@ Widget up(Review review, Professor prof, context) => Container(
                           .update({
                             'votes': review.votes,
                             'voter': review.voter,
-                            'isUp': review.isUp
+                            'isUp': review.isUp,
+                            'upvoters': result.join(','),
                           })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
@@ -499,6 +547,20 @@ Widget up(Review review, Professor prof, context) => Container(
                       review.voter?[user!.uid] = false;
                       review.votes -= 2;
                       review.isUp = false;
+                      // add to downvoters
+                      if (review.downvoters == "") {
+                        review.downvoters = review.downvoters! + user!.uid;
+                      } else {
+                        review.downvoters =
+                            review.downvoters! + ',' + user!.uid;
+                      }
+                      // remove from upvoters
+                      List<String> result = review.upvoters!.split(',');
+                      print(result);
+
+                      result = result
+                          .where((element) => (element != user!.uid))
+                          .toList();
                       final collection =
                           FirebaseFirestore.instance.collection('reviews');
                       collection
@@ -506,7 +568,9 @@ Widget up(Review review, Professor prof, context) => Container(
                           .update({
                             'votes': review.votes,
                             'voter': review.voter,
-                            'isUp': review.isUp
+                            'isUp': review.isUp,
+                            'upvoters': result.join(','),
+                            'downvoters': review.downvoters,
                           })
                           .then((_) => debugPrint('Updated'))
                           .catchError(
