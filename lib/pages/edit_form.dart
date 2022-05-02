@@ -468,7 +468,7 @@ class _EditFormState extends State<EditForm> {
         .doc(rev.id)
         .delete()
         .then((_) => debugPrint('Deleted'))
-        .catchError((error) => debugPrint('Delete failed: $error'));
+        .catchError((error) => debugPrint('Delete Failed: $error'));
 
     await updateRating(rev);
   }

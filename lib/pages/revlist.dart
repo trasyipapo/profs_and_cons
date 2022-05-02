@@ -31,7 +31,7 @@ class RevList extends StatefulWidget {
 class _RevListState extends State<RevList> {
   Professor professor;
   _RevListState({required this.professor});
-  String filterBy = 'Most Voted';
+  String sortBy = 'Most Voted';
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,7 @@ class _RevListState extends State<RevList> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               DropdownButton(
-                                  value: filterBy,
+                                  value: sortBy,
                                   icon: Icon(Icons.filter_alt),
                                   items: <String>[
                                     'Most Voted',
@@ -104,7 +104,7 @@ class _RevListState extends State<RevList> {
                                   }).toList(),
                                   onChanged: (String? newValue) {
                                     setState(() {
-                                      filterBy = newValue!;
+                                      sortBy = newValue!;
                                     });
                                   })
                             ],
@@ -139,15 +139,15 @@ class _RevListState extends State<RevList> {
                                         (rev) => (rev.profId == professor.id))
                                     .toList();
 
-                                if (filterBy == 'Most Voted') {
+                                if (sortBy == 'Most Voted') {
                                   filteredReviews = filteredReviews
                                     ..sort((rev1, rev2) =>
                                         rev2.votes.compareTo(rev1.votes));
-                                } else if (filterBy == 'Least Voted') {
+                                } else if (sortBy == 'Least Voted') {
                                   filteredReviews = filteredReviews
                                     ..sort((rev1, rev2) =>
                                         rev1.votes.compareTo(rev2.votes));
-                                } else if (filterBy == 'Newest') {
+                                } else if (sortBy == 'Newest') {
                                   filteredReviews = filteredReviews
                                     ..sort((rev1, rev2) =>
                                         ("${rev2.yearTaken}${rev2.semesterTaken}")
@@ -155,7 +155,7 @@ class _RevListState extends State<RevList> {
                                             .compareTo(
                                                 ("${rev1.yearTaken}${rev1.semesterTaken}")
                                                     .toString()));
-                                } else if (filterBy == 'Oldest') {
+                                } else if (sortBy == 'Oldest') {
                                   filteredReviews = filteredReviews
                                     ..sort((rev1, rev2) =>
                                         ("${rev1.yearTaken}${rev1.semesterTaken}")
@@ -163,11 +163,11 @@ class _RevListState extends State<RevList> {
                                             .compareTo(
                                                 ("${rev2.yearTaken}${rev2.semesterTaken}")
                                                     .toString()));
-                                } else if (filterBy == 'Highest Rating') {
+                                } else if (sortBy == 'Highest Rating') {
                                   filteredReviews = filteredReviews
                                     ..sort((rev1, rev2) => rev2.overallRating!
                                         .compareTo(rev1.overallRating!));
-                                } else if (filterBy == 'Lowest Rating') {
+                                } else if (sortBy == 'Lowest Rating') {
                                   filteredReviews = filteredReviews
                                     ..sort((rev1, rev2) => rev1.overallRating!
                                         .compareTo(rev2.overallRating!));
