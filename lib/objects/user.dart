@@ -9,6 +9,6 @@ class UserFire {
         'favorites': favorites,
       };
 
-  static UserFire fromJson(Map<String, dynamic> json) =>
-      UserFire(uid: json['uid'], favorites: json['favorites']);
+  static UserFire fromJson(Map<String, dynamic>? json) =>
+      UserFire(uid: json!['uid'], favorites: json['favorites']);
 }

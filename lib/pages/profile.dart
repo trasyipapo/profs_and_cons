@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:profs_and_cons/objects/user.dart';
 //import 'package:profs_and_cons/models/professor.dart';
 //import 'package:profs_and_cons/objects/reviewcard.dart';
 //import 'package:profs_and_cons/pages/home.dart';
@@ -9,18 +12,40 @@ import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/pages/review_form.dart';
 
+Future<bool> saved(String uid, String profId) async {
+  DocumentSnapshot docSnapshot =
+      await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+  // Get data from docs and convert map to List
+  String user = docSnapshot.data().toString();
+  return user.contains(profId);
+}
+
+Future<UserFire> getUser(String uid) async {
+  DocumentSnapshot<Map<String, dynamic>> docSnapshot =
+      await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+  // Get data from docs and convert map to List
+  UserFire user = UserFire.fromJson(docSnapshot.data());
+  return user;
+}
+
 class Profile extends StatefulWidget {
   Professor professor;
+  String currentUser = FirebaseAuth.instance.currentUser!.uid;
 
   Profile({Key? key, required this.professor}) : super(key: key);
 
   @override
-  State<Profile> createState() => _ProfileState(professor: professor);
+  State<Profile> createState() =>
+      _ProfileState(professor: professor, currentUser: currentUser);
 }
 
 class _ProfileState extends State<Profile> {
   Professor professor;
-  _ProfileState({required this.professor});
+  String currentUser;
+
+  _ProfileState({required this.professor, required this.currentUser});
 
   @override
   Widget build(BuildContext context) {
@@ -96,16 +121,17 @@ class _ProfileState extends State<Profile> {
                         },
                       )),
                       SizedBox(width: 10),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(
-                                  const EdgeInsets.all(20)),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.blue)),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [Icon(Icons.bookmark)]),
-                          onPressed: () {})
+                      FutureBuilder<bool>(
+                        future: saved(currentUser, professor.id!),
+                        builder: (contextF, snapshot) {
+                          if (snapshot.data == true) {
+                            return marked(currentUser, professor.id!, context);
+                          } else {
+                            return unmarked(
+                                currentUser, professor.id!, context);
+                          }
+                        },
+                      )
                     ])),
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
@@ -370,27 +396,49 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-// Widget seeReviewButton = Container(
-//     margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
-//     child: TextButton(
-//       style: ButtonStyle(
-//         padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(20)),
-//       ),
-//       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
-//         Text(
-//           'See reviews',
-//           style: TextStyle(fontSize: 15.0),
-//         ),
-//         SizedBox(width: 5),
-//         Icon(
-//           Icons.keyboard_arrow_right_sharp,
-//           size: 20,
-//         ),
-//       ]),
-//       onPressed: () {
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(builder: (context) => const RevList()),
-//         );
-//       },
-//     ));
+ElevatedButton unmarked(String uid, String profid, BuildContext context) {
+  return ElevatedButton(
+      style: ButtonStyle(
+          padding:
+              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [Icon(Icons.bookmark)]),
+      onPressed: () async {
+        try {
+          UserFire user = await getUser(uid);
+          user.favorites = user.favorites! + profid + ",";
+          await updateUser(user);
+        } catch (e) {}
+      });
+}
+
+ElevatedButton marked(String uid, String profid, BuildContext context) {
+  return ElevatedButton(
+      style: ButtonStyle(
+          padding:
+              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [Icon(Icons.bookmark_added)]),
+      onPressed: () async {
+        try {
+          UserFire user = await getUser(uid);
+          List<String> faves = user.favorites!.split(",");
+          faves.remove(profid);
+          user.favorites = faves.join(",");
+          await updateUser(user);
+        } catch (e) {}
+      });
+}
+
+Future updateUser(UserFire user) async {
+  final collection = FirebaseFirestore.instance.collection('users');
+  await collection
+      .doc(user.uid)
+      .update({'favorites': user.favorites})
+      .then((_) => debugPrint('Updated'))
+      .catchError((error) => debugPrint('Update Failed: $error'));
+}
