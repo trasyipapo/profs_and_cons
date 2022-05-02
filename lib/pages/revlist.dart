@@ -490,9 +490,25 @@ Widget down(Review review, Professor prof, context) => Container(
             style: header,
           ),
           SizedBox(height: 24),
+          Row(children: [
+            Text(
+                review.semesterTaken! == '0'
+                    ? 'Intersession'
+                    : review.semesterTaken! == '1'
+                        ? '1st Sem'
+                        : '2nd Sem',
+                style: header2),
+            SizedBox(width: 2),
+            Icon(
+              Icons.brightness_1,
+              size: 5,
+            ),
+            SizedBox(width: 2),
+            Text('${review.yearTaken}', style: header2),
+          ]),
           Text(
             review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: header2,
+            style: smallText,
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -596,9 +612,25 @@ Widget up(Review review, Professor prof, context) => Container(
             style: header,
           ),
           SizedBox(height: 24),
+          Row(children: [
+            Text(
+                review.semesterTaken! == '0'
+                    ? 'Intersession'
+                    : review.semesterTaken! == '1'
+                        ? '1st Sem'
+                        : '2nd Sem',
+                style: header2),
+            SizedBox(width: 2),
+            Icon(
+              Icons.brightness_1,
+              size: 5,
+            ),
+            SizedBox(width: 2),
+            Text('${review.yearTaken}', style: header2),
+          ]),
           Text(
             review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: header2,
+            style: smallText,
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
