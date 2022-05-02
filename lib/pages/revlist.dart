@@ -76,7 +76,7 @@ class _RevListState extends State<RevList> {
                     Container(
                         padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                         child: FutureBuilder<bool>(
-                          future: exists(professor.id),
+                          future: exists(professor.id!),
                           builder: (contextF, snapshot) {
                             if (snapshot.data == true) {
                               return editRev(professor, context);

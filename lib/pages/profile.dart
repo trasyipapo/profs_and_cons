@@ -82,7 +82,7 @@ class _ProfileState extends State<Profile> {
             Container(
                 padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
                 child: FutureBuilder<bool>(
-                  future: exists(professor.id),
+                  future: exists(professor.id!),
                   builder: (contextF, snapshot) {
                     if (snapshot.data == true) {
                       return editRev(professor, context);
@@ -146,7 +146,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Teaching Skill'),
-                                    ratingBar(professor.teachingRating)
+                                    ratingBar(
+                                        professor.teachingRating.toDouble())
                                   ],
                                 ),
                                 Row(
@@ -154,7 +155,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Personality'),
-                                    ratingBar(professor.personalityRating)
+                                    ratingBar(
+                                        professor.personalityRating.toDouble())
                                   ],
                                 ),
                                 Row(
@@ -162,7 +164,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Grading'),
-                                    ratingBar(professor.gradingRating)
+                                    ratingBar(
+                                        professor.gradingRating.toDouble())
                                   ],
                                 ),
                                 Row(
@@ -170,7 +173,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Workload'),
-                                    ratingBar(professor.workloadRating)
+                                    ratingBar(
+                                        professor.workloadRating.toDouble())
                                   ],
                                 ),
                                 Row(
@@ -178,7 +182,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Leniency'),
-                                    ratingBar(professor.leniencyRating)
+                                    ratingBar(
+                                        professor.leniencyRating.toDouble())
                                   ],
                                 ),
                                 Row(
@@ -186,7 +191,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Attendance'),
-                                    ratingBar(professor.attendanceRating)
+                                    ratingBar(
+                                        professor.attendanceRating.toDouble())
                                   ],
                                 ),
                                 Row(
@@ -194,7 +200,8 @@ class _ProfileState extends State<Profile> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Text('Feedback'),
-                                    ratingBar(professor.feedbackRating)
+                                    ratingBar(
+                                        professor.feedbackRating.toDouble())
                                   ],
                                 )
                               ]))

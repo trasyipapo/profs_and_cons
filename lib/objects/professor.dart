@@ -1,30 +1,30 @@
 class Professor {
-  final String id;
+  String? id;
   final String name;
   final String department;
   final String courses;
-  final double overallRating;
-  final double teachingRating;
-  final double personalityRating;
-  final double gradingRating;
-  final double workloadRating;
-  final double leniencyRating;
-  final double attendanceRating;
-  final double feedbackRating;
+  final num overallRating;
+  final num teachingRating;
+  final num personalityRating;
+  final num gradingRating;
+  final num workloadRating;
+  final num leniencyRating;
+  final num attendanceRating;
+  final num feedbackRating;
 
   Professor({
-    required this.id,
+    this.id,
     required this.name,
     required this.department,
     required this.courses,
-    required this.overallRating,
-    required this.teachingRating,
-    required this.personalityRating,
-    required this.gradingRating,
-    required this.workloadRating,
-    required this.leniencyRating,
-    required this.attendanceRating,
-    required this.feedbackRating,
+    this.overallRating = 0,
+    this.teachingRating = 0,
+    this.personalityRating = 0,
+    this.gradingRating = 0,
+    this.workloadRating = 0,
+    this.leniencyRating = 0,
+    this.attendanceRating = 0,
+    this.feedbackRating = 0,
   });
 
   Map<String, dynamic> toJson() => {
