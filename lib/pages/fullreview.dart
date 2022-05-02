@@ -170,7 +170,7 @@ Widget reviewDetails(
                         icon: const Icon(Icons.arrow_downward)),
                   ],
                 ),
-                ratingBar(review.overallRating!)
+                ratingBar(review.overallRating!.toDouble())
               ]),
               SizedBox(height: 24),
               Text('${review.title}', style: header2),
@@ -204,49 +204,49 @@ Widget reviewDetails(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Teaching Skill'),
-                  ratingBar(review.teachingRating!)
+                  ratingBar(review.teachingRating!.toDouble())
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Personality'),
-                  ratingBar(review.personalityRating!)
+                  ratingBar(review.personalityRating!.toDouble())
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Grading'),
-                  ratingBar(review.gradingRating!)
+                  ratingBar(review.gradingRating!.toDouble())
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Workload'),
-                  ratingBar(review.workloadRating!)
+                  ratingBar(review.workloadRating!.toDouble())
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Leniency'),
-                  ratingBar(review.leniencyRating!)
+                  ratingBar(review.leniencyRating!.toDouble())
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Attendance'),
-                  ratingBar(review.attendanceRating!)
+                  ratingBar(review.attendanceRating!.toDouble())
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text('Feedback'),
-                  ratingBar(review.feedbackRating!)
+                  ratingBar(review.feedbackRating!.toDouble())
                 ],
               ),
               SizedBox(height: 15),

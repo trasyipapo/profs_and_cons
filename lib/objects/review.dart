@@ -1,14 +1,14 @@
 class Review {
   String? id;
   String? courses;
-  double? teachingRating;
-  double? personalityRating;
-  double? gradingRating;
-  double? workloadRating;
-  double? leniencyRating;
-  double? attendanceRating;
-  double? feedbackRating;
-  double? overallRating;
+  num? teachingRating;
+  num? personalityRating;
+  num? gradingRating;
+  num? workloadRating;
+  num? leniencyRating;
+  num? attendanceRating;
+  num? feedbackRating;
+  num? overallRating;
   String? title;
   String? description;
   String? semesterTaken;

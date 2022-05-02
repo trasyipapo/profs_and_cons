@@ -140,10 +140,7 @@ class _RevListState extends State<RevList> {
                                           return Card(
                                               child: InkWell(
                                             child: reviewCard(
-                                                review,
-                                                professor,
-                                                context,
-                                                review.courses!.split(',')),
+                                                review, professor, context),
                                             onTap: () {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
@@ -201,9 +198,7 @@ class _RevListState extends State<RevList> {
   }
 }
 
-Widget reviewCard(
-        Review review, Professor prof, context, List<String> revCourses) =>
-    Container(
+Widget reviewCard(Review review, Professor prof, context) => Container(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -266,7 +261,7 @@ Widget reviewCard(
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_downward)),
               ]),
-              ratingBar(review.overallRating!),
+              ratingBar(review.overallRating!.toDouble()),
             ],
           ),
           SizedBox(height: 24),
@@ -281,28 +276,15 @@ Widget reviewCard(
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SizedBox(
-              width: 284, //HARDCODED -- TO FIX
-              height: 25,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: revCourses.length,
-                itemBuilder: (BuildContext context, int position) {
-                  return Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
-                      child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                              child: Text(
-                                revCourses[position],
-                                style: buttonText,
-                              ))));
-                },
-              ),
-            ),
+            Wrap(spacing: 10, children: [
+              DecoratedBox(
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                      child: Text('${review.courses}', style: buttonText))),
+            ]),
             if (user!.uid == review.writeruid)
               IconButton(
                 icon: Icon(Icons.edit),
@@ -410,7 +392,7 @@ Widget down(Review review, Professor prof, context) => Container(
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_downward)),
               ]),
-              ratingBar(review.overallRating!),
+              ratingBar(review.overallRating!.toDouble()),
             ],
           ),
           SizedBox(height: 24),
@@ -516,7 +498,7 @@ Widget up(Review review, Professor prof, context) => Container(
                     constraints: const BoxConstraints(),
                     icon: const Icon(Icons.arrow_downward)),
               ]),
-              ratingBar(review.overallRating!),
+              ratingBar(review.overallRating!.toDouble()),
             ],
           ),
           SizedBox(height: 24),

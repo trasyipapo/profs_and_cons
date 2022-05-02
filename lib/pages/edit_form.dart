@@ -119,7 +119,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Teaching Skill",
                   style: formText,
                 ),
-                initialValue: review.teachingRating!,
+                initialValue: review.teachingRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.teachingRating = onSavedVal;
                 },
@@ -134,7 +134,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Personality",
                   style: formText,
                 ),
-                initialValue: review.personalityRating!,
+                initialValue: review.personalityRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.personalityRating = onSavedVal;
                 },
@@ -149,7 +149,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Grading",
                   style: formText,
                 ),
-                initialValue: review.gradingRating!,
+                initialValue: review.gradingRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.gradingRating = onSavedVal;
                 },
@@ -164,7 +164,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Workload",
                   style: formText,
                 ),
-                initialValue: review.workloadRating!,
+                initialValue: review.workloadRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.workloadRating = onSavedVal;
                 },
@@ -179,7 +179,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Leniency",
                   style: formText,
                 ),
-                initialValue: review.leniencyRating!,
+                initialValue: review.leniencyRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.leniencyRating = onSavedVal;
                 },
@@ -194,7 +194,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Attendance",
                   style: formText,
                 ),
-                initialValue: review.attendanceRating!,
+                initialValue: review.attendanceRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.attendanceRating = onSavedVal;
                 },
@@ -209,7 +209,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Feedback",
                   style: formText,
                 ),
-                initialValue: review.feedbackRating!,
+                initialValue: review.feedbackRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.feedbackRating = onSavedVal;
                 },
@@ -224,7 +224,7 @@ class _EditFormState extends State<EditForm> {
                   "     • Overall",
                   style: formText,
                 ),
-                initialValue: review.overallRating!,
+                initialValue: review.overallRating!.toDouble(),
                 onSaved: (onSavedVal) {
                   review.overallRating = onSavedVal;
                 },
