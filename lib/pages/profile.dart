@@ -125,10 +125,9 @@ class _ProfileState extends State<Profile> {
                         future: saved(currentUser, professor.id!),
                         builder: (contextF, snapshot) {
                           if (snapshot.data == true) {
-                            return marked(currentUser, professor.id!, context);
+                            return marked(currentUser, professor, context);
                           } else {
-                            return unmarked(
-                                currentUser, professor.id!, context);
+                            return unmarked(currentUser, professor, context);
                           }
                         },
                       )
@@ -396,7 +395,7 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-ElevatedButton unmarked(String uid, String profid, BuildContext context) {
+ElevatedButton unmarked(String uid, Professor prof, BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
           padding:
@@ -408,13 +407,15 @@ ElevatedButton unmarked(String uid, String profid, BuildContext context) {
       onPressed: () async {
         try {
           UserFire user = await getUser(uid);
-          user.favorites = user.favorites! + profid + ",";
+          user.favorites = user.favorites! + prof.id! + ",";
           await updateUser(user);
+          Navigator.of(context).push(
+              CustomPageRoute(builder: (context) => Profile(professor: prof)));
         } catch (e) {}
       });
 }
 
-ElevatedButton marked(String uid, String profid, BuildContext context) {
+ElevatedButton marked(String uid, Professor prof, BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
           padding:
@@ -427,11 +428,20 @@ ElevatedButton marked(String uid, String profid, BuildContext context) {
         try {
           UserFire user = await getUser(uid);
           List<String> faves = user.favorites!.split(",");
-          faves.remove(profid);
+          faves.remove(prof.id!);
           user.favorites = faves.join(",");
           await updateUser(user);
+          Navigator.of(context).push(
+              CustomPageRoute(builder: (context) => Profile(professor: prof)));
         } catch (e) {}
       });
+}
+
+class CustomPageRoute extends MaterialPageRoute {
+  CustomPageRoute({builder}) : super(builder: builder);
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 0);
 }
 
 Future updateUser(UserFire user) async {
