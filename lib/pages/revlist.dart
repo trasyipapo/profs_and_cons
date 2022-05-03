@@ -87,7 +87,7 @@ class _RevListState extends State<RevList> {
                             children: [
                               DropdownButton(
                                   value: sortBy,
-                                  icon: Icon(Icons.filter_alt),
+                                  icon: Icon(Icons.sort_outlined),
                                   items: <String>[
                                     'Most Voted',
                                     'Least Voted',
