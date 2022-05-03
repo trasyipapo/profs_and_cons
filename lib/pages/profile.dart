@@ -54,11 +54,15 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            color: Colors.black87,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+          icon: const Icon(Icons.search),
+          color: Colors.black87,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchPage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             icon: Image.asset('assets/appbar-logo.png'),
