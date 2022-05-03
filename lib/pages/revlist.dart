@@ -148,8 +148,6 @@ class _RevListState extends State<RevList> {
                                             (element) =>
                                                 (element == user!.uid));
                                         if (isDown) {
-                                          print("down");
-
                                           return Card(
                                               child: InkWell(
                                             child: down(
@@ -166,7 +164,6 @@ class _RevListState extends State<RevList> {
                                             },
                                           ));
                                         } else if (isUp) {
-                                          print("UP");
                                           return Card(
                                               child: InkWell(
                                             child:
@@ -228,12 +225,7 @@ Widget reviewCard(
                 IconButton(
                     onPressed: () {
                       review.votes += 1;
-                      review.isUp = true;
-                      review.voter![user!.uid] = true;
-                      // review.upvoters = review.upvoters! + ',' + user!.uid;
-                      // List<String> result = review.upvoters!.split(',');
-                      // result.removeAt(0);
-                      // print(result);
+
                       if (review.upvoters == "") {
                         review.upvoters = review.upvoters! + user!.uid;
                       } else {
@@ -246,8 +238,6 @@ Widget reviewCard(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            'voter': review.voter,
-                            'isUp': review.isUp,
                             'upvoters': review.upvoters,
                           })
                           .then((_) => debugPrint('Updated'))
@@ -269,9 +259,7 @@ Widget reviewCard(
                 IconButton(
                     onPressed: () {
                       review.votes -= 1;
-                      print(review.isUp);
-                      review.voter![user!.uid] = false;
-                      review.isUp = false;
+
                       if (review.downvoters == "") {
                         review.downvoters = review.downvoters! + user!.uid;
                       } else {
@@ -284,8 +272,6 @@ Widget reviewCard(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            'voter': review.voter,
-                            'isUp': review.isUp,
                             'downvoters': review.downvoters,
                           })
                           .then((_) => debugPrint('Updated'))
@@ -370,31 +356,6 @@ Widget reviewCard(
       ),
     );
 
-RatingBar ratingBar(double rating) {
-  return RatingBar(
-      initialRating: rating,
-      itemSize: 20,
-      ignoreGestures: true,
-      direction: Axis.horizontal,
-      allowHalfRating: true,
-      itemCount: 5,
-      ratingWidget: RatingWidget(
-          full: const Icon(Icons.star, color: Colors.blue),
-          half: const Icon(
-            Icons.star_half,
-            color: Colors.blue,
-          ),
-          empty: const Icon(
-            Icons.star,
-            color: Colors.black38,
-          )),
-      onRatingUpdate: (value) {}
-      //   setState(() {
-      //     _ratingValue = value;
-      // }
-      );
-}
-
 Widget down(Review review, Professor prof, context) => Container(
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -406,8 +367,7 @@ Widget down(Review review, Professor prof, context) => Container(
                 IconButton(
                     onPressed: () {
                       review.votes += 2;
-                      review.isUp = true;
-                      review.voter?[user!.uid] = true;
+
                       // add to upvoters
                       if (review.upvoters == "") {
                         review.upvoters = review.upvoters! + user!.uid;
@@ -427,8 +387,6 @@ Widget down(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            'voter': review.voter,
-                            'isUp': review.isUp,
                             'upvoters': review.upvoters,
                             'downvoters': result.join(','),
                           })
@@ -450,9 +408,6 @@ Widget down(Review review, Professor prof, context) => Container(
                 ),
                 IconButton(
                     onPressed: () {
-                      print(review.isUp);
-                      review.voter?.remove(user!.uid);
-                      review.isUp = null;
                       review.votes += 1;
                       // remove from downvoters
                       List<String> result = review.downvoters!.split(',');
@@ -468,8 +423,6 @@ Widget down(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            'voter': review.voter,
-                            'isUp': review.isUp,
                             'downvoters': result.join(','),
                           })
                           .then((_) => debugPrint('Updated'))
@@ -536,8 +489,7 @@ Widget up(Review review, Professor prof, context) => Container(
                 IconButton(
                     onPressed: () {
                       review.votes -= 1;
-                      review.isUp = null;
-                      review.voter?.remove(user!.uid);
+
                       // remove from upvoters
                       List<String> result = review.upvoters!.split(',');
                       result = result
@@ -549,8 +501,6 @@ Widget up(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            'voter': review.voter,
-                            'isUp': review.isUp,
                             'upvoters': result.join(','),
                           })
                           .then((_) => debugPrint('Updated'))
@@ -571,10 +521,8 @@ Widget up(Review review, Professor prof, context) => Container(
                 ),
                 IconButton(
                     onPressed: () {
-                      print(review.isUp);
-                      review.voter?[user!.uid] = false;
                       review.votes -= 2;
-                      review.isUp = false;
+
                       // add to downvoters
                       if (review.downvoters == "") {
                         review.downvoters = review.downvoters! + user!.uid;
@@ -595,8 +543,6 @@ Widget up(Review review, Professor prof, context) => Container(
                           .doc(review.id)
                           .update({
                             'votes': review.votes,
-                            'voter': review.voter,
-                            'isUp': review.isUp,
                             'upvoters': result.join(','),
                             'downvoters': review.downvoters,
                           })
@@ -717,4 +663,29 @@ ElevatedButton editRev(Professor professor, BuildContext context) {
                   )),
         );
       });
+}
+
+RatingBar ratingBar(double rating) {
+  return RatingBar(
+      initialRating: rating,
+      itemSize: 20,
+      ignoreGestures: true,
+      direction: Axis.horizontal,
+      allowHalfRating: true,
+      itemCount: 5,
+      ratingWidget: RatingWidget(
+          full: const Icon(Icons.star, color: Colors.blue),
+          half: const Icon(
+            Icons.star_half,
+            color: Colors.blue,
+          ),
+          empty: const Icon(
+            Icons.star,
+            color: Colors.black38,
+          )),
+      onRatingUpdate: (value) {}
+      //   setState(() {
+      //     _ratingValue = value;
+      // }
+      );
 }

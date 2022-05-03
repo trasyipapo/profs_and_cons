@@ -18,8 +18,6 @@ class Review {
   String? writer;
   String? writeruid;
   int votes;
-  Map<String, bool>? voter = {};
-  bool? isUp;
   String? upvoters;
   String? downvoters;
 
@@ -43,7 +41,6 @@ class Review {
     this.writer,
     this.writeruid,
     this.votes = 0,
-    this.isUp,
     this.upvoters = "",
     this.downvoters = "",
   });
@@ -68,8 +65,6 @@ class Review {
         'writer': writer,
         'writeruid': writeruid,
         'votes': votes,
-        'voter': voter,
-        'isUp': isUp,
         'upvoters': upvoters,
         'downvoters': downvoters,
       };
@@ -94,8 +89,6 @@ class Review {
         writer: json['writer'],
         writeruid: json['writeruid'],
         votes: json['votes'],
-        isUp: json['isUp'],
-        // voter: json['voter'], // try not using json[] if i dont give up
         upvoters: json['upvoters'],
         downvoters: json['downvoters'],
       );
