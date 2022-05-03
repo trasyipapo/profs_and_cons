@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profs_and_cons/pages/edit_form.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:profs_and_cons/pages/fullreview.dart';
@@ -24,9 +25,7 @@ Stream<List<Review>> getRevs(List<String> ownReviewsList) =>
             snapshot.docs.map((doc) => Review.fromJson(doc.data())).toList());
 
 class OwnReviews extends StatefulWidget {
-  OwnReviews({
-    Key? key,
-  }) : super(key: key);
+  OwnReviews({Key? key}) : super(key: key);
 
   @override
   State<OwnReviews> createState() => _OwnReviewsState();
@@ -141,7 +140,7 @@ class _OwnReviewsState extends State<OwnReviews> {
                                 },
                               );
                             } else {
-                              return Text("Error.");
+                              return const Text("Error.");
                             }
                           })
                     ]))));
@@ -157,7 +156,7 @@ Widget reviewCard(Review review, context) => Container(
             children: [
               Row(children: [
                 Text(
-                  review.votes.toString(),
+                  review.profId.toString(),
                   style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 15,
@@ -167,12 +166,12 @@ Widget reviewCard(Review review, context) => Container(
               ratingBar(review.overallRating!.toDouble()),
             ],
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text(
             '${review.title}',
             style: header,
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Row(children: [
             Text(
                 review.semesterTaken! == '0'
@@ -181,19 +180,29 @@ Widget reviewCard(Review review, context) => Container(
                         ? '1st Sem'
                         : '2nd Sem',
                 style: header2),
-            SizedBox(width: 2),
-            Icon(
+            const SizedBox(width: 2),
+            const Icon(
               Icons.brightness_1,
               size: 5,
             ),
-            SizedBox(width: 2),
+            const SizedBox(width: 2),
             Text('${review.yearTaken}', style: header2),
+            // if (user!.uid == review.writeruid)
+            //   IconButton(
+            //     icon: Icon(Icons.edit),
+            //     disabledColor: Colors.white,
+            //     onPressed: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => EditForm(
+            //                     professor: prof,
+            //                     review: review,
+            //                   )));
+            //     },
+            //   ),
           ]),
-          Text(
-            review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: smallText,
-          ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
         ]),
       ),
     );
