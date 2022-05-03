@@ -110,7 +110,9 @@ class _ProfileState extends State<Profile> {
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(professor.overallRating.toString(),
+                                    Text(
+                                        snapshot.data['overallRating']
+                                            .toString(),
                                         style: overallRating),
                                     const Text('Overall Rating',
                                         style: bodyText)
