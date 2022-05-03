@@ -293,10 +293,13 @@ class _ReviewFormState extends State<ReviewForm> {
                     context,
                     "yearTaken",
                     "Latest A.Y. Taken",
-                    "2019-2020",
+                    "2019",
                     (onValidateVal) {
                       if (onValidateVal.isEmpty) {
                         return 'Please state the latest academic year you took the course';
+                      }
+                      else if(!RegExp(r"^(19|20)\d{2}$").hasMatch(onValidateVal)) {
+                        return 'Options: 1900-2999';
                       }
                       return null;
                     },
