@@ -93,335 +93,219 @@ class _ProfileState extends State<Profile> {
                   print(professor.name);
                   print(snapshot.data);
                   return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(professor.name, style: header),
-                                    Text(professor.department,
-                                        style: smallText),
-                                  ],
-                                ),
-                                Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(professor.overallRating.toString(),
-                                          style: overallRating),
-                                      const Text('Overall Rating',
-                                          style: bodyText)
-                                    ])
-                              ],
-                            )),
-                        Container(
-                            padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                      child: FutureBuilder<bool>(
-                                    future: exists(professor.id!),
-                                    builder: (contextF, snapshot) {
-                                      if (snapshot.data == true) {
-                                        return editRev(professor, context);
-                                      } else {
-                                        return addRev(professor, context);
-                                      }
-                                    },
-                                  )),
-                                  SizedBox(width: 10),
-                                  FutureBuilder<bool>(
-                                    future: saved(currentUser, professor.id!),
-                                    builder: (contextF, snapshot) {
-                                      if (snapshot.data == true) {
-                                        return marked(
-                                            currentUser, professor, context);
-                                      } else {
-                                        return unmarked(
-                                            currentUser, professor, context);
-                                      }
-                                    },
-                                  )
-                                ])),
-                        Container(
-                            padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                            child: Column(children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'Courses Taught:',
-                                    style: header2,
-                                  )
+                                  Text(professor.name, style: header),
+                                  Text(professor.department, style: smallText),
                                 ],
                               ),
-                              const Padding(padding: EdgeInsets.all(5)),
-                              SizedBox(
-                                width: 333, //HARDCODED -- TO FIX
-                                height: 25,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: courses.length,
-                                  itemBuilder:
-                                      (BuildContext context, int position) {
-                                    return Container(
-                                        margin: const EdgeInsets.fromLTRB(
-                                            0, 0, 5, 0),
-                                        child: DecoratedBox(
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            child: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 5, 10, 5),
-                                                child: Text(
-                                                  courses[position],
-                                                  style: buttonText,
-                                                ))));
-                                  },
-                                ),
-                              )
-                            ])),
-
-                        // averageRatings => replaced with this thing below
-                        Container(
-                            padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(professor.overallRating.toString(),
+                                        style: overallRating),
+                                    const Text('Overall Rating',
+                                        style: bodyText)
+                                  ])
+                            ],
+                          )),
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                          child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        25, 32, 25, 0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(professor.name, style: header),
-                                            Text(professor.department,
-                                                style: smallText),
-                                          ],
-                                        ),
-                                        Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                  snapshot.data['overallRating']
-                                                      .toString(),
-                                                  style: overallRating),
-                                              const Text('Overall Rating',
-                                                  style: bodyText)
-                                            ])
-                                      ],
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        25, 10, 25, 0),
+                                Expanded(
                                     child: FutureBuilder<bool>(
-                                      future: exists(professor.id!),
-                                      builder: (contextF, snapshot) {
-                                        if (snapshot.data == true) {
-                                          return editRev(professor, context);
-                                        } else {
-                                          return addRev(professor, context);
-                                        }
-                                      },
-                                    )),
-                                Container(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        25, 10, 25, 0),
-                                    child: Column(children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: const [
-                                          Text(
-                                            'Courses Taught:',
-                                            style: header2,
-                                          )
-                                        ],
-                                      ),
-                                      const Padding(padding: EdgeInsets.all(5)),
-                                      SizedBox(
-                                        width: 333, //HARDCODED -- TO FIX
-                                        height: 25,
-                                        child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: courses.length,
-                                          itemBuilder: (BuildContext context,
-                                              int position) {
-                                            return Container(
-                                                margin:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 5, 0),
-                                                child: DecoratedBox(
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.red,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5)),
-                                                    child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .fromLTRB(
-                                                                10, 5, 10, 5),
-                                                        child: Text(
-                                                          courses[position],
-                                                          style: buttonText,
-                                                        ))));
-                                          },
-                                        ),
-                                      )
-                                    ])),
-
-                                // averageRatings => replaced with this thing below
-                                Container(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        25, 10, 25, 0),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text('Average Ratings',
-                                              style: header2),
-                                          Padding(
+                                  future: exists(professor.id!),
+                                  builder: (contextF, snapshot) {
+                                    if (snapshot.data == true) {
+                                      return editRev(professor, context);
+                                    } else {
+                                      return addRev(professor, context);
+                                    }
+                                  },
+                                )),
+                                SizedBox(width: 10),
+                                FutureBuilder<bool>(
+                                  future: saved(currentUser, professor.id!),
+                                  builder: (contextF, snapshot) {
+                                    if (snapshot.data == true) {
+                                      return marked(
+                                          currentUser, professor, context);
+                                    } else {
+                                      return unmarked(
+                                          currentUser, professor, context);
+                                    }
+                                  },
+                                )
+                              ])),
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                          child: Column(children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Courses Taught:',
+                                  style: header2,
+                                )
+                              ],
+                            ),
+                            const Padding(padding: EdgeInsets.all(5)),
+                            SizedBox(
+                              width: 333, //HARDCODED -- TO FIX
+                              height: 25,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: courses.length,
+                                itemBuilder:
+                                    (BuildContext context, int position) {
+                                  return Container(
+                                      margin:
+                                          const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                                      child: DecoratedBox(
+                                          decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              borderRadius:
+                                                  BorderRadius.circular(5)),
+                                          child: Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
-                                                      32, 10, 32, 0),
-                                              child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text(
-                                                            'Teaching Skill'),
-                                                        ratingBar(snapshot.data[
-                                                                'teachingRating']
-                                                            .toDouble())
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text(
-                                                            'Personality'),
-                                                        ratingBar(snapshot.data[
-                                                                'personalityRating']
-                                                            .toDouble())
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text('Grading'),
-                                                        ratingBar(snapshot.data[
-                                                                'gradingRating']
-                                                            .toDouble())
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text('Workload'),
-                                                        ratingBar(snapshot.data[
-                                                                'workloadRating']
-                                                            .toDouble())
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text('Leniency'),
-                                                        ratingBar(snapshot.data[
-                                                                'leniencyRating']
-                                                            .toDouble())
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text(
-                                                            'Attendance'),
-                                                        ratingBar(snapshot.data[
-                                                                'attendanceRating']
-                                                            .toDouble())
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        const Text('Feedback'),
-                                                        ratingBar(snapshot.data[
-                                                                'feedbackRating']
-                                                            .toDouble())
-                                                      ],
-                                                    )
-                                                  ]))
-                                        ])),
-                                Container(
-                                    margin: const EdgeInsets.fromLTRB(
-                                        25, 10, 25, 32),
-                                    child: TextButton(
-                                      style: ButtonStyle(
-                                        padding: MaterialStateProperty.all<
-                                                EdgeInsets>(
-                                            const EdgeInsets.all(20)),
-                                      ),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: const [
-                                            Text(
-                                              'See reviews',
-                                              style: TextStyle(fontSize: 15.0),
-                                            ),
-                                            SizedBox(width: 5),
-                                            Icon(
-                                              Icons.keyboard_arrow_right_sharp,
-                                              size: 20,
-                                            ),
-                                          ]),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => RevList(
-                                                    professor: professor,
-                                                  )),
-                                        );
-                                      },
-                                    ))
-                              ],
-                            ))
-                      ]);
+                                                      10, 5, 10, 5),
+                                              child: Text(
+                                                courses[position],
+                                                style: buttonText,
+                                              ))));
+                                },
+                              ),
+                            )
+                          ])),
+                      // averageRatings => replaced with this thing below
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Average Ratings', style: header2),
+                                Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        32, 10, 32, 0),
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Teaching Skill'),
+                                              ratingBar(snapshot
+                                                  .data['teachingRating']
+                                                  .toDouble())
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Personality'),
+                                              ratingBar(snapshot
+                                                  .data['personalityRating']
+                                                  .toDouble())
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Grading'),
+                                              ratingBar(snapshot
+                                                  .data['gradingRating']
+                                                  .toDouble())
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Workload'),
+                                              ratingBar(snapshot
+                                                  .data['workloadRating']
+                                                  .toDouble())
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Leniency'),
+                                              ratingBar(snapshot
+                                                  .data['leniencyRating']
+                                                  .toDouble())
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Attendance'),
+                                              ratingBar(snapshot
+                                                  .data['attendanceRating']
+                                                  .toDouble())
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              const Text('Feedback'),
+                                              ratingBar(snapshot
+                                                  .data['feedbackRating']
+                                                  .toDouble())
+                                            ],
+                                          )
+                                        ]))
+                              ])),
+                      Container(
+                          margin: const EdgeInsets.fromLTRB(25, 10, 25, 32),
+                          child: TextButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.all(20)),
+                            ),
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'See reviews',
+                                    style: TextStyle(fontSize: 15.0),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Icon(
+                                    Icons.keyboard_arrow_right_sharp,
+                                    size: 20,
+                                  ),
+                                ]),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RevList(
+                                          professor: professor,
+                                        )),
+                              );
+                            },
+                          ))
+                    ],
+                  );
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),
