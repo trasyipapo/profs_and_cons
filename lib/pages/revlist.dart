@@ -351,6 +351,20 @@ Widget reviewCard(
                 },
               ),
             ),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
           ])
         ]),
       ),
