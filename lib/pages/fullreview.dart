@@ -72,6 +72,16 @@ class _FullReviewState extends State<FullReview> {
                   List<Review> reviews = snapshot.data!;
                   List<Review> filteredReviews =
                       reviews.where((rev) => (rev.id == review.id)).toList();
+//
+                  List<String> upvoters =
+                      filteredReviews[0].upvoters!.split(',');
+                  List<String> downvoters =
+                      filteredReviews[0].downvoters!.split(',');
+
+                  bool isUp = upvoters.any((element) => (element == user!.uid));
+                  bool isDown =
+                      downvoters.any((element) => (element == user!.uid));
+                  //
                   return Container(
                     constraints: const BoxConstraints.expand(),
                     child: Column(
@@ -92,9 +102,18 @@ class _FullReviewState extends State<FullReview> {
                                 ),
                               ],
                             )),
-                        Card(
-                            child: reviewDetails(filteredReviews[0], professor,
-                                context, revCourses))
+                        if (isUp)
+                          Card(
+                              child: upvotedReviewDetails(filteredReviews[0],
+                                  professor, context, revCourses))
+                        else if (isDown)
+                          Card(
+                              child: downvotedReviewDetails(filteredReviews[0],
+                                  professor, context, revCourses))
+                        else
+                          Card(
+                              child: reviewDetails(filteredReviews[0],
+                                  professor, context, revCourses))
                       ],
                     ),
                   );
@@ -129,11 +148,20 @@ Widget reviewDetails(
                     IconButton(
                         onPressed: () {
                           review.votes += 1;
+                          if (review.upvoters == "") {
+                            review.upvoters = review.upvoters! + user!.uid;
+                          } else {
+                            review.upvoters =
+                                review.upvoters! + ',' + user!.uid;
+                          }
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
                           collection
                               .doc(review.id)
-                              .update({'votes': review.votes})
+                              .update({
+                                'votes': review.votes,
+                                'upvoters': review.upvoters
+                              })
                               .then((_) => debugPrint('Updated'))
                               .catchError((error) =>
                                   debugPrint('Update Failed: $error'));
@@ -153,17 +181,427 @@ Widget reviewDetails(
                     IconButton(
                         onPressed: () {
                           review.votes -= 1;
-
+                          if (review.downvoters == "") {
+                            review.downvoters = review.downvoters! + user!.uid;
+                          } else {
+                            review.downvoters =
+                                review.downvoters! + ',' + user!.uid;
+                          }
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
                           collection
                               .doc(review.id)
-                              .update({'votes': review.votes})
+                              .update({
+                                'votes': review.votes,
+                                'downvoters': review.downvoters
+                              })
                               .then((_) => debugPrint('Updated'))
                               .catchError((error) =>
                                   debugPrint('Update Failed: $error'));
                         },
                         color: Colors.grey,
+                        iconSize: 20,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.arrow_downward)),
+                  ],
+                ),
+                ratingBar(review.overallRating!.toDouble())
+              ]),
+              SizedBox(height: 24),
+              Text('${review.title}', style: header2),
+              SizedBox(height: 10),
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 5,
+                children: [
+                  Text(
+                      review.anonymous
+                          ? 'Anonymous Reviewer'
+                          : '${review.writer}',
+                      style: smallText),
+                  Text(
+                      review.semesterTaken! == '0'
+                          ? 'Intersession'
+                          : review.semesterTaken! == '1'
+                              ? '1st Sem'
+                              : '2nd Sem',
+                      style: smallText),
+                  Text('${review.yearTaken}', style: smallText),
+                ],
+              ),
+              SizedBox(height: 15),
+              Text(
+                '${review.description}',
+                style: bodyText,
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Teaching Skill'),
+                  ratingBar(review.teachingRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Personality'),
+                  ratingBar(review.personalityRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Grading'),
+                  ratingBar(review.gradingRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Workload'),
+                  ratingBar(review.workloadRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Leniency'),
+                  ratingBar(review.leniencyRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Attendance'),
+                  ratingBar(review.attendanceRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Feedback'),
+                  ratingBar(review.feedbackRating!.toDouble())
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                SizedBox(
+                  width: 286, //HARDCODED -- TO FIX
+                  height: 25,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: revCourses.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                          child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Text(
+                                    revCourses[position],
+                                    style: buttonText,
+                                  ))));
+                    },
+                  ),
+                ),
+                if (user!.uid == review.writeruid)
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    disabledColor: Colors.white,
+                    onPressed: () {
+                      user!.uid != review.writeruid
+                          ? null
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditForm(
+                                        professor: prof,
+                                        review: review,
+                                      )));
+                    },
+                  ),
+              ]),
+            ]));
+
+Widget upvotedReviewDetails(
+        Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
+        padding: const EdgeInsets.fromLTRB(25, 32, 25, 32),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          review.votes -= 1;
+                          // remove from upvoters
+                          List<String> result = review.upvoters!.split(',');
+                          result = result
+                              .where((element) => (element != user!.uid))
+                              .toList();
+                          final collection =
+                              FirebaseFirestore.instance.collection('reviews');
+                          collection
+                              .doc(review.id)
+                              .update({
+                                'votes': review.votes,
+                                'upvoters': result.join(','),
+                              })
+                              .then((_) => debugPrint('Updated'))
+                              .catchError((error) =>
+                                  debugPrint('Update Failed: $error'));
+                        },
+                        color: Colors.blue,
+                        iconSize: 20,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.arrow_upward)),
+                    Text(
+                      review.votes.toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 15,
+                          color: Colors.grey),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          review.votes -= 2;
+                          // remove from upvoters
+                          List<String> result = review.upvoters!.split(',');
+                          result = result
+                              .where((element) => (element != user!.uid))
+                              .toList();
+                          // add to downvoters
+                          if (review.downvoters == "") {
+                            review.downvoters = review.downvoters! + user!.uid;
+                          } else {
+                            review.downvoters =
+                                review.downvoters! + ',' + user!.uid;
+                          }
+                          final collection =
+                              FirebaseFirestore.instance.collection('reviews');
+                          collection
+                              .doc(review.id)
+                              .update({
+                                'votes': review.votes,
+                                'downvoters': review.downvoters,
+                                'upvoters': result.join(',')
+                              })
+                              .then((_) => debugPrint('Updated'))
+                              .catchError((error) =>
+                                  debugPrint('Update Failed: $error'));
+                        },
+                        color: Colors.grey,
+                        iconSize: 20,
+                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.arrow_downward)),
+                  ],
+                ),
+                ratingBar(review.overallRating!.toDouble())
+              ]),
+              SizedBox(height: 24),
+              Text('${review.title}', style: header2),
+              SizedBox(height: 10),
+              Wrap(
+                alignment: WrapAlignment.start,
+                spacing: 5,
+                children: [
+                  Text(
+                      review.anonymous
+                          ? 'Anonymous Reviewer'
+                          : '${review.writer}',
+                      style: smallText),
+                  Text(
+                      review.semesterTaken! == '0'
+                          ? 'Intersession'
+                          : review.semesterTaken! == '1'
+                              ? '1st Sem'
+                              : '2nd Sem',
+                      style: smallText),
+                  Text('${review.yearTaken}', style: smallText),
+                ],
+              ),
+              SizedBox(height: 15),
+              Text(
+                '${review.description}',
+                style: bodyText,
+              ),
+              SizedBox(height: 15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Teaching Skill'),
+                  ratingBar(review.teachingRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Personality'),
+                  ratingBar(review.personalityRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Grading'),
+                  ratingBar(review.gradingRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Workload'),
+                  ratingBar(review.workloadRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Leniency'),
+                  ratingBar(review.leniencyRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Attendance'),
+                  ratingBar(review.attendanceRating!.toDouble())
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Feedback'),
+                  ratingBar(review.feedbackRating!.toDouble())
+                ],
+              ),
+              SizedBox(height: 15),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                SizedBox(
+                  width: 286, //HARDCODED -- TO FIX
+                  height: 25,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: revCourses.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                          child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Text(
+                                    revCourses[position],
+                                    style: buttonText,
+                                  ))));
+                    },
+                  ),
+                ),
+                if (user!.uid == review.writeruid)
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    disabledColor: Colors.white,
+                    onPressed: () {
+                      user!.uid != review.writeruid
+                          ? null
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EditForm(
+                                        professor: prof,
+                                        review: review,
+                                      )));
+                    },
+                  ),
+              ]),
+            ]));
+
+Widget downvotedReviewDetails(
+        Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
+        padding: const EdgeInsets.fromLTRB(25, 32, 25, 32),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          review.votes += 2;
+                          // add to upvoters
+                          if (review.upvoters == "") {
+                            review.upvoters = review.upvoters! + user!.uid;
+                          } else {
+                            review.upvoters =
+                                review.upvoters! + ',' + user!.uid;
+                          }
+                          // remove from downvoters
+                          List<String> result = review.downvoters!.split(',');
+                          result = result
+                              .where((element) => (element != user!.uid))
+                              .toList();
+                          final collection =
+                              FirebaseFirestore.instance.collection('reviews');
+                          collection
+                              .doc(review.id)
+                              .update({
+                                'votes': review.votes,
+                                'upvoters': review.upvoters,
+                                'downvoters': result.join(','),
+                              })
+                              .then((_) => debugPrint('Updated'))
+                              .catchError((error) =>
+                                  debugPrint('Update Failed: $error'));
+                        },
+                        color: Colors.grey,
+                        iconSize: 20,
+                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        constraints: const BoxConstraints(),
+                        icon: const Icon(Icons.arrow_upward)),
+                    Text(
+                      review.votes.toString(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 15,
+                          color: Colors.grey),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          review.votes += 1;
+                          // remove from downvoters
+                          List<String> result = review.downvoters!.split(',');
+                          result = result
+                              .where((element) => (element != user!.uid))
+                              .toList();
+                          final collection =
+                              FirebaseFirestore.instance.collection('reviews');
+                          collection
+                              .doc(review.id)
+                              .update({
+                                'votes': review.votes,
+                                'downvoters': result.join(','),
+                              })
+                              .then((_) => debugPrint('Updated'))
+                              .catchError((error) =>
+                                  debugPrint('Update Failed: $error'));
+                        },
+                        color: Colors.blue,
                         iconSize: 20,
                         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                         constraints: const BoxConstraints(),
