@@ -48,24 +48,7 @@ class _RevListState extends State<RevList> {
                     // Navigator.of(context).push(
                     // MaterialPageRoute(builder: (context) => Profile(professor: prof)));
                   }),
-              actions: [
-                IconButton(
-                  icon: Image.asset('assets/appbar-logo.png'),
-                  padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchPage()),
-                    );
-                  },
-                ),
-              ],
-              centerTitle: false,
               backgroundColor: Colors.white,
-              title: const Text(
-                'Profs and Cons',
-                textAlign: TextAlign.left,
-              ),
             ),
             body: Padding(
               padding: const EdgeInsets.all(16),

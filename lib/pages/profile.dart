@@ -57,26 +57,12 @@ class _ProfileState extends State<Profile> {
             icon: const Icon(Icons.arrow_back),
             color: Colors.black87,
             onPressed: () {
-              Navigator.pop(context);
-            }),
-        actions: [
-          IconButton(
-            icon: Image.asset('assets/appbar-logo.png'),
-            padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-            onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SearchPage()),
               );
-            },
-          ),
-        ],
-        centerTitle: false,
+            }),
         backgroundColor: Colors.white,
-        title: const Text(
-          'Profs and Cons',
-          textAlign: TextAlign.left,
-        ),
       ),
       body: Container(
           constraints: const BoxConstraints.expand(),
