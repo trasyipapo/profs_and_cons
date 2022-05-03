@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 import 'package:profs_and_cons/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -154,11 +155,11 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Bookmarks()),
+                        MaterialPageRoute(builder: (context) => OwnReviews()),
                       );
                     },
                     child: const Text(
-                      'Go to Bookmarks',
+                      'Go to Reviews',
                       style: TextStyle(
                           fontFamily: 'GoogleSans',
                           fontWeight: FontWeight.normal,
