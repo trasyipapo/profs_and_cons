@@ -24,54 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: title,
       theme: ThemeData(primarySwatch: Colors.red, fontFamily: 'GoogleSans'),
-      home: MyBottomNavigationBar(),
-    );
-  }
-}
-
-class MyBottomNavigationBar extends StatefulWidget {
-  // const MyBottomNavigationBar({ Key? key }) : super(key: key);
-  @override
-  State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
-}
-
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int _currentIndex = 1;
-  final List<Widget> _children = [
-    Bookmarks(),
-    SearchPage(),
-    Bookmarks(),
-  ];
-
-  void onTappedBar(int index){
-    setState(() {
-       _currentIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTappedBar,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.bookmark),
-            label: 'Bookmarks',
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-      ),
+      home: SearchPage(),
     );
   }
 }

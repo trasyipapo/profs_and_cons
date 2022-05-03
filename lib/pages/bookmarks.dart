@@ -31,6 +31,20 @@ class Bookmarks extends StatefulWidget {
 
 class _BookmarksState extends State<Bookmarks> {
   _BookmarksState();
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    Bookmarks(),
+    SearchPage(),
+    Bookmarks(),
+  ];
+
+  int onTappedBar(int index){
+    setState(() {
+       _currentIndex = index;
+    });
+    return _currentIndex;
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -157,6 +171,40 @@ class _BookmarksState extends State<Bookmarks> {
                               return Text("Error.");
                             }
                           })
-                    ]))));
+                    ])),
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (onTappedBar) {
+              if (onTappedBar == 0) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Bookmarks()));
+              } else if (onTappedBar == 1) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SearchPage()));
+              } else if (onTappedBar == 2) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => Bookmarks()));
+              }
+            },
+            currentIndex: _currentIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.bookmark),
+                label: 'Bookmarks',
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+            selectedItemColor: Colors.blue,
+          ),
+          ));
   }
 }
