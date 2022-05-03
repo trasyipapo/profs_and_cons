@@ -32,13 +32,10 @@ class _SearchResultsState extends State<SearchResults> {
         home: Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                  icon: const Icon(Icons.search),
+                  icon: const Icon(Icons.arrow_back),
                   color: Colors.black87,
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SearchPage()),
-                    );
+                    Navigator.pop(context);
                   }),
               actions: [
                 IconButton(
