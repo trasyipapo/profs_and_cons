@@ -144,27 +144,6 @@ class _SearchPageState extends State<SearchPage> {
               //             fontSize: 20),
               //       ),
               //     )),
-
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                        minimumSize: const Size.fromHeight(50)),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Bookmarks()),
-                      );
-                    },
-                    child: const Text(
-                      'Go to Bookmarks',
-                      style: TextStyle(
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20),
-                    ),
-                  )),
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(

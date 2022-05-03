@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/pages/profile.dart';
 // import 'package:profs_and_cons/pages/fullreview.dart';
@@ -18,17 +19,59 @@ class MyApp extends StatelessWidget {
   static final String title = 'Profs and Cons';
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: title,
-          theme: ThemeData(primarySwatch: Colors.red, fontFamily: 'GoogleSans'),
-          home: LoginPage(),
-          routes: {
-            '/home': (context) => SearchPage(),
-            //'/profile': (context) => Profile(),
-            // '/fullreview': (context) => const FullReview(),
-            // '/revlist': (context) => const RevList(),
-            //'/searchresults': (context) => const SearchResults(),
-            '/login': (context) => LoginPage(),
-          });
+  Widget build(BuildContext context){
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      theme: ThemeData(primarySwatch: Colors.red, fontFamily: 'GoogleSans'),
+      home: MyBottomNavigationBar(),
+    );
+  }
+}
+
+class MyBottomNavigationBar extends StatefulWidget {
+  // const MyBottomNavigationBar({ Key? key }) : super(key: key);
+  @override
+  State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  int _currentIndex = 1;
+  final List<Widget> _children = [
+    Bookmarks(),
+    SearchPage(),
+    Bookmarks(),
+  ];
+
+  void onTappedBar(int index){
+    setState(() {
+       _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTappedBar,
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.bookmark),
+            label: 'Bookmarks',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+      ),
+    );
+  }
 }
