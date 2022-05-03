@@ -234,7 +234,10 @@ class _RevListState extends State<RevList> {
                                               return Card(
                                                   child: InkWell(
                                                 child: down(
-                                                    review, professor, context),
+                                                    review,
+                                                    professor,
+                                                    context,
+                                                    review.courses!.split(',')),
                                                 onTap: () {
                                                   Navigator.of(context).push(
                                                       MaterialPageRoute(
@@ -250,7 +253,10 @@ class _RevListState extends State<RevList> {
                                               return Card(
                                                   child: InkWell(
                                                 child: up(
-                                                    review, professor, context),
+                                                    review,
+                                                    professor,
+                                                    context,
+                                                    review.courses!.split(',')),
                                                 onTap: () {
                                                   Navigator.of(context).push(
                                                       MaterialPageRoute(
@@ -424,7 +430,8 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-Widget down(Review review, Professor prof, context) => Container(
+Widget down(Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -518,35 +525,35 @@ Widget down(Review review, Professor prof, context) => Container(
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Wrap(spacing: 10, children: [
-              DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: Text('${review.courses}', style: buttonText))),
-            ]),
-            if (user!.uid == review.writeruid)
-              IconButton(
-                icon: Icon(Icons.edit),
-                disabledColor: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditForm(
-                                professor: prof,
-                                review: review,
-                              )));
+            SizedBox(
+              width: 239, //HARDCODED -- TO FIX
+              height: 25,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: revCourses.length,
+                itemBuilder: (BuildContext context, int position) {
+                  return Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: Text(
+                                revCourses[position],
+                                style: buttonText,
+                              ))));
                 },
               ),
+            ),
           ])
         ]),
       ),
     );
 
-Widget up(Review review, Professor prof, context) => Container(
+Widget up(Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
       child: Padding(
         padding: EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -640,29 +647,28 @@ Widget up(Review review, Professor prof, context) => Container(
           ),
           SizedBox(height: 24),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Wrap(spacing: 10, children: [
-              DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                      child: Text('${review.courses}', style: buttonText))),
-            ]),
-            if (user!.uid == review.writeruid)
-              IconButton(
-                icon: Icon(Icons.edit),
-                disabledColor: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditForm(
-                                professor: prof,
-                                review: review,
-                              )));
+            SizedBox(
+              width: 239, //HARDCODED -- TO FIX
+              height: 25,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: revCourses.length,
+                itemBuilder: (BuildContext context, int position) {
+                  return Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                      child: DecoratedBox(
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                              child: Text(
+                                revCourses[position],
+                                style: buttonText,
+                              ))));
                 },
               ),
+            ),
           ])
         ]),
       ),
