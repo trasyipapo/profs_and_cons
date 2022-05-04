@@ -74,9 +74,9 @@ class _EditFormState extends State<EditForm> {
     // final courses =
     //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
-    semesters.add({"id": 0, "name": "Intersession"});
-    semesters.add({"id": 1, "name": "1st Sem"});
-    semesters.add({"id": 2, "name": "2nd Sem"});
+    semesters.add({"id": 1, "name": "Intersession"});
+    semesters.add({"id": 2, "name": "1st Sem"});
+    semesters.add({"id": 0, "name": "2nd Sem"});
     //CheckBoxState anonymous = CheckBoxState(title: "Submit Anonymously");
 
     return Form(
@@ -307,8 +307,8 @@ class _EditFormState extends State<EditForm> {
                     (onValidateVal) {
                       if (onValidateVal.isEmpty) {
                         return 'Please state the latest academic year you took the course';
-                      }
-                      else if(!RegExp(r"^(19|20)\d{2}$").hasMatch(onValidateVal)) {
+                      } else if (!RegExp(r"^(19|20)\d{2}$")
+                          .hasMatch(onValidateVal)) {
                         return 'Options: 1900-2999';
                       }
                       return null;

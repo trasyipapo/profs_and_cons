@@ -204,9 +204,9 @@ Widget reviewDetails(
                           : '${review.writer}',
                       style: smallText),
                   Text(
-                      review.semesterTaken! == '0'
+                      review.semesterTaken! == '1'
                           ? 'Intersession'
-                          : review.semesterTaken! == '1'
+                          : review.semesterTaken! == '2'
                               ? '1st Sem'
                               : '2nd Sem',
                       style: smallText),
@@ -405,9 +405,9 @@ Widget upvotedReviewDetails(
                           : '${review.writer}',
                       style: smallText),
                   Text(
-                      review.semesterTaken! == '0'
+                      review.semesterTaken! == '1'
                           ? 'Intersession'
-                          : review.semesterTaken! == '1'
+                          : review.semesterTaken! == '2'
                               ? '1st Sem'
                               : '2nd Sem',
                       style: smallText),
@@ -606,9 +606,9 @@ Widget downvotedReviewDetails(
                           : '${review.writer}',
                       style: smallText),
                   Text(
-                      review.semesterTaken! == '0'
+                      review.semesterTaken! == '1'
                           ? 'Intersession'
-                          : review.semesterTaken! == '1'
+                          : review.semesterTaken! == '2'
                               ? '1st Sem'
                               : '2nd Sem',
                       style: smallText),
