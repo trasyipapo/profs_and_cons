@@ -6,6 +6,7 @@ import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/user.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -166,8 +167,9 @@ class _BookmarksState extends State<Bookmarks> {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => SearchPage()));
               } else if (onTappedBar == 2) {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => OwnReviews()));
               }
             },
             currentIndex: _currentIndex,

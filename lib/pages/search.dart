@@ -206,37 +206,37 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ))
           ])),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          _currentIndex = value;
-          if (value == 0) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Bookmarks()));
-          } else if (value == 1) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => SearchPage()));
-          } else if (value == 2) {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Bookmarks()));
-          }
-        },
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.bookmark),
-            label: 'Bookmarks',
+       bottomNavigationBar: BottomNavigationBar(
+            onTap: (onTappedBar) {
+              if (onTappedBar == 0) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+              } else if (onTappedBar == 1) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SearchPage()));
+              } else if (onTappedBar == 2) {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => OwnReviews()));
+              }
+            },
+            currentIndex: _currentIndex,
+            items: [
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.bookmark),
+                label: 'Bookmarks',
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+            selectedItemColor: Colors.blue,
           ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        selectedItemColor: Colors.blue,
-      ),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/objects/professor.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/pages/search.dart';
@@ -138,7 +139,7 @@ class _SearchResultsState extends State<SearchResults> {
             } else if (value == 2) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => Bookmarks()));
+                  builder: (context) => OwnReviews()));
             }
           },
           items: [

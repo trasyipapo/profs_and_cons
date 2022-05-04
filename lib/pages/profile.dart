@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/objects/user.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 //import 'package:profs_and_cons/models/professor.dart';
 //import 'package:profs_and_cons/objects/reviewcard.dart';
 //import 'package:profs_and_cons/pages/home.dart';
@@ -331,7 +332,7 @@ class _ProfileState extends State<Profile> {
             } else if (value == 2) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => Bookmarks()));
+                  builder: (context) => OwnReviews()));
             }
           },
           items: [

@@ -8,6 +8,7 @@ import 'package:profs_and_cons/objects/reviewcard.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 import 'package:profs_and_cons/pages/review_form.dart';
 import 'package:profs_and_cons/pages/edit_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -288,7 +289,7 @@ class _RevListState extends State<RevList> {
             } else if (value == 2) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => Bookmarks()));
+                  builder: (context) => OwnReviews()));
             }
           },
           items: [
