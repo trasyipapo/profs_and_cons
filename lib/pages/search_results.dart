@@ -7,6 +7,7 @@ import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:profs_and_cons/pages/search.dart';
 
 Stream<List<Professor>> readProfs() => FirebaseFirestore.instance
     .collection('professors')
@@ -35,7 +36,8 @@ class _SearchResultsState extends State<SearchResults> {
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.black87,
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SearchPage()));
                   }),
               backgroundColor: Colors.white,
             ),
@@ -101,10 +103,13 @@ class _SearchResultsState extends State<SearchResults> {
                                         prof.overallRating.toStringAsFixed(2),
                                         style: resultsRating),
                                     onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Profile(professor: prof)));
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => Profile(
+                                                    professor: prof,
+                                                    query: query,
+                                                    prevPage: 1,
+                                                  )));
                                     },
                                   ));
                                 },

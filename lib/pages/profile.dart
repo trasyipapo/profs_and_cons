@@ -10,6 +10,8 @@ import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search.dart';
+import 'package:profs_and_cons/pages/search_results.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/review_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -33,20 +35,33 @@ Future<UserFire> getUser(String uid) async {
 
 class Profile extends StatefulWidget {
   Professor professor;
+  String? query;
   String currentUser = FirebaseAuth.instance.currentUser!.uid;
+  int prevPage;
 
-  Profile({Key? key, required this.professor}) : super(key: key);
+  Profile(
+      {Key? key, required this.professor, this.query, required this.prevPage})
+      : super(key: key);
 
   @override
-  State<Profile> createState() =>
-      _ProfileState(professor: professor, currentUser: currentUser);
+  State<Profile> createState() => _ProfileState(
+      professor: professor,
+      currentUser: currentUser,
+      query: query,
+      prevPage: prevPage);
 }
 
 class _ProfileState extends State<Profile> {
   Professor professor;
   String currentUser;
+  String? query;
+  int prevPage;
 
-  _ProfileState({required this.professor, required this.currentUser});
+  _ProfileState(
+      {required this.professor,
+      required this.currentUser,
+      this.query,
+      required this.prevPage});
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +72,13 @@ class _ProfileState extends State<Profile> {
             icon: const Icon(Icons.arrow_back),
             color: Colors.black87,
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
+              if (prevPage == 1) {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => SearchResults(query: query!)));
+              } else if (prevPage == 2) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+              }
             }),
         backgroundColor: Colors.white,
       ),
@@ -125,11 +143,11 @@ class _ProfileState extends State<Profile> {
                                   future: saved(currentUser, professor.id!),
                                   builder: (contextF, snapshot) {
                                     if (snapshot.data == true) {
-                                      return marked(
-                                          currentUser, professor, context);
+                                      return marked(currentUser, professor,
+                                          prevPage, context);
                                     } else {
-                                      return unmarked(
-                                          currentUser, professor, context);
+                                      return unmarked(currentUser, professor,
+                                          prevPage, context);
                                     }
                                   },
                                 )
@@ -414,7 +432,8 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-ElevatedButton unmarked(String uid, Professor prof, BuildContext context) {
+ElevatedButton unmarked(
+    String uid, Professor prof, int prevPage, BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
           padding:
@@ -428,13 +447,17 @@ ElevatedButton unmarked(String uid, Professor prof, BuildContext context) {
           UserFire user = await getUser(uid);
           user.favorites = user.favorites! + prof.id! + ",";
           await updateUser(user);
-          Navigator.of(context).push(
-              CustomPageRoute(builder: (context) => Profile(professor: prof)));
+          Navigator.of(context).push(CustomPageRoute(
+              builder: (context) => Profile(
+                    professor: prof,
+                    prevPage: prevPage,
+                  )));
         } catch (e) {}
       });
 }
 
-ElevatedButton marked(String uid, Professor prof, BuildContext context) {
+ElevatedButton marked(
+    String uid, Professor prof, int prevPage, BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
           padding:
@@ -450,8 +473,11 @@ ElevatedButton marked(String uid, Professor prof, BuildContext context) {
           faves.remove(prof.id!);
           user.favorites = faves.join(",");
           await updateUser(user);
-          Navigator.of(context).push(
-              CustomPageRoute(builder: (context) => Profile(professor: prof)));
+          Navigator.of(context).push(CustomPageRoute(
+              builder: (context) => Profile(
+                    professor: prof,
+                    prevPage: prevPage,
+                  )));
         } catch (e) {}
       });
 }

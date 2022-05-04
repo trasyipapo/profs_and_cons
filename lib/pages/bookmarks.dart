@@ -41,7 +41,8 @@ class _BookmarksState extends State<Bookmarks> {
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.black87,
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SearchPage()));
                   }),
               backgroundColor: Colors.white,
             ),
@@ -119,8 +120,8 @@ class _BookmarksState extends State<Bookmarks> {
                                                   MaterialPageRoute(
                                                       builder: (context) =>
                                                           Profile(
-                                                              professor:
-                                                                  prof)));
+                                                              professor: prof,
+                                                              prevPage: 2)));
                                             },
                                           ));
                                         },
