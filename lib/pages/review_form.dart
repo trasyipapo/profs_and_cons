@@ -398,7 +398,6 @@ class _ReviewFormState extends State<ReviewForm> {
       snapShot.docs.forEach((doc) {
         name = doc['name'];
         department = doc['department'];
-        print(name.toString() + "INSIDE SNAPSHOT");
       });
     });
     rev.profName = name;
@@ -425,9 +424,9 @@ class _ReviewFormState extends State<ReviewForm> {
     // final json2 = rev.toJson();
     // await docReview.set(json2);
 //
-    final revTester = FirebaseFirestore.instance
-        .collection('users')
-        .where('uid', isEqualTo: user!.uid);
+    // final revTester = FirebaseFirestore.instance
+    //     .collection('users')
+    //     .where('uid', isEqualTo: user!.uid);
 
     final tester = FirebaseFirestore.instance
         .collection('reviews')
@@ -443,7 +442,7 @@ class _ReviewFormState extends State<ReviewForm> {
         workload = 0;
     int total = 0;
 
-    String? pastReviews = "";
+    // String? pastReviews = "";
 
     await tester.get().then((snapShot) {
       snapShot.docs.forEach((doc) {
@@ -458,11 +457,11 @@ class _ReviewFormState extends State<ReviewForm> {
         total += 1;
       });
     });
-    await revTester.get().then((snapShot) {
-      snapShot.docs.forEach((doc) {
-        pastReviews = doc["ownReviews"];
-      });
-    });
+    // await revTester.get().then((snapShot) {
+    //   snapShot.docs.forEach((doc) {
+    //     pastReviews = doc["ownReviews"];
+    //   });
+    // });
 
     attend /= total;
     feedback /= total;
@@ -473,16 +472,16 @@ class _ReviewFormState extends State<ReviewForm> {
     teaching /= total;
     workload /= total;
 
-    if (pastReviews == "") {
-      pastReviews = rev.id.toString();
-    } else {
-      pastReviews = pastReviews! + ',' + rev.id.toString();
-    }
+    // if (pastReviews == "") {
+    //   pastReviews = rev.id.toString();
+    // } else {
+    //   pastReviews = pastReviews! + ',' + rev.id.toString();
+    // }
     // rev.profName = name;
     // rev.department = department;
     // // final json2 = rev.toJson();
     // // await docReview.set(json2);
-    print(name.toString() + 'OUTSIDE');
+    // print(name.toString() + 'OUTSIDE');
 
     final updateProf = FirebaseFirestore.instance.collection('professors');
     updateProf
@@ -500,14 +499,14 @@ class _ReviewFormState extends State<ReviewForm> {
         .then((_) => debugPrint('Updated'))
         .catchError((error) => debugPrint('Update Failed: $error'));
 
-    final addtouser = FirebaseFirestore.instance.collection('users');
-    addtouser
-        .doc(user!.uid)
-        .update({
-          'ownReviews': pastReviews,
-        })
-        .then((_) => debugPrint('Updated own reviews'))
-        .catchError((error) => debugPrint('Update Failed: $error'));
+    // final addtouser = FirebaseFirestore.instance.collection('users');
+    // addtouser
+    //     .doc(user!.uid)
+    //     .update({
+    //       'ownReviews': pastReviews,
+    //     })
+    //     .then((_) => debugPrint('Updated own reviews'))
+    //     .catchError((error) => debugPrint('Update Failed: $error'));
 
     // final updateRev = FirebaseFirestore.instance.collection('reviews');
     // updateRev
