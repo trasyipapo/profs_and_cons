@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:profs_and_cons/objects/professor.dart';
-import 'package:profs_and_cons/pages/revlist.dart';
+import 'package:profs_and_cons/pages/revlist.dart' as revl;
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/review.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:profs_and_cons/pages/edit_form.dart';
@@ -61,9 +62,9 @@ class _FullReviewState extends State<FullReview> {
                   List<String> downvoters =
                       filteredReviews[0].downvoters!.split(',');
 
-                  bool isUp = upvoters.any((element) => (element == user!.uid));
+                  bool isUp = upvoters.any((element) => (element == revl.user!.uid));
                   bool isDown =
-                      downvoters.any((element) => (element == user!.uid));
+                      downvoters.any((element) => (element == revl.user!.uid));
                   //
                   return Container(
                     constraints: const BoxConstraints.expand(),
@@ -106,7 +107,38 @@ class _FullReviewState extends State<FullReview> {
                   );
                 }
               }),
-        ));
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            if (value == 0) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            } else if (value == 1) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchPage()));
+            } else if (value == 2) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.bookmark),
+              label: 'Bookmarks',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.grey[600],
+        ),));
   }
 }
 
@@ -132,10 +164,10 @@ Widget reviewDetails(
                         onPressed: () {
                           review.votes += 1;
                           if (review.upvoters == "") {
-                            review.upvoters = review.upvoters! + user!.uid;
+                            review.upvoters = review.upvoters! + revl.user!.uid;
                           } else {
                             review.upvoters =
-                                review.upvoters! + ',' + user!.uid;
+                                review.upvoters! + ',' + revl.user!.uid;
                           }
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
@@ -165,10 +197,10 @@ Widget reviewDetails(
                         onPressed: () {
                           review.votes -= 1;
                           if (review.downvoters == "") {
-                            review.downvoters = review.downvoters! + user!.uid;
+                            review.downvoters = review.downvoters! + revl.user!.uid;
                           } else {
                             review.downvoters =
-                                review.downvoters! + ',' + user!.uid;
+                                review.downvoters! + ',' + revl.user!.uid;
                           }
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
@@ -293,12 +325,12 @@ Widget reviewDetails(
                     },
                   ),
                 ),
-                if (user!.uid == review.writeruid)
+                if (revl.user!.uid == review.writeruid)
                   IconButton(
                     icon: Icon(Icons.edit),
                     disabledColor: Colors.white,
                     onPressed: () {
-                      user!.uid != review.writeruid
+                      revl.user!.uid != review.writeruid
                           ? null
                           : Navigator.push(
                               context,
@@ -329,7 +361,7 @@ Widget upvotedReviewDetails(
                           // remove from upvoters
                           List<String> result = review.upvoters!.split(',');
                           result = result
-                              .where((element) => (element != user!.uid))
+                              .where((element) => (element != revl.user!.uid))
                               .toList();
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
@@ -361,14 +393,14 @@ Widget upvotedReviewDetails(
                           // remove from upvoters
                           List<String> result = review.upvoters!.split(',');
                           result = result
-                              .where((element) => (element != user!.uid))
+                              .where((element) => (element != revl.user!.uid))
                               .toList();
                           // add to downvoters
                           if (review.downvoters == "") {
-                            review.downvoters = review.downvoters! + user!.uid;
+                            review.downvoters = review.downvoters! + revl.user!.uid;
                           } else {
                             review.downvoters =
-                                review.downvoters! + ',' + user!.uid;
+                                review.downvoters! + ',' + revl.user!.uid;
                           }
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
@@ -494,12 +526,12 @@ Widget upvotedReviewDetails(
                     },
                   ),
                 ),
-                if (user!.uid == review.writeruid)
+                if (revl.user!.uid == review.writeruid)
                   IconButton(
                     icon: Icon(Icons.edit),
                     disabledColor: Colors.white,
                     onPressed: () {
-                      user!.uid != review.writeruid
+                      revl.user!.uid != review.writeruid
                           ? null
                           : Navigator.push(
                               context,
@@ -529,15 +561,15 @@ Widget downvotedReviewDetails(
                           review.votes += 2;
                           // add to upvoters
                           if (review.upvoters == "") {
-                            review.upvoters = review.upvoters! + user!.uid;
+                            review.upvoters = review.upvoters! + revl.user!.uid;
                           } else {
                             review.upvoters =
-                                review.upvoters! + ',' + user!.uid;
+                                review.upvoters! + ',' + revl.user!.uid;
                           }
                           // remove from downvoters
                           List<String> result = review.downvoters!.split(',');
                           result = result
-                              .where((element) => (element != user!.uid))
+                              .where((element) => (element != revl.user!.uid))
                               .toList();
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
@@ -570,7 +602,7 @@ Widget downvotedReviewDetails(
                           // remove from downvoters
                           List<String> result = review.downvoters!.split(',');
                           result = result
-                              .where((element) => (element != user!.uid))
+                              .where((element) => (element != revl.user!.uid))
                               .toList();
                           final collection =
                               FirebaseFirestore.instance.collection('reviews');
@@ -695,12 +727,12 @@ Widget downvotedReviewDetails(
                     },
                   ),
                 ),
-                if (user!.uid == review.writeruid)
+                if (revl.user!.uid == review.writeruid)
                   IconButton(
                     icon: Icon(Icons.edit),
                     disabledColor: Colors.white,
                     onPressed: () {
-                      user!.uid != review.writeruid
+                      revl.user!.uid != review.writeruid
                           ? null
                           : Navigator.push(
                               context,

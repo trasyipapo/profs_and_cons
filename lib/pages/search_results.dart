@@ -3,6 +3,7 @@ import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/main.dart';
 import 'package:profs_and_cons/pages/profile.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'dart:convert';
@@ -26,6 +27,7 @@ class SearchResults extends StatefulWidget {
 class _SearchResultsState extends State<SearchResults> {
   String query;
   _SearchResultsState({required this.query});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -122,6 +124,39 @@ class _SearchResultsState extends State<SearchResults> {
                           }
                         },
                       )
-                    ]))));
+                    ])),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            if (value == 0) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            } else if (value == 1) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchPage()));
+            } else if (value == 2) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.bookmark),
+              label: 'Bookmarks',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.grey[600],
+        ),
+      ));
   }
 }

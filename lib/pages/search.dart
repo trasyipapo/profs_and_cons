@@ -42,6 +42,8 @@ class _SearchPageState extends State<SearchPage> {
     super.dispose();
   }
 
+  int _currentIndex = 1;
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -51,140 +53,167 @@ class _SearchPageState extends State<SearchPage> {
         nameSplit[0][0].toUpperCase() + nameSplit[0].substring(1).toLowerCase();
 
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: false,
-          backgroundColor: Colors.transparent,
-          title: Padding(
-            padding: const EdgeInsets.fromLTRB(6.0, 0, 150.0, 0),
-            child: Image.asset('assets/home-logo.png'),
-          ),
-          leadingWidth: 500,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        backgroundColor: Colors.transparent,
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(6.0, 0, 150.0, 0),
+          child: Image.asset('assets/home-logo.png'),
         ),
-        body: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/bg-image.png"),
-                    fit: BoxFit.cover)),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Spacer(),
-              Container(
-                  padding: const EdgeInsets.fromLTRB(25, 50, 25, 25),
-                  child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Hello,\n' + firstName + '!',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 32,
-                                  color: Colors.white)),
-                          const Text('\n',
-                              style:
-                                  TextStyle(fontSize: 5, color: Colors.white)),
-                          const Text('Let\'s search for your profs',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white))
-                        ],
-                      ))),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: TextField(
-                    textInputAction: TextInputAction.search,
-                    controller: myController,
-                    onSubmitted: (String query) {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SearchResults(query: query)));
-                    },
-                    cursorColor: Colors.blue,
-                    cursorHeight: 20,
-                    cursorWidth: 2,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Colors.black54,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: Colors.blue, width: 2.0),
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      hintStyle: TextStyle(color: Colors.grey[800]),
-                      hintText: "Search",
-                    )),
-              ),
-              const Spacer(),
-              // Padding(
-              //     padding: const EdgeInsets.all(16.0),
-              //     child: ElevatedButton(
-              //       style: ElevatedButton.styleFrom(
-              //           primary: Colors.red,
-              //           minimumSize: const Size.fromHeight(50)),
-              //       onPressed: () {
-              //         Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (context) => TempSearchResults()),
-              //         );
-              //       },
-              //       child: const Text(
-              //         'Search Professors',
-              //         style: TextStyle(
-              //             fontFamily: 'GoogleSans',
-              //             fontWeight: FontWeight.normal,
-              //             fontSize: 20),
-              //       ),
-              //     )),
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                        minimumSize: const Size.fromHeight(50)),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddProf()),
-                      );
-                    },
-                    child: const Text(
-                      'Add Professor',
-                      style: TextStyle(
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20),
+        leadingWidth: 500,
+      ),
+      body: Container(
+          constraints: const BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/bg-image.png"), fit: BoxFit.cover)),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const Spacer(),
+            Container(
+                padding: const EdgeInsets.fromLTRB(25, 50, 25, 25),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Hello,\n' + firstName + '!',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32,
+                                color: Colors.white)),
+                        const Text('\n',
+                            style: TextStyle(fontSize: 5, color: Colors.white)),
+                        const Text('Let\'s search for your profs',
+                            style: TextStyle(fontSize: 16, color: Colors.white))
+                      ],
+                    ))),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                  textInputAction: TextInputAction.search,
+                  controller: myController,
+                  onSubmitted: (String query) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SearchResults(query: query)));
+                  },
+                  cursorColor: Colors.blue,
+                  cursorHeight: 20,
+                  cursorWidth: 2,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Colors.black54,
                     ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                    hintStyle: TextStyle(color: Colors.grey[800]),
+                    hintText: "Search",
                   )),
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                        minimumSize: const Size.fromHeight(50)),
-                    onPressed: () {
-                      final provider = Provider.of<GoogleSignInProvider>(
-                          context,
-                          listen: false);
-                      provider.logout();
-                    },
-                    child: const Text(
-                      'Logout',
-                      style: TextStyle(
-                          fontFamily: 'GoogleSans',
-                          fontWeight: FontWeight.normal,
-                          fontSize: 20),
-                    ),
-                  ))
-            ])));
+            ),
+            const Spacer(),
+            // Padding(
+            //     padding: const EdgeInsets.all(16.0),
+            //     child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           primary: Colors.red,
+            //           minimumSize: const Size.fromHeight(50)),
+            //       onPressed: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => TempSearchResults()),
+            //         );
+            //       },
+            //       child: const Text(
+            //         'Search Professors',
+            //         style: TextStyle(
+            //             fontFamily: 'GoogleSans',
+            //             fontWeight: FontWeight.normal,
+            //             fontSize: 20),
+            //       ),
+            //     )),
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      minimumSize: const Size.fromHeight(50)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddProf()),
+                    );
+                  },
+                  child: const Text(
+                    'Add Professor',
+                    style: TextStyle(
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20),
+                  ),
+                )),
+            Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      minimumSize: const Size.fromHeight(50)),
+                  onPressed: () {
+                    final provider = Provider.of<GoogleSignInProvider>(context,
+                        listen: false);
+                    provider.logout();
+                  },
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(
+                        fontFamily: 'GoogleSans',
+                        fontWeight: FontWeight.normal,
+                        fontSize: 20),
+                  ),
+                ))
+          ])),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          _currentIndex = value;
+          if (value == 0) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+          } else if (value == 1) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => SearchPage()));
+          } else if (value == 2) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+          }
+        },
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.bookmark),
+            label: 'Bookmarks',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+      ),
+    );
   }
 }
 

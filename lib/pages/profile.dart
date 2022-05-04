@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/objects/user.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 //import 'package:profs_and_cons/models/professor.dart';
 //import 'package:profs_and_cons/objects/reviewcard.dart';
 //import 'package:profs_and_cons/pages/home.dart';
@@ -317,6 +318,38 @@ class _ProfileState extends State<Profile> {
                   );
                 }
               })),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            if (value == 0) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            } else if (value == 1) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchPage()));
+            } else if (value == 2) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.bookmark),
+              label: 'Bookmarks',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.grey[600],
+        ),
     );
   }
 }

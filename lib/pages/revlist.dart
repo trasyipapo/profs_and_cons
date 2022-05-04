@@ -7,6 +7,7 @@ import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/reviewcard.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/review.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/review_form.dart';
 import 'package:profs_and_cons/pages/edit_form.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -273,7 +274,39 @@ class _RevListState extends State<RevList> {
                               }
                             })),
                   ]),
-            )));
+            ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            if (value == 0) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            } else if (value == 1) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchPage()));
+            } else if (value == 2) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.bookmark),
+              label: 'Bookmarks',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.grey[600],
+        ),));
   }
 }
 
