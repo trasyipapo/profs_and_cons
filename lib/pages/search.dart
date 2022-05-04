@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 import 'package:profs_and_cons/provider/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -144,6 +145,48 @@ class _SearchPageState extends State<SearchPage> {
               //             fontSize: 20),
               //       ),
               //     )),
+
+              Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        minimumSize: const Size.fromHeight(50)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => OwnReviews()),
+                      );
+                    },
+                    child: const Text(
+                      'Go to Reviews',
+                      style: TextStyle(
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20),
+                    ),
+                  )),
+              Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        minimumSize: const Size.fromHeight(50)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Bookmarks()),
+                      );
+                    },
+                    child: const Text(
+                      'Go to Bookmarks',
+                      style: TextStyle(
+                          fontFamily: 'GoogleSans',
+                          fontWeight: FontWeight.normal,
+                          fontSize: 20),
+                    ),
+                  )),
+
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ElevatedButton(
