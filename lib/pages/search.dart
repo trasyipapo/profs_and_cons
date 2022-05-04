@@ -7,6 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/pages/temp_addprof.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search_results.dart';
+import 'package:profs_and_cons/objects/user.dart';
+import 'package:profs_and_cons/pages/profile.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -142,26 +144,47 @@ class _SearchPageState extends State<SearchPage> {
             //             fontSize: 20),
             //       ),
             //     )),
-            Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      minimumSize: const Size.fromHeight(50)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddProf()),
+            StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(user.uid)
+                    .snapshots(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Something went wrong...${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    print(snapshot.data['isAdmin']);
+                    return Visibility(
+                      visible: snapshot.data['isAdmin'] == true,
+                      child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.red,
+                                minimumSize: const Size.fromHeight(50)),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddProf()),
+                              );
+                            },
+                            child: const Text(
+                              'Add Professor',
+                              style: TextStyle(
+                                  fontFamily: 'GoogleSans',
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20),
+                            ),
+                          )),
                     );
-                  },
-                  child: const Text(
-                    'Add Professor',
-                    style: TextStyle(
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20),
-                  ),
-                )),
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                }),
+
             Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: ElevatedButton(
