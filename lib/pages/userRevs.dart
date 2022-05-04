@@ -72,8 +72,8 @@ class _OwnReviewsState extends State<OwnReviews> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('OwnReviews of'),
                       Text(user!.displayName!, style: header),
+                      const Text('My Reviews'),
                       const SizedBox(height: 10),
                       FutureBuilder<UserFire>(
                           future: getUser(user!.uid),
@@ -134,10 +134,12 @@ class _OwnReviewsState extends State<OwnReviews> {
                                               department:
                                                   rev.department.toString(),
                                               courses: rev.courses.toString());
-                                          // getProf(rev);
+                                          List<String> courseslist =
+                                              rev.courses!.split(',');
                                           return Card(
                                               child: InkWell(
-                                            child: tempcard(rev, prof, context),
+                                            child: tempcard(rev, prof, context,
+                                                courseslist),
                                             onTap: () {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
@@ -191,16 +193,18 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-Widget tempcard(Review review, Professor prof, context) => Container(
+Widget tempcard(
+        Review review, Professor prof, context, List<String> revCourses) =>
+    Container(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(children: [
                 Text(
-                  review.votes.toString(),
+                  review.profName.toString(),
                   style: const TextStyle(
                       fontWeight: FontWeight.normal,
                       fontSize: 15,
@@ -210,47 +214,90 @@ Widget tempcard(Review review, Professor prof, context) => Container(
               ratingBar(review.overallRating!.toDouble()),
             ],
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text(
             '${review.title}',
             style: header,
           ),
-          SizedBox(height: 24),
-          Row(children: [
-            Text(
+          const SizedBox(height: 24),
+          Row(
+            children: [
+              Text(
+                review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
+                style: smallText,
+              ),
+              const SizedBox(
+                height: 24,
+                width: 2,
+              ),
+              const Icon(
+                Icons.brightness_1,
+                size: 3,
+                color: Colors.grey,
+              ),
+              Text(
                 review.semesterTaken! == '0'
                     ? 'Intersession'
                     : review.semesterTaken! == '1'
                         ? '1st Sem'
                         : '2nd Sem',
-                style: header2),
-            SizedBox(width: 2),
-            Icon(
-              Icons.brightness_1,
-              size: 5,
-            ),
-            SizedBox(width: 2),
-            Text('${review.yearTaken}', style: header2),
-            if (user!.uid == review.writeruid)
-              IconButton(
-                icon: Icon(Icons.edit),
-                disabledColor: Colors.white,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditForm(
-                                professor: prof,
-                                review: review,
-                              )));
-                },
+                style: smallText,
               ),
-          ]),
-          Text(
-            review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-            style: smallText,
+              const SizedBox(width: 2),
+              const Icon(
+                Icons.brightness_1,
+                size: 3,
+                color: Colors.grey,
+              ),
+              Text('${review.yearTaken}', style: smallText),
+            ],
           ),
-          SizedBox(height: 24),
+          Row(
+            children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                SizedBox(
+                  width: 265, //HARDCODED -- TO FIX 239
+                  height: 25,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: revCourses.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
+                          child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 5, 10, 5),
+                                  child: Text(
+                                    revCourses[position],
+                                    style: buttonText,
+                                  ))));
+                    },
+                  ),
+                ),
+              ]),
+              // here
+              IconButton(
+                  icon: Icon(Icons.edit),
+                  disabledColor: Colors.white,
+                  onPressed: () {
+                    user!.uid != review.writeruid
+                        ? null
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditForm(
+                                      professor: prof,
+                                      review: review,
+                                    )));
+                  })
+
+              //
+            ],
+          ),
         ]),
       ),
     );
