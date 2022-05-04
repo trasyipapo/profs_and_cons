@@ -146,10 +146,10 @@ class _ProfileState extends State<Profile> {
                                   builder: (contextF, snapshot) {
                                     if (snapshot.data == true) {
                                       return marked(currentUser, professor,
-                                          prevPage, context);
+                                          prevPage, query!, context);
                                     } else {
                                       return unmarked(currentUser, professor,
-                                          prevPage, context);
+                                          prevPage, query!, context);
                                     }
                                   },
                                 )
@@ -319,38 +319,35 @@ class _ProfileState extends State<Profile> {
                   );
                 }
               })),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (value) {
-            if (value == 0) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Bookmarks()));
-            } else if (value == 1) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => SearchPage()));
-            } else if (value == 2) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => OwnReviews()));
-            }
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.bookmark),
-              label: 'Bookmarks',
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          selectedItemColor: Colors.grey[600],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          if (value == 0) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+          } else if (value == 1) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => SearchPage()));
+          } else if (value == 2) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => OwnReviews()));
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.bookmark),
+            label: 'Bookmarks',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        selectedItemColor: Colors.grey[600],
+      ),
     );
   }
 }
@@ -466,8 +463,8 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-ElevatedButton unmarked(
-    String uid, Professor prof, int prevPage, BuildContext context) {
+ElevatedButton unmarked(String uid, Professor prof, int prevPage, String query,
+    BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
           padding:
@@ -485,13 +482,14 @@ ElevatedButton unmarked(
               builder: (context) => Profile(
                     professor: prof,
                     prevPage: prevPage,
+                    query: query,
                   )));
         } catch (e) {}
       });
 }
 
-ElevatedButton marked(
-    String uid, Professor prof, int prevPage, BuildContext context) {
+ElevatedButton marked(String uid, Professor prof, int prevPage, String query,
+    BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
           padding:
@@ -511,6 +509,7 @@ ElevatedButton marked(
               builder: (context) => Profile(
                     professor: prof,
                     prevPage: prevPage,
+                    query: query,
                   )));
         } catch (e) {}
       });
