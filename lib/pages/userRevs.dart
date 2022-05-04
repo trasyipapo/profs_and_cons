@@ -128,7 +128,26 @@ class _OwnReviewsState extends State<OwnReviews> {
                                         itemCount: reviews.length,
                                         itemBuilder: (context, index) {
                                           final rev = reviews[index];
-                                          return reviewCard(rev, context);
+
+                                          Professor prof = Professor(
+                                              name: rev.profName.toString(),
+                                              department:
+                                                  rev.department.toString(),
+                                              courses: rev.courses.toString());
+                                          // getProf(rev);
+                                          return Card(
+                                              child: InkWell(
+                                            child: tempcard(rev, prof, context),
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          FullReview(
+                                                            review: rev,
+                                                            professor: prof,
+                                                          )));
+                                            },
+                                          ));
                                         },
                                       ));
                                     }
@@ -146,66 +165,6 @@ class _OwnReviewsState extends State<OwnReviews> {
                     ]))));
   }
 }
-
-Widget reviewCard(Review review, context) => Container(
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(children: [
-                Text(
-                  review.profId.toString(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 15,
-                      color: Colors.grey),
-                ),
-              ]),
-              ratingBar(review.overallRating!.toDouble()),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Text(
-            '${review.title}',
-            style: header,
-          ),
-          const SizedBox(height: 24),
-          Row(children: [
-            Text(
-                review.semesterTaken! == '0'
-                    ? 'Intersession'
-                    : review.semesterTaken! == '1'
-                        ? '1st Sem'
-                        : '2nd Sem',
-                style: header2),
-            const SizedBox(width: 2),
-            const Icon(
-              Icons.brightness_1,
-              size: 5,
-            ),
-            const SizedBox(width: 2),
-            Text('${review.yearTaken}', style: header2),
-            // if (user!.uid == review.writeruid)
-            //   IconButton(
-            //     icon: Icon(Icons.edit),
-            //     disabledColor: Colors.white,
-            //     onPressed: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => EditForm(
-            //                     professor: prof,
-            //                     review: review,
-            //                   )));
-            //     },
-            //   ),
-          ]),
-          const SizedBox(height: 24),
-        ]),
-      ),
-    );
 
 RatingBar ratingBar(double rating) {
   return RatingBar(
@@ -231,3 +190,93 @@ RatingBar ratingBar(double rating) {
       // }
       );
 }
+
+Widget tempcard(Review review, Professor prof, context) => Container(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(children: [
+                Text(
+                  review.votes.toString(),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 15,
+                      color: Colors.grey),
+                ),
+              ]),
+              ratingBar(review.overallRating!.toDouble()),
+            ],
+          ),
+          SizedBox(height: 24),
+          Text(
+            '${review.title}',
+            style: header,
+          ),
+          SizedBox(height: 24),
+          Row(children: [
+            Text(
+                review.semesterTaken! == '0'
+                    ? 'Intersession'
+                    : review.semesterTaken! == '1'
+                        ? '1st Sem'
+                        : '2nd Sem',
+                style: header2),
+            SizedBox(width: 2),
+            Icon(
+              Icons.brightness_1,
+              size: 5,
+            ),
+            SizedBox(width: 2),
+            Text('${review.yearTaken}', style: header2),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
+          ]),
+          Text(
+            review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
+            style: smallText,
+          ),
+          SizedBox(height: 24),
+        ]),
+      ),
+    );
+
+// Future getProf(Review rev) async {
+//   final docReview = FirebaseFirestore.instance.collection('reviews').doc();
+//   rev.id = docReview.id;
+//   final json = rev.toJson();
+//   await docReview.set(json);
+
+//   final tester = FirebaseFirestore.instance
+//       .collection('professors')
+//       .where('id', isEqualTo: rev.profId);
+
+//   String? name, department;
+
+//   await tester.get().then((snapShot) {
+//     snapShot.docs.forEach((doc) {
+//       name = doc['name'];
+//       department = doc['department'];
+//     });
+//   });
+
+//   department = department;
+//   name = name;
+
+//   print(department);
+//   print(name);
+// }

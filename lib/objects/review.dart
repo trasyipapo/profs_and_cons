@@ -20,6 +20,8 @@ class Review {
   int votes;
   String? upvoters;
   String? downvoters;
+  String? department;
+  String? profName;
 
   Review({
     this.id,
@@ -43,6 +45,8 @@ class Review {
     this.votes = 0,
     this.upvoters = "",
     this.downvoters = "",
+    this.department,
+    this.profName,
   });
 
   Map<String, dynamic> toJson() => {
@@ -67,6 +71,8 @@ class Review {
         'votes': votes,
         'upvoters': upvoters,
         'downvoters': downvoters,
+        'profName': profName,
+        'department': department,
       };
 
   static Review fromJson(Map<String, dynamic> json) => Review(
@@ -91,5 +97,7 @@ class Review {
         votes: json['votes'],
         upvoters: json['upvoters'],
         downvoters: json['downvoters'],
+        profName: json['profName'],
+        department: json['department'],
       );
 }

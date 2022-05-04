@@ -389,9 +389,42 @@ class _ReviewFormState extends State<ReviewForm> {
   Future createReview(Review rev) async {
     final docReview = FirebaseFirestore.instance.collection('reviews').doc();
     rev.id = docReview.id;
+    // update profname and dep
+    final profTester = FirebaseFirestore.instance
+        .collection('professors')
+        .where('id', isEqualTo: rev.profId);
+    String? department, name = '';
+    await profTester.get().then((snapShot) {
+      snapShot.docs.forEach((doc) {
+        name = doc['name'];
+        department = doc['department'];
+        print(name.toString() + "INSIDE SNAPSHOT");
+      });
+    });
+    rev.profName = name;
+    rev.department = department;
+    // end of update profname and dep
     final json = rev.toJson();
     await docReview.set(json);
+//
+    // final profTester = FirebaseFirestore.instance
+    //     .collection('professors')
+    //     .where('id', isEqualTo: rev.profId);
+    // String? department, name = '';
+    // await profTester.get().then((snapShot) {
+    //   snapShot.docs.forEach((doc) {
+    //     name = doc['name'];
+    //     department = doc['department'];
+    //     print(name.toString() + "INSIDE SNAPSHOT");
+    //   });
+    // });
 
+    // rev.profName = name;
+    // rev.department = department;
+//////////////////////////////////////
+    // final json2 = rev.toJson();
+    // await docReview.set(json2);
+//
     final revTester = FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo: user!.uid);
@@ -445,6 +478,11 @@ class _ReviewFormState extends State<ReviewForm> {
     } else {
       pastReviews = pastReviews! + ',' + rev.id.toString();
     }
+    // rev.profName = name;
+    // rev.department = department;
+    // // final json2 = rev.toJson();
+    // // await docReview.set(json2);
+    print(name.toString() + 'OUTSIDE');
 
     final updateProf = FirebaseFirestore.instance.collection('professors');
     updateProf
@@ -470,5 +508,15 @@ class _ReviewFormState extends State<ReviewForm> {
         })
         .then((_) => debugPrint('Updated own reviews'))
         .catchError((error) => debugPrint('Update Failed: $error'));
+
+    // final updateRev = FirebaseFirestore.instance.collection('reviews');
+    // updateRev
+    //     .doc(rev.profId)
+    //     .update({
+    //       'profName': name,
+    //       'department': department,
+    //     })
+    //     .then((_) => debugPrint('Updated revs'))
+    //     .catchError((error) => debugPrint('Update Failed: $error'));
   }
 }
