@@ -55,30 +55,15 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            icon: const Icon(Icons.search),
+            icon: const Icon(Icons.arrow_back),
             color: Colors.black87,
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SearchPage()));
-            }),
-        actions: [
-          IconButton(
-            icon: Image.asset('assets/appbar-logo.png'),
-            padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
             onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => SearchPage()),
               );
-            },
-          ),
-        ],
-        centerTitle: false,
+            }),
         backgroundColor: Colors.white,
-        title: const Text(
-          'Profs and Cons',
-          textAlign: TextAlign.left,
-        ),
       ),
       body: Container(
           constraints: const BoxConstraints.expand(),
