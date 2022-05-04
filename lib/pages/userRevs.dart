@@ -16,13 +16,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 
-Stream<List<Review>> getRevs(List<String> ownReviewsList) =>
-    FirebaseFirestore.instance
-        .collection('reviews')
-        .where('id', whereIn: ownReviewsList)
-        .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => Review.fromJson(doc.data())).toList());
+Stream<List<Review>> getRevs() => FirebaseFirestore.instance
+    .collection('reviews')
+    .where('writeruid', isEqualTo: user!.uid)
+    .snapshots()
+    .map((snapshot) =>
+        snapshot.docs.map((doc) => Review.fromJson(doc.data())).toList());
 
 class OwnReviews extends StatefulWidget {
   OwnReviews({Key? key}) : super(key: key);
@@ -80,11 +79,11 @@ class _OwnReviewsState extends State<OwnReviews> {
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               UserFire? userObject = snapshot.data;
-                              List<String> ownReviewsList =
-                                  userObject!.ownReviews!.split(",");
-                              print(ownReviewsList);
+                              // List<String> ownReviewsList =
+                              //     userObject!.ownReviews!.split(",");
+                              // print(ownReviewsList);
                               return StreamBuilder<List<Review>>(
-                                stream: getRevs(ownReviewsList),
+                                stream: getRevs(),
                                 builder: (context, snapshot) {
                                   if (snapshot.hasError) {
                                     return Text(
