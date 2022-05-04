@@ -46,7 +46,8 @@ Future checkAddUser(String uid) async {
   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
 
   if (allData.length == 0) {
-    UserFire newUser = UserFire(uid: uid.toString(), favorites: "");
+    UserFire newUser =
+        UserFire(uid: uid.toString(), favorites: "", isAdmin: false);
     createUser(newUser);
     return true;
   } else {
