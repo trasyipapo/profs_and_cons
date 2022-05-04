@@ -3,7 +3,7 @@ class UserFire {
   String? favorites;
   String? ownReviews;
 
-  UserFire({this.uid, this.favorites, this.ownReviews});
+  UserFire({this.uid, this.favorites, this.ownReviews = ''});
 
   Map<String, dynamic> toJson() => {
         'uid': uid,
