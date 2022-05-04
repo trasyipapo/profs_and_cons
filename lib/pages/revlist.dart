@@ -393,9 +393,9 @@ Widget reviewCard(
           SizedBox(height: 24),
           Row(children: [
             Text(
-                review.semesterTaken! == '0'
+                review.semesterTaken! == '1'
                     ? 'Intersession'
-                    : review.semesterTaken! == '1'
+                    : review.semesterTaken! == '2'
                         ? '1st Sem'
                         : '2nd Sem',
                 style: header2),
@@ -531,9 +531,9 @@ Widget down(Review review, Professor prof, context, List<String> revCourses) =>
           SizedBox(height: 24),
           Row(children: [
             Text(
-                review.semesterTaken! == '0'
+                review.semesterTaken! == '1'
                     ? 'Intersession'
-                    : review.semesterTaken! == '1'
+                    : review.semesterTaken! == '2'
                         ? '1st Sem'
                         : '2nd Sem',
                 style: header2),
@@ -668,9 +668,9 @@ Widget up(Review review, Professor prof, context, List<String> revCourses) =>
           SizedBox(height: 24),
           Row(children: [
             Text(
-                review.semesterTaken! == '0'
+                review.semesterTaken! == '1'
                     ? 'Intersession'
-                    : review.semesterTaken! == '1'
+                    : review.semesterTaken! == '2'
                         ? '1st Sem'
                         : '2nd Sem',
                 style: header2),
