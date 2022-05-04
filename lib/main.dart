@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: title,
       theme: ThemeData(primarySwatch: Colors.red, fontFamily: 'GoogleSans'),
-      home: SearchPage(),
+      home: LoginPage(),
     );
   }
 }

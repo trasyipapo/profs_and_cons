@@ -203,7 +203,7 @@ class _SearchPageState extends State<SearchPage> {
             } else if (value == 2) {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => Bookmarks()));
+                  builder: (context) => OwnReviews()));
             }
           },
           currentIndex: _currentIndex,

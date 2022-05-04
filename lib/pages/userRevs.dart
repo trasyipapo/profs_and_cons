@@ -6,6 +6,7 @@ import 'package:profs_and_cons/pages/fullreview.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/main.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/profile.dart';
 import 'package:profs_and_cons/data/professor_api.dart';
 import 'package:profs_and_cons/objects/professor.dart';
@@ -33,6 +34,9 @@ class OwnReviews extends StatefulWidget {
 
 class _OwnReviewsState extends State<OwnReviews> {
   _OwnReviewsState();
+
+  int _currentIndex = 2;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -164,7 +168,42 @@ class _OwnReviewsState extends State<OwnReviews> {
                               return const Text("Error.");
                             }
                           })
-                    ]))));
+                    ])),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            _currentIndex = value;
+            if (value == 0) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => Bookmarks()));
+            } else if (value == 1) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => SearchPage()));
+            } else if (value == 2) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => OwnReviews()));
+            }
+          },
+          currentIndex: _currentIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.bookmark),
+              label: 'Bookmarks',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.blue,
+        ),
+      ));
   }
 }
 
