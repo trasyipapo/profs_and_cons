@@ -5,17 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/objects/user.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/userRevs.dart';
-//import 'package:profs_and_cons/models/professor.dart';
-//import 'package:profs_and_cons/objects/reviewcard.dart';
-//import 'package:profs_and_cons/pages/home.dart';
 import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/pages/search_results.dart';
-import 'package:profs_and_cons/pages/bookmarks.dart';
-import 'package:profs_and_cons/pages/review_form.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 Future<bool> saved(String uid, String profId) async {
   DocumentSnapshot docSnapshot =

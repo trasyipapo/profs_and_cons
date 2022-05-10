@@ -2,17 +2,14 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/styles.dart';
 import 'package:profs_and_cons/objects/professor.dart';
-import 'package:profs_and_cons/objects/checkboxformfield.dart';
 import 'package:profs_and_cons/objects/ratingformfield.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:profs_and_cons/pages/revlist.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class EditForm extends StatefulWidget {

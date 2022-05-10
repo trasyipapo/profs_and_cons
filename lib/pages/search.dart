@@ -8,8 +8,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/pages/temp_addprof.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/pages/search_results.dart';
-import 'package:profs_and_cons/objects/user.dart';
-import 'package:profs_and_cons/pages/profile.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -206,37 +204,36 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ))
           ])),
-       bottomNavigationBar: BottomNavigationBar(
-            onTap: (onTappedBar) {
-              if (onTappedBar == 0) {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Bookmarks()));
-              } else if (onTappedBar == 1) {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SearchPage()));
-              } else if (onTappedBar == 2) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => OwnReviews()));
-              }
-            },
-            currentIndex: _currentIndex,
-            items: [
-              BottomNavigationBarItem(
-                icon: new Icon(Icons.bookmark),
-                label: 'Bookmarks',
-              ),
-              BottomNavigationBarItem(
-                icon: new Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: new Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-            selectedItemColor: Colors.blue,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (onTappedBar) {
+          if (onTappedBar == 0) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+          } else if (onTappedBar == 1) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => SearchPage()));
+          } else if (onTappedBar == 2) {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => OwnReviews()));
+          }
+        },
+        currentIndex: _currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.bookmark),
+            label: 'Bookmarks',
           ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+      ),
     );
   }
 }

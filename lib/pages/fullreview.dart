@@ -8,7 +8,6 @@ import 'package:profs_and_cons/objects/review.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/userRevs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:profs_and_cons/pages/edit_form.dart';
 
 Stream<List<Review>> readReviews() => FirebaseFirestore.instance
@@ -63,7 +62,8 @@ class _FullReviewState extends State<FullReview> {
                   List<String> downvoters =
                       filteredReviews[0].downvoters!.split(',');
 
-                  bool isUp = upvoters.any((element) => (element == revl.user!.uid));
+                  bool isUp =
+                      upvoters.any((element) => (element == revl.user!.uid));
                   bool isDown =
                       downvoters.any((element) => (element == revl.user!.uid));
                   //
@@ -108,38 +108,36 @@ class _FullReviewState extends State<FullReview> {
                   );
                 }
               }),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (value) {
-            if (value == 0) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Bookmarks()));
-            } else if (value == 1) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => SearchPage()));
-            } else if (value == 2) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => OwnReviews()));
-            }
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.bookmark),
-              label: 'Bookmarks',
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          selectedItemColor: Colors.grey[600],
-        ),));
+          bottomNavigationBar: BottomNavigationBar(
+            onTap: (value) {
+              if (value == 0) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+              } else if (value == 1) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SearchPage()));
+              } else if (value == 2) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => OwnReviews()));
+              }
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.bookmark),
+                label: 'Bookmarks',
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: new Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
+            selectedItemColor: Colors.grey[600],
+          ),
+        ));
   }
 }
 
@@ -198,7 +196,8 @@ Widget reviewDetails(
                         onPressed: () {
                           review.votes -= 1;
                           if (review.downvoters == "") {
-                            review.downvoters = review.downvoters! + revl.user!.uid;
+                            review.downvoters =
+                                review.downvoters! + revl.user!.uid;
                           } else {
                             review.downvoters =
                                 review.downvoters! + ',' + revl.user!.uid;
@@ -398,7 +397,8 @@ Widget upvotedReviewDetails(
                               .toList();
                           // add to downvoters
                           if (review.downvoters == "") {
-                            review.downvoters = review.downvoters! + revl.user!.uid;
+                            review.downvoters =
+                                review.downvoters! + revl.user!.uid;
                           } else {
                             review.downvoters =
                                 review.downvoters! + ',' + revl.user!.uid;
