@@ -11,6 +11,9 @@ import 'package:profs_and_cons/objects/professor.dart';
 import 'package:profs_and_cons/objects/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:profs_and_cons/provider/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'package:profs_and_cons/widget/logout_button.dart';
 
 final user = FirebaseAuth.instance.currentUser;
 
@@ -47,6 +50,39 @@ class _OwnReviewsState extends State<OwnReviews> {
                       height: 70,
                     ),
                     Text(user!.displayName!, style: header),
+                    Padding(
+                      padding: EdgeInsets.all(5),
+                      child: LogOutButton(),
+                    ),
+                    // Padding(
+                    //     padding: const EdgeInsets.all(16.0),
+                    //     child: ElevatedButton(
+                    //       style: ButtonStyle(
+                    //           backgroundColor:
+                    //               MaterialStateProperty.all(Colors.white),
+                    //           foregroundColor:
+                    //               MaterialStateProperty.all(Colors.grey),
+                    //           shape: MaterialStateProperty.all<
+                    //                   RoundedRectangleBorder>(
+                    //               RoundedRectangleBorder(
+                    //                   borderRadius: BorderRadius.circular(5.0),
+                    //                   side: BorderSide(color: Colors.grey))),
+                    //           padding: MaterialStateProperty.all(
+                    //               EdgeInsets.fromLTRB(120, 10, 120, 10))),
+                    //       onPressed: () {
+                    //         final provider = Provider.of<GoogleSignInProvider>(
+                    //             context,
+                    //             listen: false);
+                    //         provider.logout();
+                    //       },
+                    //       child: const Text(
+                    //         'Logout',
+                    //         style: TextStyle(
+                    //             fontFamily: 'GoogleSans',
+                    //             fontWeight: FontWeight.normal,
+                    //             fontSize: 20),
+                    //       ),
+                    //     )),
                     const Text('My Reviews'),
                     const SizedBox(height: 10),
                     FutureBuilder<UserFire>(

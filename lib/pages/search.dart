@@ -184,25 +184,25 @@ class _SearchPageState extends State<SearchPage> {
                   }
                 }),
 
-            Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.red,
-                      minimumSize: const Size.fromHeight(50)),
-                  onPressed: () {
-                    final provider = Provider.of<GoogleSignInProvider>(context,
-                        listen: false);
-                    provider.logout();
-                  },
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
-                        fontFamily: 'GoogleSans',
-                        fontWeight: FontWeight.normal,
-                        fontSize: 20),
-                  ),
-                ))
+            // Padding(
+            //     padding: const EdgeInsets.all(16.0),
+            //     child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           primary: Colors.red,
+            //           minimumSize: const Size.fromHeight(50)),
+            //       onPressed: () {
+            //         final provider = Provider.of<GoogleSignInProvider>(context,
+            //             listen: false);
+            //         provider.logout();
+            //       },
+            //       child: const Text(
+            //         'Logout',
+            //         style: TextStyle(
+            //             fontFamily: 'GoogleSans',
+            //             fontWeight: FontWeight.normal,
+            //             fontSize: 20),
+            //       ),
+            //     ))
           ])),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (onTappedBar) {
