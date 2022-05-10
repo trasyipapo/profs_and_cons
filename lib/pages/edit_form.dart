@@ -43,18 +43,6 @@ class _EditFormState extends State<EditForm> {
             onPressed: () {
               Navigator.pop(context);
             }),
-        actions: [
-          IconButton(
-            icon: Image.asset('assets/appbar-logo.png'),
-            padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
-              );
-            },
-          ),
-        ],
         backgroundColor: Colors.white,
       ),
       body: _form(),
