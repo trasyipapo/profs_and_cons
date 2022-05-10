@@ -26,3 +26,9 @@ const TextStyle smallText =
 
 const TextStyle formText =
     TextStyle(fontWeight: FontWeight.normal, fontSize: 16, color: Colors.black);
+
+const TextStyle userProfile =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black);
+
+const TextStyle userProfileHeader =
+    TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black);
