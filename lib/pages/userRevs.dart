@@ -38,40 +38,14 @@ class _OwnReviewsState extends State<OwnReviews> {
     return MaterialApp(
         title: 'Professor Profile Screen',
         home: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.search),
-                color: Colors.black87,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchPage()),
-                  );
-                }),
-            actions: [
-              IconButton(
-                icon: Image.asset('assets/appbar-logo.png'),
-                padding: const EdgeInsets.fromLTRB(0, 8.0, 18.0, 8.0),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SearchPage()),
-                  );
-                },
-              ),
-            ],
-            centerTitle: false,
-            backgroundColor: Colors.white,
-            title: const Text(
-              'Profs and Cons',
-              textAlign: TextAlign.left,
-            ),
-          ),
           body: Padding(
               padding: const EdgeInsets.all(25),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 70,
+                    ),
                     Text(user!.displayName!, style: header),
                     const Text('My Reviews'),
                     const SizedBox(height: 10),
