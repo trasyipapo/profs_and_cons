@@ -78,6 +78,7 @@ class _ReviewFormState extends State<ReviewForm> {
               style: header,
             ),
             Text(professor.department, style: smallText),
+            SizedBox(height: 10),
             Text(
               "Choose the course",
               style: header2,
@@ -95,11 +96,12 @@ class _ReviewFormState extends State<ReviewForm> {
                 review.courses = onSavedVal?.join(',');
               },
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Text(
               "Rate your prof",
               style: header2,
             ),
+            SizedBox(height: 15),
             RatingFormField(
                 title: Text(
                   "     • Teaching Skill",

@@ -67,8 +67,8 @@ class _BookmarksState extends State<Bookmarks> {
                     SizedBox(
                       height: 70,
                     ),
-                    const Text('Bookmarks of'),
-                    Text(user!.displayName!, style: header),
+                    const Text('My Bookmarks', style: header),
+                    // Text(user!.displayName!, style: header),
                     const SizedBox(height: 10),
                     FutureBuilder<UserFire>(
                         future: getUser(user!.uid),
@@ -117,6 +117,8 @@ class _BookmarksState extends State<Bookmarks> {
                                   } else {
                                     return Expanded(
                                         child: ListView.builder(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       itemCount: professors.length,
