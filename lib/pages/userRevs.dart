@@ -44,9 +44,7 @@ class _OwnReviewsState extends State<OwnReviews> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 70,
-                    ),
+                    SizedBox(height: 70),
                     ListTile(
                       leading: CircleAvatar(
                         maxRadius: 30,
@@ -69,13 +67,12 @@ class _OwnReviewsState extends State<OwnReviews> {
                       child: LogOutButton(),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     const Text(
                       'My Reviews',
                       style: userProfileHeader,
                     ),
-                    //const SizedBox(height: 10),
                     FutureBuilder<UserFire>(
                         future: getUser(user!.uid),
                         builder: (context, snapshot) {
@@ -124,6 +121,8 @@ class _OwnReviewsState extends State<OwnReviews> {
                                   } else {
                                     return Expanded(
                                         child: ListView.builder(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 15),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       itemCount: reviews.length,

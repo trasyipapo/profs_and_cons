@@ -117,6 +117,8 @@ class _BookmarksState extends State<Bookmarks> {
                                   } else {
                                     return Expanded(
                                         child: ListView.builder(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       itemCount: professors.length,
