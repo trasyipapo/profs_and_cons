@@ -139,11 +139,19 @@ class _ProfileState extends State<Profile> {
                                   future: saved(currentUser, professor.id!),
                                   builder: (contextF, snapshot) {
                                     if (snapshot.data == true) {
-                                      return marked(currentUser, professor,
-                                          prevPage, query!, context);
+                                      if (query != null)
+                                        return marked(currentUser, professor,
+                                            prevPage, query!, context);
+                                      else
+                                        return marked(currentUser, professor,
+                                            prevPage, null, context);
                                     } else {
-                                      return unmarked(currentUser, professor,
-                                          prevPage, query!, context);
+                                      if (query != null)
+                                        return unmarked(currentUser, professor,
+                                            prevPage, query!, context);
+                                      else
+                                        return unmarked(currentUser, professor,
+                                            prevPage, null, context);
                                     }
                                   },
                                 )
@@ -457,7 +465,7 @@ RatingBar ratingBar(double rating) {
       );
 }
 
-ElevatedButton unmarked(String uid, Professor prof, int prevPage, String query,
+ElevatedButton unmarked(String uid, Professor prof, int prevPage, String? query,
     BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
@@ -476,13 +484,13 @@ ElevatedButton unmarked(String uid, Professor prof, int prevPage, String query,
               builder: (context) => Profile(
                     professor: prof,
                     prevPage: prevPage,
-                    query: query,
+                    query: query!,
                   )));
         } catch (e) {}
       });
 }
 
-ElevatedButton marked(String uid, Professor prof, int prevPage, String query,
+ElevatedButton marked(String uid, Professor prof, int prevPage, String? query,
     BuildContext context) {
   return ElevatedButton(
       style: ButtonStyle(
@@ -503,7 +511,7 @@ ElevatedButton marked(String uid, Professor prof, int prevPage, String query,
               builder: (context) => Profile(
                     professor: prof,
                     prevPage: prevPage,
-                    query: query,
+                    query: query!,
                   )));
         } catch (e) {}
       });
