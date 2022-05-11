@@ -67,8 +67,8 @@ class _BookmarksState extends State<Bookmarks> {
                     SizedBox(
                       height: 70,
                     ),
-                    const Text('Bookmarks of'),
-                    Text(user!.displayName!, style: header),
+                    const Text('My Bookmarks', style: header),
+                    // Text(user!.displayName!, style: header),
                     const SizedBox(height: 10),
                     FutureBuilder<UserFire>(
                         future: getUser(user!.uid),
