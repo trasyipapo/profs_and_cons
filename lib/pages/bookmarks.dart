@@ -138,8 +138,9 @@ class _BookmarksState extends State<Bookmarks> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         Profile(
-                                                            professor: prof,
-                                                            prevPage: 2)));
+                                                          professor: prof,
+                                                          prevPage: 2,
+                                                        )));
                                           },
                                         ));
                                       },
