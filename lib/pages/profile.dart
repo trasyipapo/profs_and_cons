@@ -484,7 +484,7 @@ ElevatedButton unmarked(String uid, Professor prof, int prevPage, String? query,
               builder: (context) => Profile(
                     professor: prof,
                     prevPage: prevPage,
-                    query: query!,
+                    query: query,
                   )));
         } catch (e) {}
       });
@@ -511,7 +511,7 @@ ElevatedButton marked(String uid, Professor prof, int prevPage, String? query,
               builder: (context) => Profile(
                     professor: prof,
                     prevPage: prevPage,
-                    query: query!,
+                    query: query,
                   )));
         } catch (e) {}
       });
