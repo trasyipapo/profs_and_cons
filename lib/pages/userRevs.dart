@@ -40,39 +40,44 @@ class _OwnReviewsState extends State<OwnReviews> {
         title: 'Professor Profile Screen',
         home: Scaffold(
           body: Padding(
-              padding: const EdgeInsets.all(25),
+              padding: EdgeInsets.zero,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 70),
-                    ListTile(
-                      leading: CircleAvatar(
-                        maxRadius: 30,
-                        backgroundImage: NetworkImage(user!.photoURL!),
-                      ),
-                      title: Text(
-                        user!.displayName!,
-                        style: userProfile,
-                      ),
-                      subtitle: Text(
-                        user!.email!,
-                        style: bodyText,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      // padding: EdgeInsets.all(5),
-                      child: LogOutButton(),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'My Reviews',
-                      style: userProfileHeader,
-                    ),
+                    const SizedBox(height: 62),
+                    Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        decoration: BoxDecoration(color: Colors.grey[200]),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              leading: CircleAvatar(
+                                maxRadius: 30,
+                                backgroundImage: NetworkImage(user!.photoURL!),
+                              ),
+                              title: Text(
+                                user!.displayName!,
+                                style: userProfile,
+                              ),
+                              subtitle: Text(
+                                user!.email!,
+                                style: bodyText,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Center(
+                              // padding: EdgeInsets.all(5),
+                              child: LogOutButton(),
+                            ),
+                          ],
+                        )),
+                    Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 25),
+                        child: const Text(
+                          'My Reviews',
+                          style: userProfileHeader,
+                        )),
                     FutureBuilder<UserFire>(
                         future: getUser(user!.uid),
                         builder: (context, snapshot) {
@@ -121,8 +126,8 @@ class _OwnReviewsState extends State<OwnReviews> {
                                   } else {
                                     return Expanded(
                                         child: ListView.builder(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 15),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          25, 0, 25, 25),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       itemCount: reviews.length,
