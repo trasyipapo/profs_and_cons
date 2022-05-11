@@ -45,8 +45,10 @@ class _SearchResultsState extends State<SearchResults> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Search results for'),
-                    Text(query, style: header),
+                    query == ""
+                        ? const Text('Showing All Professors', style: header)
+                        : const Text('Search results for'),
+                    if (query != "") Text(query, style: header),
                     const SizedBox(height: 10),
                     StreamBuilder<List<Professor>>(
                       stream: readProfs(),
