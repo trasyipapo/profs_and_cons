@@ -70,7 +70,6 @@ class _FullReviewState extends State<FullReview> {
                   return Container(
                     constraints: const BoxConstraints.expand(),
                     child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                             padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
@@ -140,13 +139,6 @@ class _FullReviewState extends State<FullReview> {
         ));
   }
 }
-
-// Widget profName = Container(
-//     padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [const Text(professor.name, style: header)],
-//     ));
 
 Widget reviewDetails(
         Review review, Professor prof, context, List<String> revCourses) =>
@@ -766,8 +758,5 @@ RatingBar ratingBar(double rating) {
             color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
-      //   setState(() {
-      //     _ratingValue = value;
-      // }
       );
 }

@@ -49,16 +49,6 @@ class _BookmarksState extends State<Bookmarks> {
     return MaterialApp(
         title: 'Professor Profile Screen',
         home: Scaffold(
-          // appBar: AppBar(
-          //   // leading: IconButton(
-          //   //     icon: const Icon(Icons.arrow_back),
-          //   //     color: Color.fromARGB(255, 52, 55, 58),
-          //   //     onPressed: () {
-          //   //       Navigator.of(context).push(
-          //   //           MaterialPageRoute(builder: (context) => SearchPage()));
-          //   //     }),
-          //   backgroundColor: Color.fromARGB(255, 248, 249, 255),
-          // ),
           body: Padding(
               padding: const EdgeInsets.all(25),
               child: Column(
@@ -68,7 +58,6 @@ class _BookmarksState extends State<Bookmarks> {
                       height: 70,
                     ),
                     const Text('My Bookmarks', style: header),
-                    // Text(user!.displayName!, style: header),
                     const SizedBox(height: 10),
                     FutureBuilder<UserFire>(
                         future: getUser(user!.uid),

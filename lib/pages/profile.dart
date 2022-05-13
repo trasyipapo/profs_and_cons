@@ -354,19 +354,6 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-// Widget profInfo = Container(
-//     padding: const EdgeInsets.fromLTRB(25, 32, 25, 0),
-//     child: Row(
-//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//       children: [
-//         const Text('Juan Dela Cruz', style: header),
-//         Column(crossAxisAlignment: CrossAxisAlignment.end, children: const [
-//           Text('4.5', style: overallRating),
-//           Text('Overall Rating', style: bodyText)
-//         ])
-//       ],
-//     ));
-
 Widget reviewButton = Container(
     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
     child: ElevatedButton(
@@ -400,46 +387,6 @@ Widget coursesTaught = Container(
       ])
     ]));
 
-// Widget averageRatings = Container(
-//     padding: const EdgeInsets.fromLTRB(25, 10, 25, 0),
-//     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//       const Text('Average Ratings', style: header2),
-//       Padding(
-//           padding: const EdgeInsets.fromLTRB(32, 10, 32, 0),
-//           child: Column(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Teaching Skill'), ratingBar(4)],
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Personality'), ratingBar(3)],
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Grading'), ratingBar(4)],
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Workload'), ratingBar(3)],
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Leniency'), ratingBar(5)],
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Attendance'), ratingBar(4)],
-//                 ),
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [const Text('Feedback'), ratingBar(4)],
-//                 )
-//               ]))
-//     ]));
-
 RatingBar ratingBar(double rating) {
   return RatingBar(
       initialRating: rating,
@@ -459,9 +406,6 @@ RatingBar ratingBar(double rating) {
             color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
-      //   setState(() {
-      //     _ratingValue = value;
-      // }
       );
 }
 

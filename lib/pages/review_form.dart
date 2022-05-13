@@ -1,9 +1,6 @@
-//current working file
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/styles.dart';
@@ -57,13 +54,10 @@ class _ReviewFormState extends State<ReviewForm> {
       courseList
           .add(FormBuilderFieldOption(child: Text(course), value: course));
     }
-    // final courses =
-    //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
     semesters.add({"id": 1, "name": "Intersession"});
     semesters.add({"id": 2, "name": "1st Sem"});
     semesters.add({"id": 0, "name": "2nd Sem"});
-    //CheckBoxState anonymous = CheckBoxState(title: "Submit Anonymously");
 
     return Form(
       key: globalKey,
@@ -352,8 +346,6 @@ class _ReviewFormState extends State<ReviewForm> {
                                 message =
                                     "An error occured while submitting review";
                               }
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(content: Text(message)));
                               Navigator.pop(context);
                             }
                           },
@@ -396,28 +388,6 @@ class _ReviewFormState extends State<ReviewForm> {
     // end of update profname and dep
     final json = rev.toJson();
     await docReview.set(json);
-//
-    // final profTester = FirebaseFirestore.instance
-    //     .collection('professors')
-    //     .where('id', isEqualTo: rev.profId);
-    // String? department, name = '';
-    // await profTester.get().then((snapShot) {
-    //   snapShot.docs.forEach((doc) {
-    //     name = doc['name'];
-    //     department = doc['department'];
-    //     print(name.toString() + "INSIDE SNAPSHOT");
-    //   });
-    // });
-
-    // rev.profName = name;
-    // rev.department = department;
-//////////////////////////////////////
-    // final json2 = rev.toJson();
-    // await docReview.set(json2);
-//
-    // final revTester = FirebaseFirestore.instance
-    //     .collection('users')
-    //     .where('uid', isEqualTo: user!.uid);
 
     final tester = FirebaseFirestore.instance
         .collection('reviews')
@@ -433,8 +403,6 @@ class _ReviewFormState extends State<ReviewForm> {
         workload = 0;
     int total = 0;
 
-    // String? pastReviews = "";
-
     await tester.get().then((snapShot) {
       snapShot.docs.forEach((doc) {
         attend = attend + doc["attendanceRating"];
@@ -448,11 +416,6 @@ class _ReviewFormState extends State<ReviewForm> {
         total += 1;
       });
     });
-    // await revTester.get().then((snapShot) {
-    //   snapShot.docs.forEach((doc) {
-    //     pastReviews = doc["ownReviews"];
-    //   });
-    // });
 
     attend /= total;
     feedback /= total;
@@ -462,17 +425,6 @@ class _ReviewFormState extends State<ReviewForm> {
     personality /= total;
     teaching /= total;
     workload /= total;
-
-    // if (pastReviews == "") {
-    //   pastReviews = rev.id.toString();
-    // } else {
-    //   pastReviews = pastReviews! + ',' + rev.id.toString();
-    // }
-    // rev.profName = name;
-    // rev.department = department;
-    // // final json2 = rev.toJson();
-    // // await docReview.set(json2);
-    // print(name.toString() + 'OUTSIDE');
 
     final updateProf = FirebaseFirestore.instance.collection('professors');
     updateProf
@@ -489,24 +441,5 @@ class _ReviewFormState extends State<ReviewForm> {
         })
         .then((_) => debugPrint('Updated'))
         .catchError((error) => debugPrint('Update Failed: $error'));
-
-    // final addtouser = FirebaseFirestore.instance.collection('users');
-    // addtouser
-    //     .doc(user!.uid)
-    //     .update({
-    //       'ownReviews': pastReviews,
-    //     })
-    //     .then((_) => debugPrint('Updated own reviews'))
-    //     .catchError((error) => debugPrint('Update Failed: $error'));
-
-    // final updateRev = FirebaseFirestore.instance.collection('reviews');
-    // updateRev
-    //     .doc(rev.profId)
-    //     .update({
-    //       'profName': name,
-    //       'department': department,
-    //     })
-    //     .then((_) => debugPrint('Updated revs'))
-    //     .catchError((error) => debugPrint('Update Failed: $error'));
   }
 }

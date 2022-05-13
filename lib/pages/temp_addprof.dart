@@ -10,18 +10,9 @@ class AddProf extends StatefulWidget {
 }
 
 class _AddProfState extends State<AddProf> {
-  // final controllerId = TextEditingController();
   final controllerName = TextEditingController();
   final controllerDep = TextEditingController();
   final controllerCourses = TextEditingController();
-  // final controlleroverallRating = TextEditingController();
-  // final controllerteachingRating = TextEditingController();
-  // final controllerpersonalityRating = TextEditingController();
-  // final controllergradingRating = TextEditingController();
-  // final controllerworkloadRating = TextEditingController();
-  // final controllerleniencyRating = TextEditingController();
-  // final controllerattendanceRating = TextEditingController();
-  // final controllerfeedbackRating = TextEditingController();
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -36,16 +27,6 @@ class _AddProfState extends State<AddProf> {
         body: ListView(
           padding: EdgeInsets.all(16),
           children: <Widget>[
-            // TextField(
-            //   controller: controllerId,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Professor ID',
-            //   ),
-            // ),
-            // const SizedBox(
-            //   height: 24,
-            // ),
             TextField(
               controller: controllerName,
               decoration: const InputDecoration(
@@ -73,62 +54,6 @@ class _AddProfState extends State<AddProf> {
                 hintText: 'Courses',
               ),
             ),
-            // TextField(
-            //   controller: controlleroverallRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Overall',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllerteachingRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Teaching',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllerpersonalityRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Personality',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllergradingRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Grading',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllerworkloadRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Workload',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllerleniencyRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Leniency',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllerattendanceRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Attendance',
-            //   ),
-            // ),
-            // TextField(
-            //   controller: controllerfeedbackRating,
-            //   decoration: const InputDecoration(
-            //     border: OutlineInputBorder(),
-            //     hintText: 'Feedback',
-            //   ),
-            // ),
             const SizedBox(
               height: 24,
             ),
@@ -136,20 +61,9 @@ class _AddProfState extends State<AddProf> {
               child: Text('Add New Professor'),
               onPressed: () {
                 final professor = Professor(
-                  // id: controllerId.text,
                   name: controllerName.text,
                   department: controllerDep.text,
                   courses: controllerCourses.text,
-                  // overallRating: double.parse(controlleroverallRating.text),
-                  // teachingRating: double.parse(controllerteachingRating.text),
-                  // personalityRating:
-                  //     double.parse(controllerpersonalityRating.text),
-                  // gradingRating: double.parse(controllergradingRating.text),
-                  // workloadRating: double.parse(controllerworkloadRating.text),
-                  // leniencyRating: double.parse(controllerleniencyRating.text),
-                  // attendanceRating:
-                  //     double.parse(controllerattendanceRating.text),
-                  // feedbackRating: double.parse(controllerfeedbackRating.text),
                 );
 
                 createProf(professor);

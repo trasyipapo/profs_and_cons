@@ -1,8 +1,5 @@
-//current working file
-
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:profs_and_cons/pages/search.dart';
 import 'package:profs_and_cons/objects/review.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/styles.dart';
@@ -56,13 +53,10 @@ class _EditFormState extends State<EditForm> {
       courseList
           .add(FormBuilderFieldOption(child: Text(course), value: course));
     }
-    // final courses =
-    //     coursesList.map((course) => CheckBoxState(title: course)).toList();
     List<dynamic> semesters = [];
     semesters.add({"id": 1, "name": "Intersession"});
     semesters.add({"id": 2, "name": "1st Sem"});
     semesters.add({"id": 0, "name": "2nd Sem"});
-    //CheckBoxState anonymous = CheckBoxState(title: "Submit Anonymously");
 
     return Form(
       key: globalKey,
@@ -360,15 +354,6 @@ class _EditFormState extends State<EditForm> {
                                 message =
                                     "An error occured while submitting review";
                               }
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(content: Text(message)));
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => RevList(
-                              //             professor: professor,
-                              //           )),
-                              // );
                               Navigator.pop(context);
                             }
                           },
@@ -402,8 +387,6 @@ class _EditFormState extends State<EditForm> {
                               message =
                                   "An error occured while deleting review";
                             }
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(content: Text(message)));
                             Navigator.pop(context);
                           },
                           child: Text("Delete Review"),

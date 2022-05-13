@@ -45,8 +45,6 @@ class _RevListState extends State<RevList> {
                 color: Color.fromARGB(255, 52, 55, 58),
                 onPressed: () {
                   Navigator.pop(context);
-                  // Navigator.of(context).push(
-                  // MaterialPageRoute(builder: (context) => Profile(professor: prof)));
                 }),
             backgroundColor: Color.fromARGB(255, 248, 249, 255),
           ),
@@ -779,8 +777,5 @@ RatingBar ratingBar(double rating) {
             color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
-      //   setState(() {
-      //     _ratingValue = value;
-      // }
       );
 }

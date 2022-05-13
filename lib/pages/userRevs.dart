@@ -66,7 +66,6 @@ class _OwnReviewsState extends State<OwnReviews> {
                             ),
                             const SizedBox(height: 5),
                             Center(
-                              // padding: EdgeInsets.all(5),
                               child: LogOutButton(),
                             ),
                           ],
@@ -83,9 +82,6 @@ class _OwnReviewsState extends State<OwnReviews> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             UserFire? userObject = snapshot.data;
-                            // List<String> ownReviewsList =
-                            //     userObject!.ownReviews!.split(",");
-                            // print(ownReviewsList);
                             return StreamBuilder<List<Review>>(
                               stream: getRevs(),
                               builder: (context, snapshot) {
@@ -224,9 +220,6 @@ RatingBar ratingBar(double rating) {
             color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
-      //   setState(() {
-      //     _ratingValue = value;
-      // }
       );
 }
 
@@ -338,29 +331,3 @@ Widget tempcard(
         ]),
       ),
     );
-
-// Future getProf(Review rev) async {
-//   final docReview = FirebaseFirestore.instance.collection('reviews').doc();
-//   rev.id = docReview.id;
-//   final json = rev.toJson();
-//   await docReview.set(json);
-
-//   final tester = FirebaseFirestore.instance
-//       .collection('professors')
-//       .where('id', isEqualTo: rev.profId);
-
-//   String? name, department;
-
-//   await tester.get().then((snapShot) {
-//     snapShot.docs.forEach((doc) {
-//       name = doc['name'];
-//       department = doc['department'];
-//     });
-//   });
-
-//   department = department;
-//   name = name;
-
-//   print(department);
-//   print(name);
-// }

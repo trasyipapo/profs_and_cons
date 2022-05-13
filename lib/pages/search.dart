@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/pages/bookmarks.dart';
 import 'package:profs_and_cons/pages/userRevs.dart';
-import 'package:profs_and_cons/provider/google_sign_in.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:profs_and_cons/pages/temp_addprof.dart';
@@ -122,27 +120,7 @@ class _SearchPageState extends State<SearchPage> {
                   )),
             ),
             const Spacer(),
-            // Padding(
-            //     padding: const EdgeInsets.all(16.0),
-            //     child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           primary: Color.fromARGB(255, 239, 108, 108),
-            //           minimumSize: const Size.fromHeight(50)),
-            //       onPressed: () {
-            //         Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => TempSearchResults()),
-            //         );
-            //       },
-            //       child: const Text(
-            //         'Search Professors',
-            //         style: TextStyle(
-            //             fontFamily: 'GoogleSans',
-            //             fontWeight: FontWeight.normal,
-            //             fontSize: 20),
-            //       ),
-            //     )),
+
             StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('users')
@@ -183,26 +161,6 @@ class _SearchPageState extends State<SearchPage> {
                     );
                   }
                 }),
-
-            // Padding(
-            //     padding: const EdgeInsets.all(16.0),
-            //     child: ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //           primary: Color.fromARGB(255, 239, 108, 108),
-            //           minimumSize: const Size.fromHeight(50)),
-            //       onPressed: () {
-            //         final provider = Provider.of<GoogleSignInProvider>(context,
-            //             listen: false);
-            //         provider.logout();
-            //       },
-            //       child: const Text(
-            //         'Logout',
-            //         style: TextStyle(
-            //             fontFamily: 'GoogleSans',
-            //             fontWeight: FontWeight.normal,
-            //             fontSize: 20),
-            //       ),
-            //     ))
           ])),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (onTappedBar) {
@@ -237,37 +195,6 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 }
-
-// class Home extends StatefulWidget {
-//   const Home({Key? key}) : super(key: key);
-
-//   @override
-//   State<Home> createState() => _HomeState();
-// }
-
-// class _HomeState extends State<Home> {
-//   final myController = TextEditingController();
-//   @override
-//   void _printLatestValue() {
-//     print('Second text field: ${myController.text}');
-//   }
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     // Start listening to changes.
-//     myController.addListener(_printLatestValue);
-//   }
-
-//   void dispose() {
-//     // Clean up the controller when the widget is removed from the
-//     // widget tree.
-//     myController.dispose();
-//     super.dispose();
-//   }
-
-// }
 
 Future queryData(String queryString) async {
   return FirebaseFirestore.instance
