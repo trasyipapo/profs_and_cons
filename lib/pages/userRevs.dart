@@ -253,33 +253,19 @@ Widget tempcard(
           Row(
             children: [
               Text(
-                review.anonymous ? 'Anonymous Reviewer' : '${review.writer}',
-                style: smallText,
-              ),
-              const SizedBox(
-                height: 24,
-                width: 2,
-              ),
-              const Icon(
-                Icons.brightness_1,
-                size: 3,
-                color: Colors.grey,
-              ),
-              Text(
                 review.semesterTaken! == '0'
                     ? 'Intersession'
                     : review.semesterTaken! == '1'
                         ? '1st Sem'
                         : '2nd Sem',
-                style: smallText,
+                style: header2,
               ),
               const SizedBox(width: 2),
               const Icon(
                 Icons.brightness_1,
-                size: 3,
-                color: Colors.grey,
+                size: 5,
               ),
-              Text('${review.yearTaken}', style: smallText),
+              Text('${review.yearTaken}', style: header2),
             ],
           ),
           Row(
