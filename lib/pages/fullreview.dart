@@ -41,11 +41,11 @@ class _FullReviewState extends State<FullReview> {
           appBar: AppBar(
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                color: Colors.black87,
+                color: Color.fromARGB(255, 52, 55, 58),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromARGB(255, 248, 249, 255),
           ),
           body: StreamBuilder<List<Review>>(
               stream: readReviews(),
@@ -82,7 +82,7 @@ class _FullReviewState extends State<FullReview> {
                                   children: [
                                     Text(professor.name, style: header),
                                     Text(professor.department,
-                                        style: smallText),
+                                        style: medText),
                                   ],
                                 ),
                               ],
@@ -313,7 +313,7 @@ Widget reviewDetails(
                           margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                           child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: Color.fromARGB(255, 239, 108, 108),
                                   borderRadius: BorderRadius.circular(5)),
                               child: Padding(
                                   padding:
@@ -328,7 +328,7 @@ Widget reviewDetails(
                 if (revl.user!.uid == review.writeruid)
                   IconButton(
                     icon: Icon(Icons.edit),
-                    disabledColor: Colors.white,
+                    disabledColor: Color.fromARGB(255, 248, 249, 255),
                     onPressed: () {
                       revl.user!.uid != review.writeruid
                           ? null
@@ -375,7 +375,7 @@ Widget upvotedReviewDetails(
                               .catchError((error) =>
                                   debugPrint('Update Failed: $error'));
                         },
-                        color: Colors.blue,
+                        color: Color.fromARGB(255, 74, 117, 182),
                         iconSize: 20,
                         padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                         constraints: const BoxConstraints(),
@@ -515,7 +515,7 @@ Widget upvotedReviewDetails(
                           margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                           child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: Color.fromARGB(255, 239, 108, 108),
                                   borderRadius: BorderRadius.circular(5)),
                               child: Padding(
                                   padding:
@@ -530,7 +530,7 @@ Widget upvotedReviewDetails(
                 if (revl.user!.uid == review.writeruid)
                   IconButton(
                     icon: Icon(Icons.edit),
-                    disabledColor: Colors.white,
+                    disabledColor: Color.fromARGB(255, 248, 249, 255),
                     onPressed: () {
                       revl.user!.uid != review.writeruid
                           ? null
@@ -617,7 +617,7 @@ Widget downvotedReviewDetails(
                               .catchError((error) =>
                                   debugPrint('Update Failed: $error'));
                         },
-                        color: Colors.blue,
+                        color: Color.fromARGB(255, 74, 117, 182),
                         iconSize: 20,
                         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                         constraints: const BoxConstraints(),
@@ -716,7 +716,7 @@ Widget downvotedReviewDetails(
                           margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                           child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: Color.fromARGB(255, 239, 108, 108),
                                   borderRadius: BorderRadius.circular(5)),
                               child: Padding(
                                   padding:
@@ -731,7 +731,7 @@ Widget downvotedReviewDetails(
                 if (revl.user!.uid == review.writeruid)
                   IconButton(
                     icon: Icon(Icons.edit),
-                    disabledColor: Colors.white,
+                    disabledColor: Color.fromARGB(255, 248, 249, 255),
                     onPressed: () {
                       revl.user!.uid != review.writeruid
                           ? null
@@ -756,14 +756,14 @@ RatingBar ratingBar(double rating) {
       allowHalfRating: true,
       itemCount: 5,
       ratingWidget: RatingWidget(
-          full: const Icon(Icons.star, color: Colors.blue),
+          full: const Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
           half: const Icon(
             Icons.star_half,
-            color: Colors.blue,
+            color: Color.fromARGB(255, 74, 117, 182),
           ),
           empty: const Icon(
             Icons.star,
-            color: Colors.black38,
+            color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
       //   setState(() {

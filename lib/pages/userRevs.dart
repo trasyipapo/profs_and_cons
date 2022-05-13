@@ -103,7 +103,7 @@ class _OwnReviewsState extends State<OwnReviews> {
                                           padding: const EdgeInsets.fromLTRB(
                                               120, 56, 120, 24),
                                           child: Image.asset(
-                                              'assets/appbar-logo.png'),
+                                              'assets/empty.png'),
                                         ),
                                         const Text(
                                             "Sorry, you don't have any reviews yet",
@@ -111,16 +111,16 @@ class _OwnReviewsState extends State<OwnReviews> {
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 32,
-                                                color: Colors.black)),
+                                                color: Color.fromARGB(255, 52, 55, 58))),
                                         const Text('\n',
                                             style: TextStyle(
                                                 fontSize: 5,
-                                                color: Colors.white)),
+                                                color: Color.fromARGB(255, 248, 249, 255))),
                                         const Text(
                                             'Search for professors then write reviews for them!',
                                             style: TextStyle(
                                                 fontSize: 16,
-                                                color: Colors.black)),
+                                                color: Color.fromARGB(255, 52, 55, 58))),
                                       ],
                                     );
                                   } else {
@@ -199,7 +199,7 @@ class _OwnReviewsState extends State<OwnReviews> {
                 label: 'Profile',
               ),
             ],
-            selectedItemColor: Colors.blue,
+            selectedItemColor: Color.fromARGB(255, 74, 117, 182),
           ),
         ));
   }
@@ -214,14 +214,14 @@ RatingBar ratingBar(double rating) {
       allowHalfRating: true,
       itemCount: 5,
       ratingWidget: RatingWidget(
-          full: const Icon(Icons.star, color: Colors.blue),
+          full: const Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
           half: const Icon(
             Icons.star_half,
-            color: Colors.blue,
+            color: Color.fromARGB(255, 74, 117, 182),
           ),
           empty: const Icon(
             Icons.star,
-            color: Colors.black38,
+            color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
       //   setState(() {
@@ -303,7 +303,7 @@ Widget tempcard(
                           margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                           child: DecoratedBox(
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: Color.fromARGB(255, 239, 108, 108),
                                   borderRadius: BorderRadius.circular(5)),
                               child: Padding(
                                   padding:
@@ -319,7 +319,7 @@ Widget tempcard(
               // here
               IconButton(
                   icon: Icon(Icons.edit),
-                  disabledColor: Colors.white,
+                  disabledColor: Color.fromARGB(255, 248, 249, 255),
                   onPressed: () {
                     user!.uid != review.writeruid
                         ? null

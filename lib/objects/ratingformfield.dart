@@ -26,7 +26,7 @@ class RatingFormField extends FormField<double> {
                           minRating: 1,
                           itemSize: 30,
                           itemBuilder: (context, _) =>
-                              Icon(Icons.star, color: Colors.blue),
+                              Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
                           onRatingUpdate: (rating) {
                             state.didChange(rating);
                           },
@@ -35,7 +35,7 @@ class RatingFormField extends FormField<double> {
                   Padding(
                       padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: Text(state.errorText ?? '',
-                          style: TextStyle(color: Colors.red)))
+                          style: TextStyle(color: Color.fromARGB(255, 239, 108, 108))))
                 ],
               );
             });

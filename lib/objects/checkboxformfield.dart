@@ -17,7 +17,7 @@
 //                 dense: state.hasError,
 //                 title: title,
 //                 subtitle: Text(state.errorText ?? '',
-//                     style: TextStyle(color: Colors.red)),
+//                     style: TextStyle(color: Color.fromARGB(255, 239, 108, 108))),
 //                 value: state.value,
 //                 onChanged: state.didChange,
 //                 controlAffinity: ListTileControlAffinity.leading,

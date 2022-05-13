@@ -13,7 +13,7 @@ class LogOutButton extends StatelessWidget {
               padding: EdgeInsets.all(4),
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 248, 249, 255)),
                     foregroundColor: MaterialStateProperty.all(Colors.grey),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
@@ -47,7 +47,7 @@ class LogOutButton extends StatelessWidget {
 //                         child: ElevatedButton(
 //                           style: ButtonStyle(
 //                               backgroundColor:
-//                                   MaterialStateProperty.all(Colors.white),
+//                                   MaterialStateProperty.all(Color.fromARGB(255, 248, 249, 255)),
 //                               foregroundColor:
 //                                   MaterialStateProperty.all(Colors.grey),
 //                               shape: MaterialStateProperty.all<

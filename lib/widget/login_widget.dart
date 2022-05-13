@@ -21,7 +21,7 @@ class LoginWidget extends StatelessWidget {
               child: Text(
                 'Profs and Cons',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 248, 249, 255),
                   fontFamily: 'GoogleSans',
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
@@ -38,7 +38,7 @@ class LoginWidget extends StatelessWidget {
               child: Text(
                 'Welcome,\nAtenean!',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 248, 249, 255),
                   fontFamily: 'GoogleSans',
                   fontSize: 34,
                   fontWeight: FontWeight.bold,
@@ -54,7 +54,7 @@ class LoginWidget extends StatelessWidget {
               child: Text(
                 'Are you ready to start the sem?',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 248, 249, 255),
                   fontFamily: 'GoogleSans',
                   fontSize: 18,
                 ),

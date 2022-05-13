@@ -28,7 +28,7 @@ class _AddProfState extends State<AddProf> {
         appBar: AppBar(
             leading: IconButton(
                 icon: const Icon(Icons.search),
-                color: Colors.black87,
+                color: Color.fromARGB(255, 52, 55, 58),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SearchPage()));

@@ -42,13 +42,13 @@ class _RevListState extends State<RevList> {
           appBar: AppBar(
             leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                color: Colors.black87,
+                color: Color.fromARGB(255, 52, 55, 58),
                 onPressed: () {
                   Navigator.pop(context);
                   // Navigator.of(context).push(
                   // MaterialPageRoute(builder: (context) => Profile(professor: prof)));
                 }),
-            backgroundColor: Colors.white,
+            backgroundColor: Color.fromARGB(255, 248, 249, 255),
           ),
           body: Padding(
             padding: const EdgeInsets.all(16),
@@ -59,7 +59,7 @@ class _RevListState extends State<RevList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(professor.name, style: header),
-                    Text(professor.department, style: smallText),
+                    Text(professor.department, style: medText),
                   ],
                 ),
                 Column(
@@ -159,7 +159,7 @@ class _RevListState extends State<RevList> {
                                 Padding(
                                   padding: const EdgeInsets.fromLTRB(
                                       120, 56, 120, 24),
-                                  child: Image.asset('assets/appbar-logo.png'),
+                                  child: Image.asset('assets/empty.png'),
                                 ),
                                 const Text(
                                     "There are no reviews for this prof yet.",
@@ -167,13 +167,13 @@ class _RevListState extends State<RevList> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 32,
-                                        color: Colors.black)),
+                                        color: Color.fromARGB(255, 52, 55, 58))),
                                 const Text('\n',
                                     style: TextStyle(
-                                        fontSize: 5, color: Colors.white)),
+                                        fontSize: 5, color: Color.fromARGB(255, 248, 249, 255))),
                                 const Text('Be the first to review?',
                                     style: TextStyle(
-                                        fontSize: 16, color: Colors.black)),
+                                        fontSize: 16, color: Color.fromARGB(255, 52, 55, 58))),
                               ],
                             );
                           } else {
@@ -403,7 +403,7 @@ Widget reviewCard(
                       margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                       child: DecoratedBox(
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 239, 108, 108),
                               borderRadius: BorderRadius.circular(5)),
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -493,7 +493,7 @@ Widget down(Review review, Professor prof, context, List<String> revCourses) =>
                           .catchError(
                               (error) => debugPrint('Update Failed: $error'));
                     },
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 74, 117, 182),
                     iconSize: 20,
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     constraints: const BoxConstraints(),
@@ -541,7 +541,7 @@ Widget down(Review review, Professor prof, context, List<String> revCourses) =>
                       margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                       child: DecoratedBox(
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 239, 108, 108),
                               borderRadius: BorderRadius.circular(5)),
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -587,7 +587,7 @@ Widget up(Review review, Professor prof, context, List<String> revCourses) =>
                           .catchError(
                               (error) => debugPrint('Update Failed: $error'));
                     },
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 74, 117, 182),
                     iconSize: 20,
                     padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                     constraints: const BoxConstraints(),
@@ -678,7 +678,7 @@ Widget up(Review review, Professor prof, context, List<String> revCourses) =>
                       margin: const EdgeInsets.fromLTRB(0, 0, 5, 0),
                       child: DecoratedBox(
                           decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: Color.fromARGB(255, 239, 108, 108),
                               borderRadius: BorderRadius.circular(5)),
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -718,7 +718,7 @@ ElevatedButton addRev(Professor professor, BuildContext context) {
       style: ButtonStyle(
           padding:
               MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 74, 117, 182))),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           'Add New Review',
@@ -769,14 +769,14 @@ RatingBar ratingBar(double rating) {
       allowHalfRating: true,
       itemCount: 5,
       ratingWidget: RatingWidget(
-          full: const Icon(Icons.star, color: Colors.blue),
+          full: const Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
           half: const Icon(
             Icons.star_half,
-            color: Colors.blue,
+            color: Color.fromARGB(255, 74, 117, 182),
           ),
           empty: const Icon(
             Icons.star,
-            color: Colors.black38,
+            color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
       //   setState(() {

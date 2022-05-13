@@ -39,11 +39,11 @@ class _EditFormState extends State<EditForm> {
       appBar: AppBar(
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.black87,
+            color: Color.fromARGB(255, 52, 55, 58),
             onPressed: () {
               Navigator.pop(context);
             }),
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 248, 249, 255),
       ),
       body: _form(),
     );
@@ -232,7 +232,7 @@ class _EditFormState extends State<EditForm> {
               review.title = onSavedVal;
             },
                 initialValue: review.title ?? "",
-                borderColor: Colors.black,
+                borderColor: Color.fromARGB(255, 52, 55, 58),
                 borderRadius: 2,
                 fontSize: 16,
                 labelFontSize: 16,
@@ -252,7 +252,7 @@ class _EditFormState extends State<EditForm> {
               review.description = onSavedVal;
             },
                 initialValue: review.description ?? "",
-                borderColor: Colors.black,
+                borderColor: Color.fromARGB(255, 52, 55, 58),
                 borderRadius: 2,
                 fontSize: 16,
                 labelFontSize: 16,
@@ -278,7 +278,7 @@ class _EditFormState extends State<EditForm> {
                       }
                       return null;
                     },
-                    borderColor: Colors.black,
+                    borderColor: Color.fromARGB(255, 52, 55, 58),
                     borderRadius: 2,
                     labelFontSize: 16,
                     paddingLeft: 0,
@@ -304,7 +304,7 @@ class _EditFormState extends State<EditForm> {
                       review.yearTaken = onSavedVal;
                     },
                     initialValue: review.yearTaken ?? "",
-                    borderColor: Colors.black,
+                    borderColor: Color.fromARGB(255, 52, 55, 58),
                     borderRadius: 2,
                     fontSize: 16,
                     labelFontSize: 16,
@@ -336,7 +336,7 @@ class _EditFormState extends State<EditForm> {
                     child: Text("Cancel"),
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
+                            MaterialStateProperty.all(Color.fromARGB(255, 248, 249, 255)),
                         foregroundColor: MaterialStateProperty.all(Colors.grey),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -375,14 +375,14 @@ class _EditFormState extends State<EditForm> {
                           child: Text("Update"),
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.blue),
+                                  MaterialStateProperty.all(Color.fromARGB(255, 74, 117, 182)),
                               foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
+                                  MaterialStateProperty.all(Color.fromARGB(255, 248, 249, 255)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2.0),
-                                      side: BorderSide(color: Colors.blue)))),
+                                      side: BorderSide(color: Color.fromARGB(255, 74, 117, 182))))),
                         ))),
               ],
             ),
@@ -409,14 +409,14 @@ class _EditFormState extends State<EditForm> {
                           child: Text("Delete Review"),
                           style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.red),
+                                  MaterialStateProperty.all(Color.fromARGB(255, 239, 108, 108)),
                               foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
+                                  MaterialStateProperty.all(Color.fromARGB(255, 248, 249, 255)),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(2.0),
-                                      side: BorderSide(color: Colors.red)))),
+                                      side: BorderSide(color: Color.fromARGB(255, 239, 108, 108))))),
                         ))),
               ],
             )

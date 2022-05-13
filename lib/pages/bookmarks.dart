@@ -52,12 +52,12 @@ class _BookmarksState extends State<Bookmarks> {
           // appBar: AppBar(
           //   // leading: IconButton(
           //   //     icon: const Icon(Icons.arrow_back),
-          //   //     color: Colors.black87,
+          //   //     color: Color.fromARGB(255, 52, 55, 58),
           //   //     onPressed: () {
           //   //       Navigator.of(context).push(
           //   //           MaterialPageRoute(builder: (context) => SearchPage()));
           //   //     }),
-          //   backgroundColor: Colors.white,
+          //   backgroundColor: Color.fromARGB(255, 248, 249, 255),
           // ),
           body: Padding(
               padding: const EdgeInsets.all(25),
@@ -94,7 +94,7 @@ class _BookmarksState extends State<Bookmarks> {
                                           padding: const EdgeInsets.fromLTRB(
                                               120, 56, 120, 24),
                                           child: Image.asset(
-                                              'assets/appbar-logo.png'),
+                                              'assets/empty.png'),
                                         ),
                                         const Text(
                                             "Sorry, you don't have any bookmarks yet",
@@ -102,16 +102,16 @@ class _BookmarksState extends State<Bookmarks> {
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 32,
-                                                color: Colors.black)),
+                                                color: Color.fromARGB(255, 52, 55, 58))),
                                         const Text('\n',
                                             style: TextStyle(
                                                 fontSize: 5,
-                                                color: Colors.white)),
+                                                color: Color.fromARGB(255, 248, 249, 255))),
                                         const Text(
                                             'Search for profs to bookmark them!',
                                             style: TextStyle(
                                                 fontSize: 16,
-                                                color: Colors.black)),
+                                                color: Color.fromARGB(255, 52, 55, 58))),
                                       ],
                                     );
                                   } else {
@@ -186,7 +186,7 @@ class _BookmarksState extends State<Bookmarks> {
                 label: 'Profile',
               ),
             ],
-            selectedItemColor: Colors.blue,
+            selectedItemColor: Color.fromARGB(255, 74, 117, 182),
           ),
         ));
   }

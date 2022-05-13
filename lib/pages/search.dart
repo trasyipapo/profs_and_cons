@@ -83,11 +83,11 @@ class _SearchPageState extends State<SearchPage> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 32,
-                                color: Colors.white)),
+                                color: Color.fromARGB(255, 248, 249, 255))),
                         const Text('\n',
-                            style: TextStyle(fontSize: 5, color: Colors.white)),
+                            style: TextStyle(fontSize: 5, color: Color.fromARGB(255, 248, 249, 255))),
                         const Text('Let\'s search for your profs',
-                            style: TextStyle(fontSize: 16, color: Colors.white))
+                            style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 248, 249, 255)))
                       ],
                     ))),
             Padding(
@@ -99,22 +99,22 @@ class _SearchPageState extends State<SearchPage> {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SearchResults(query: query)));
                   },
-                  cursorColor: Colors.blue,
+                  cursorColor: Color.fromARGB(255, 74, 117, 182),
                   cursorHeight: 20,
                   cursorWidth: 2,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(
                       Icons.search,
-                      color: Colors.black54,
+                      color: Color.fromARGB(255, 52, 55, 58),
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: Color.fromARGB(255, 248, 249, 255),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide:
-                          const BorderSide(color: Colors.blue, width: 2.0),
+                          const BorderSide(color: Color.fromARGB(255, 74, 117, 182), width: 2.0),
                       borderRadius: BorderRadius.circular(25.0),
                     ),
                     hintStyle: TextStyle(color: Colors.grey[800]),
@@ -126,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
             //     padding: const EdgeInsets.all(16.0),
             //     child: ElevatedButton(
             //       style: ElevatedButton.styleFrom(
-            //           primary: Colors.red,
+            //           primary: Color.fromARGB(255, 239, 108, 108),
             //           minimumSize: const Size.fromHeight(50)),
             //       onPressed: () {
             //         Navigator.push(
@@ -159,7 +159,7 @@ class _SearchPageState extends State<SearchPage> {
                           padding: const EdgeInsets.all(16.0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red,
+                                primary: Color.fromARGB(255, 239, 108, 108),
                                 minimumSize: const Size.fromHeight(50)),
                             onPressed: () {
                               Navigator.push(
@@ -188,7 +188,7 @@ class _SearchPageState extends State<SearchPage> {
             //     padding: const EdgeInsets.all(16.0),
             //     child: ElevatedButton(
             //       style: ElevatedButton.styleFrom(
-            //           primary: Colors.red,
+            //           primary: Color.fromARGB(255, 239, 108, 108),
             //           minimumSize: const Size.fromHeight(50)),
             //       onPressed: () {
             //         final provider = Provider.of<GoogleSignInProvider>(context,
@@ -232,7 +232,7 @@ class _SearchPageState extends State<SearchPage> {
             label: 'Profile',
           ),
         ],
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Color.fromARGB(255, 74, 117, 182),
       ),
     );
   }

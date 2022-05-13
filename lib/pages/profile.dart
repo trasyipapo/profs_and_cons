@@ -66,7 +66,7 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            color: Colors.black87,
+            color: Color.fromARGB(255, 52, 55, 58),
             onPressed: () {
               if (prevPage == 1) {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -76,7 +76,7 @@ class _ProfileState extends State<Profile> {
                     .push(MaterialPageRoute(builder: (context) => Bookmarks()));
               }
             }),
-        backgroundColor: Colors.white,
+        backgroundColor: Color.fromARGB(255, 248, 249, 255),
       ),
       body: Container(
           constraints: const BoxConstraints.expand(),
@@ -103,7 +103,7 @@ class _ProfileState extends State<Profile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(professor.name, style: header),
-                                  Text(professor.department, style: smallText),
+                                  Text(professor.department, style: medText),
                                 ],
                               ),
                               Column(
@@ -182,7 +182,7 @@ class _ProfileState extends State<Profile> {
                                           const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                       child: DecoratedBox(
                                           decoration: BoxDecoration(
-                                              color: Colors.red,
+                                              color: Color.fromARGB(255, 236, 93, 93),
                                               borderRadius:
                                                   BorderRadius.circular(5)),
                                           child: Padding(
@@ -295,7 +295,7 @@ class _ProfileState extends State<Profile> {
                                 children: const [
                                   Text(
                                     'See reviews',
-                                    style: TextStyle(fontSize: 15.0),
+                                    style: TextStyle(fontSize: 15.0, color: Color.fromARGB(255, 74, 117, 182)),
                                   ),
                                   SizedBox(width: 5),
                                   Icon(
@@ -373,7 +373,7 @@ Widget reviewButton = Container(
         style: ButtonStyle(
             padding:
                 MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+            backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 74, 117, 182))),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: const [
           Text(
@@ -392,7 +392,7 @@ Widget coursesTaught = Container(
         Wrap(spacing: 10, children: [
           DecoratedBox(
               decoration: BoxDecoration(
-                  color: Colors.red, borderRadius: BorderRadius.circular(5)),
+                  color: Color.fromARGB(255, 236, 93, 93), borderRadius: BorderRadius.circular(5)),
               child: const Padding(
                   padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Text('CSCI 115', style: buttonText))),
@@ -449,14 +449,14 @@ RatingBar ratingBar(double rating) {
       allowHalfRating: true,
       itemCount: 5,
       ratingWidget: RatingWidget(
-          full: const Icon(Icons.star, color: Colors.blue),
+          full: const Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
           half: const Icon(
             Icons.star_half,
-            color: Colors.blue,
+            color: Color.fromARGB(255, 74, 117, 182),
           ),
           empty: const Icon(
             Icons.star,
-            color: Colors.black38,
+            color: Color.fromARGB(255, 52, 55, 58),
           )),
       onRatingUpdate: (value) {}
       //   setState(() {
@@ -471,7 +471,7 @@ ElevatedButton unmarked(String uid, Professor prof, int prevPage, String? query,
       style: ButtonStyle(
           padding:
               MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 74, 117, 182))),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [Icon(Icons.bookmark)]),
@@ -496,7 +496,7 @@ ElevatedButton marked(String uid, Professor prof, int prevPage, String? query,
       style: ButtonStyle(
           padding:
               MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)),
+          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 246, 216, 83))),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [Icon(Icons.bookmark_added)]),

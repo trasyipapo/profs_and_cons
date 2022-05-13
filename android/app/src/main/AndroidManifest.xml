@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.profs_and_cons">
    <application
-        android:label="profs_and_cons"
+        android:label="Profs and Cons"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -9,7 +9,7 @@ class GoogleSigninButton extends StatelessWidget {
         padding: EdgeInsets.all(4),
         child: ElevatedButton.icon(
           style: ElevatedButton.styleFrom(
-              primary: Colors.red, minimumSize: const Size.fromHeight(50)),
+              primary: Color.fromARGB(255, 239, 108, 108), minimumSize: const Size.fromHeight(50)),
           label: Text(
             'Sign In With Google',
             style: TextStyle(
@@ -17,7 +17,7 @@ class GoogleSigninButton extends StatelessWidget {
                 fontWeight: FontWeight.normal,
                 fontSize: 20),
           ),
-          icon: FaIcon(FontAwesomeIcons.google, color: Colors.white),
+          icon: FaIcon(FontAwesomeIcons.google, color: Color.fromARGB(255, 248, 249, 255)),
           onPressed: () {
             final provider =
                 Provider.of<GoogleSignInProvider>(context, listen: false);
