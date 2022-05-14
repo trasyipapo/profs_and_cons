@@ -165,13 +165,18 @@ class _RevListState extends State<RevList> {
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 32,
-                                        color: Color.fromARGB(255, 52, 55, 58))),
+                                        color:
+                                            Color.fromARGB(255, 52, 55, 58))),
                                 const Text('\n',
                                     style: TextStyle(
-                                        fontSize: 5, color: Color.fromARGB(255, 248, 249, 255))),
+                                        fontSize: 5,
+                                        color: Color.fromARGB(
+                                            255, 248, 249, 255))),
                                 const Text('Be the first to review?',
                                     style: TextStyle(
-                                        fontSize: 16, color: Color.fromARGB(255, 52, 55, 58))),
+                                        fontSize: 16,
+                                        color:
+                                            Color.fromARGB(255, 52, 55, 58))),
                               ],
                             );
                           } else {
@@ -412,6 +417,20 @@ Widget reviewCard(
                 },
               ),
             ),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
           ])
         ]),
       ),
@@ -550,6 +569,20 @@ Widget down(Review review, Professor prof, context, List<String> revCourses) =>
                 },
               ),
             ),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
           ])
         ]),
       ),
@@ -687,6 +720,20 @@ Widget up(Review review, Professor prof, context, List<String> revCourses) =>
                 },
               ),
             ),
+            if (user!.uid == review.writeruid)
+              IconButton(
+                icon: Icon(Icons.edit),
+                disabledColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => EditForm(
+                                professor: prof,
+                                review: review,
+                              )));
+                },
+              ),
           ])
         ]),
       ),
@@ -716,7 +763,8 @@ ElevatedButton addRev(Professor professor, BuildContext context) {
       style: ButtonStyle(
           padding:
               MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
-          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 74, 117, 182))),
+          backgroundColor: MaterialStateProperty.all<Color>(
+              Color.fromARGB(255, 74, 117, 182))),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           'Add New Review',
@@ -767,7 +815,8 @@ RatingBar ratingBar(double rating) {
       allowHalfRating: true,
       itemCount: 5,
       ratingWidget: RatingWidget(
-          full: const Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
+          full:
+              const Icon(Icons.star, color: Color.fromARGB(255, 74, 117, 182)),
           half: const Icon(
             Icons.star_half,
             color: Color.fromARGB(255, 74, 117, 182),
@@ -776,6 +825,5 @@ RatingBar ratingBar(double rating) {
             Icons.star,
             color: Color.fromARGB(255, 52, 55, 58),
           )),
-      onRatingUpdate: (value) {}
-      );
+      onRatingUpdate: (value) {});
 }
