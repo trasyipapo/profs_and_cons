@@ -787,7 +787,7 @@ ElevatedButton editRev(Professor professor, BuildContext context) {
       style: ButtonStyle(
           padding:
               MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(20)),
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.amber)),
+          backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 247, 220, 99))),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           'Edit Review',
