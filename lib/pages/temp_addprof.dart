@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:profs_and_cons/pages/search.dart';
+import 'package:profs_and_cons/pages/bookmarks.dart';
+import 'package:profs_and_cons/pages/userRevs.dart';
 import 'package:flutter/material.dart';
 import 'package:profs_and_cons/objects/professor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,13 +19,14 @@ class _AddProfState extends State<AddProf> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-            leading: IconButton(
-                icon: const Icon(Icons.search),
-                color: Color.fromARGB(255, 52, 55, 58),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchPage()));
-                })),
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Color.fromARGB(255, 52, 55, 58),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          backgroundColor: Color.fromARGB(255, 248, 249, 255),
+        ),
         body: ListView(
           padding: EdgeInsets.all(16),
           children: <Widget>[
@@ -58,7 +61,16 @@ class _AddProfState extends State<AddProf> {
               height: 24,
             ),
             ElevatedButton(
-              child: Text('Add New Professor'),
+              style: ElevatedButton.styleFrom(
+                  primary: Color.fromARGB(255, 239, 108, 108),
+                  minimumSize: const Size.fromHeight(50)),
+              child: Text(
+                'Add New Professor',
+                style: TextStyle(
+                    fontFamily: 'GoogleSans',
+                    fontWeight: FontWeight.normal,
+                    fontSize: 20),
+              ),
               onPressed: () {
                 final professor = Professor(
                   name: controllerName.text,
@@ -72,6 +84,35 @@ class _AddProfState extends State<AddProf> {
               },
             ),
           ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: (value) {
+            if (value == 0) {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Bookmarks()));
+            } else if (value == 1) {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => SearchPage()));
+            } else if (value == 2) {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => OwnReviews()));
+            }
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.bookmark),
+              label: 'Bookmarks',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: new Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          selectedItemColor: Colors.grey[600],
         ),
       );
 
